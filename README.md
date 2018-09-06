@@ -1,6 +1,5 @@
 # Data Visualisation PoC
 
-Property of Techolution LLC.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.3.
 
 ## Project Setup

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <META HTTP-EQUIV="REFRESH" CONTENT="csrf_timeout_in_seconds" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+
+        body {
+            background-color: #f0fafe;
+            font-family: Roboto-Light, "Helvetica Neue", sans-serif;
+            padding-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .welcome-message {
+            margin: 15px 0 5px 0;
+            font-size: 16px;
+            font-weight: 100;
+            color: #718c9d;
+            font-family: Roboto-Light, "Helvetica Neue", sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .guideline-message {
+            font-size: 12px;
+            font-weight: 100;
+            color: #8F979D;
+            font-family: Roboto-Light, "Helvetica Neue", sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .login-card {
+            width: 300px;
+            height: auto;
+            border-radius: 4px;
+            background-color: #fff;
+            margin: 20px 0;
+            padding: 15px;
+            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+        }
+
+        .sign-up {
+            color: #1266a5;
+        }
+
+        .forgotten-button {
+            font-size: 12px;
+            color: grey;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        a {
+            color: #000000;
+            opacity: 0.5;
+            font-size: 12px;
+            margin-left: 97px;
+        }
+
+        a:hover {
+            color: #1266a5;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .action-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        table td {
+            color: white;
+        }
+
+        .mdl-textfield__label {
+            color: black;
+        }
+
+        .mdl-textfield__label:after {
+            background-color: #8F979D;
+        }
+
+        .mdl-textfield .mdl-textfield__label {
+            color: #8F979D;
+        }
+
+        .mdl-textfield.is-focused .mdl-textfield__label {
+            color: #8F979D;
+        }
+
+        .mdl-textfield__input {
+            color: black;
+        }
+
+        .mdl-textfield__input:after {
+            background-color: #8F979D;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .mdl-button {
+            background-color: #0065A4;
+            color: #fff;
+            border: none;
+            font-size: 14px;
+            width: 120px;
+            height: 50px;
+            margin-top: 20px;
+            padding: 8px;
+            text-transform: capitalize;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        @media only screen and (max-width: 320px) {
+            .login-card {
+                width: 275px;
+            }
+        }
+
+        .successAfterMailDialog {
+            width: 350px;
+            height: 350px;
+
+        }
+
+        .close {
+            margin-left: 330px;
+        }
+
+        .imgSection {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .imgSection .keyImage {
+            margin-top: 35px;
+        }
+
+        .img-margin {
+            margin-top: 35px;
+        }
+
+        #forgotPwdDialog {
+            width: 350px;
+            height: 490px;
+
+        }
+
+        #setPwdDialog {
+            width: 350px;
+            height: 490px;
+
+        }
+
+        #successSetPwdDialog {
+            width: 350px;
+            height: 490px;
+        }
+
+        .mdl-dialog__title {
+
+            font-size: 24px;
+            color: #415C6C;
+            letter-spacing: 0;
+            text-align: center;
+        }
+
+        p {
+            opacity: 0.8;
+            font-size: 12px;
+            color: #8F979D;
+            letter-spacing: 0;
+            text-align: center;
+        }
+
+        .mdl-textfield__label:after {
+            background-color: #8F979D;
+        }
+
+        .mdl-textfield__label:is-focused {
+            background-color: #8F979D;
+            color: #8F979D;
+        }
+
+        .mdl-textfield__input {
+            color: black !important;
+        }
+
+        .mdl-textfield__input:after {
+            background-color: #8F979D;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .mdl-dialog__actions .mdl-button {
+            display: flex;
+            justify-content: center;
+            background-color: #0065A4;
+            font-size: 12px;
+            color: #FFFFFF;
+            margin-right: 114px;
+        }
+    </style>
+</head>
+
+<body>
+<img src="images/Revolution-Retail-Systems-logo_mobile.png" />
+<span class="welcome-message">Welcome back to RRS Customer Portal</span>
+<span class="guideline-message">Please signIn to continue</span>
+<div class="login-card">
+    <form name="f" action="/auth/login" method="POST">
+        <table align="center">
+            <tbody>
+            <tr>
+                <td>
+                    <div th:if="${param.error}">
+                        <span class="mdl-textfield__error">Invalid username or password.</span>
+                    </div>
+                    <div th:if="${param.logout}">
+                        <span class="mdl-textfield__error">You have been logged out.</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="email" name="username" />
+                        <label class="mdl-textfield__label">Email</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="password" id="password"  name="password" />
+                        <label class="mdl-textfield__label">Password</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="action-container" colspan="2">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="submit" >
+                        Sign In
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a id="forgotPwdLink">Forgot Password?</a>
+                </td>
+            </tr>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<dialog id="forgotPwdDialog" class="mdl-dialog">
+    <img class="close" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDYxMiA2MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYxMiA2MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0iY3Jvc3MiPgoJCTxnPgoJCQk8cG9seWdvbiBwb2ludHM9IjYxMiwzNi4wMDQgNTc2LjUyMSwwLjYwMyAzMDYsMjcwLjYwOCAzNS40NzgsMC42MDMgMCwzNi4wMDQgMjcwLjUyMiwzMDYuMDExIDAsNTc1Ljk5NyAzNS40NzgsNjExLjM5NyAgICAgIDMwNiwzNDEuNDExIDU3Ni41MjEsNjExLjM5NyA2MTIsNTc1Ljk5NyAzNDEuNDU5LDMwNi4wMTEgICAgIiBmaWxsPSIjMDA2NWE0Ii8+CgkJPC9nPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="
+    />
+    <span class="imgSection">
+            <img src="images/Revolution-Retail-Systems-logo_mobile.png" />
+            <img class="keyImage" src="images/key.png" />
+        </span>
+    <h4 class="mdl-dialog__title">Forgot Password?</h4>
+    <p>Enter your email to receive your password reset link</p>
+    <div class="mdl-dialog__content">
+        <form name="email" action="/auth/sendemail" method="GET">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="email" name="email" />
+                <label class="mdl-textfield__label">Email</label>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button type="submit" id="sendLinkBtn" name="submit" class="mdl-button">send link</button>
+            </div>
+        </form>
+      </div>
+
+
+</dialog>
+
+<dialog id="successAfterMailDialog" class="mdl-dialog successAfterMailDialog">
+    <img class="close" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDYxMiA2MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYxMiA2MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0iY3Jvc3MiPgoJCTxnPgoJCQk8cG9seWdvbiBwb2ludHM9IjYxMiwzNi4wMDQgNTc2LjUyMSwwLjYwMyAzMDYsMjcwLjYwOCAzNS40NzgsMC42MDMgMCwzNi4wMDQgMjcwLjUyMiwzMDYuMDExIDAsNTc1Ljk5NyAzNS40NzgsNjExLjM5NyAgICAgIDMwNiwzNDEuNDExIDU3Ni41MjEsNjExLjM5NyA2MTIsNTc1Ljk5NyAzNDEuNDU5LDMwNi4wMTEgICAgIiBmaWxsPSIjMDA2NWE0Ii8+CgkJPC9nPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="
+    />
+    <span class="imgSection img-margin">
+            <img src="images/Revolution-Retail-Systems-logo_mobile.png" />
+            <img class="keyImage" src="images/Group.svg" />
+        </span>
+    <h4 class="mdl-dialog__title">Great !</h4>
+    <p>We have sent an email to reset your password</p>
+    <div class="mdl-dialog__content">
+    </div>
+</dialog>
+
+<dialog id="setPwdDialog" class="mdl-dialog">
+    <img class="close" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDYxMiA2MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYxMiA2MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0iY3Jvc3MiPgoJCTxnPgoJCQk8cG9seWdvbiBwb2ludHM9IjYxMiwzNi4wMDQgNTc2LjUyMSwwLjYwMyAzMDYsMjcwLjYwOCAzNS40NzgsMC42MDMgMCwzNi4wMDQgMjcwLjUyMiwzMDYuMDExIDAsNTc1Ljk5NyAzNS40NzgsNjExLjM5NyAgICAgIDMwNiwzNDEuNDExIDU3Ni41MjEsNjExLjM5NyA2MTIsNTc1Ljk5NyAzNDEuNDU5LDMwNi4wMTEgICAgIiBmaWxsPSIjMDA2NWE0Ii8+CgkJPC9nPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="
+    />
+    <span class="imgSection">
+            <img src="images/Revolution-Retail-Systems-logo_mobile.png" />
+            <img class="keyImage" src="images/key.png" />
+        </span>
+    <h4 class="mdl-dialog__title">Set New Password</h4>
+    <p>Please set your password</p>
+    <div class="mdl-dialog__content">
+        <form action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="password" id="newPassword" />
+                <label class="mdl-textfield__label">New Password</label>
+            </div>
+        </form>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" id="setPwdBtn" name="submit" class="mdl-button">Set Password</button>
+    </div>
+</dialog>
+
+<dialog id="successSetPwdDialog" class="mdl-dialog">
+    <img class="close" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDYxMiA2MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYxMiA2MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0iY3Jvc3MiPgoJCTxnPgoJCQk8cG9seWdvbiBwb2ludHM9IjYxMiwzNi4wMDQgNTc2LjUyMSwwLjYwMyAzMDYsMjcwLjYwOCAzNS40NzgsMC42MDMgMCwzNi4wMDQgMjcwLjUyMiwzMDYuMDExIDAsNTc1Ljk5NyAzNS40NzgsNjExLjM5NyAgICAgIDMwNiwzNDEuNDExIDU3Ni41MjEsNjExLjM5NyA2MTIsNTc1Ljk5NyAzNDEuNDU5LDMwNi4wMTEgICAgIiBmaWxsPSIjMDA2NWE0Ii8+CgkJPC9nPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="
+    />
+    <span class="imgSection">
+            <img src="images/Revolution-Retail-Systems-logo_mobile.png" />
+            <img class="keyImage" src="images/Group.svg" />
+        </span>
+    <h4 class="mdl-dialog__title">Great !</h4>
+    <p>Your password has set successfully</p>
+    <p> Please Sign In to continue!</p>
+    <div class="mdl-dialog__content">
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" id="successSetPwdBtn" name="submit" class="mdl-button">Set Password</button>
+
+    </div>
+</dialog>
+
+<script>
+        var forgotPwdDialog = document.querySelector('#forgotPwdDialog');
+        var forgotPwdLink = document.querySelector('#forgotPwdLink');
+        var successAfterMailDialog = document.querySelector('#successAfterMailDialog');
+        var sendLinkBtn = document.querySelector('#sendLinkBtn');
+        var successSetPwdDialog = document.querySelector('#successSetPwdDialog');
+        var setPwdDialog = document.querySelector('#setPwdDialog');
+        var setPwdBtn = document.querySelector('#setPwdBtn');
+        if (!forgotPwdDialog.showModal) {
+            dialogPolyfill.registerDialog(forgotPwdDialog);
+        }
+        forgotPwdLink.addEventListener('click', function () {
+            forgotPwdDialog.showModal();
+        });
+        forgotPwdDialog.querySelector('.close').addEventListener('click', function () {
+            forgotPwdDialog.close();
+        });
+
+        if (!successAfterMailDialog.showModal) {
+            dialogPolyfill.registerDialog(successAfterMailDialog);
+        }
+        sendLinkBtn.addEventListener('click', function () {
+            successAfterMailDialog.showModal();
+            forgotPwdDialog.close();
+        });
+        successAfterMailDialog.querySelector('.close').addEventListener('click', function () {
+            successAfterMailDialog.close();
+        });
+
+        if (!successSetPwdDialog.showModal) {
+            dialogPolyfill.registerDialog(successSetPwdDialog);
+        }
+        setPwdBtn.addEventListener('click', function () {
+            successSetPwdDialog.showModal();
+            setPwdDialog.close();
+        });
+        successSetPwdDialog.querySelector('.close').addEventListener('click', function () {
+            successSetPwdDialog.close();
+        });
+        $(document).ready(function () {
+            $.material.options.autofill = true;
+            $.material.init();
+        });
+    </script>
+</body>
+</html>

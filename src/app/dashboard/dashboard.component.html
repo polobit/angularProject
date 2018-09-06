@@ -1,0 +1,153 @@
+<span class="heading-alert" *ngIf="showAlertsOnly">{{Languages.get('global.alerts', 'upper')}}</span>
+<span class="heading-alert" *ngIf="!showAlertsOnly">{{Languages.get('global.dailyDashboard', 'upper')}}</span>
+<div class="card-container" id="card-container">
+    <!-- Average hour spent onsite -->  
+    <app-dashboard-card 
+        *ngIf="(!showAlertsOnly || averageTimeSpentOnSiteData?.lastUpdatedDayAverage > 2) && hasKpiView('averageHoursSpentOnsite')"
+        [id]="1"
+        link="/averageHours/report"
+        [isLoaded]="averageTimeSpentOnSiteData !== undefined"
+        [isAlert]="averageTimeSpentOnSiteData?.lastUpdatedDayAverage !== 0 && averageTimeSpentOnSiteData?.lastUpdatedDayAverage > 2"
+        [title]="Languages.get('kpi.averageNumberOfHoursOnSite', 'start')"
+        [lastUpdated]="averageTimeSpentOnSiteData?.lastUpdatedDate"
+        [kpiUnit]="Languages.get('global.hours', 'upper')"
+        [kpiValue]="averageTimeSpentOnSiteData?.lastUpdatedDayAverage === 0 ? notAvailable : averageTimeSpentOnSiteData?.lastUpdatedDayAverage"
+        [previousAverage]="averageTimeSpentOnSiteData?.previousDayAverage"
+        [previousAverageUnit]="Languages.get('global.hours', 'start')"
+        [percentageChange]="averageTimeSpentOnSiteData?.percentageChange"
+        [previousDayDate]="averageTimeSpentOnSiteData?.previousDayDate">
+    </app-dashboard-card>
+    <!-- High frequency -->
+    <app-dashboard-card
+        *ngIf="(!showAlertsOnly || highFrequencyDispatchStoresData?.cases > 2) && hasKpiView('highFrequencyDispatch')"
+        [id]="2"
+        link="/high-frequency-stores"
+        [isLoaded]="highFrequencyDispatchStoresData !== undefined"
+        [isAlert]="highFrequencyDispatchStoresData?.cases > 2"
+        [lastUpdated]="highFrequencyDispatchStoresData?.caseDate"
+        [title]="Languages.get('kpi.highFrequencyDispatch', 'start') "
+        [kpiValue]="highFrequencyDispatchStoresData?.totalCases"
+        [kpiUnit]="Languages.get('global.stores', 'start')">
+    </app-dashboard-card>
+    <!-- Cases by hour -->
+    <app-dashboard-card 
+        *ngIf="!showAlertsOnly && hasKpiView('casesByHour')"
+        [id]="3"
+        link="/casesByHour"
+        [isLoaded]="casesByHourData !== undefined"
+        [isAlert]="false"
+        [title]="Languages.get('kpi.casesByHour', 'start')"
+        [lastUpdated]="casesByHourData?.caseDate"
+        [kpiUnit]="Languages.get('global.cases', 'upper')"
+        [kpiValue]="casesByHourData?.totalCases">
+    </app-dashboard-card>
+    <!-- First Time Fix -->
+    <app-dashboard-card
+        *ngIf="(!showAlertsOnly || firstTimeFixIsAlertValidation(firstTimeFixData, AppConfiguration.firstTimeFix.alertTarget))
+        && hasKpiView('firstTimeFix')"
+        id="firstTimeFix"
+        link="/first-time-fix"
+        [isLoaded]="firstTimeFixData !== undefined"
+        [isAlert]="firstTimeFixIsAlertValidation(firstTimeFixData, AppConfiguration.firstTimeFix.alertTarget)"
+        [title]="Languages.get('kpi.firstTimeFix', 'start')"
+        [lastUpdated]="firstTimeFixData?.latestDate"
+        [kpiUnitType]="'percentage'"
+        [kpiValue]="(firstTimeFixData?.latestPercentage === '0.00' && firstTimeFixData?.total === 0) ? notAvailable : firstTimeFixData?.latestPercentage"
+        [previousAverage]="firstTimeFixData?.earlierPercentage"
+        [percentageChange]="firstTimeFixData?.percentageChange"
+        [previousAverageUnit]="Languages.get('global.percentUnit')"
+        [previousDayDate]="firstTimeFixData?.earlierDate">
+    </app-dashboard-card>
+    <!-- Onsite time spent -->
+    <app-dashboard-card
+        *ngIf="!showAlertsOnly && hasKpiView('casesByOnsiteHours')"
+        [class.column-1]="!showAlertsOnly"
+        [id]="4"
+        link="/onsitetime/1"
+        [isAlert]="false"
+        [isLoaded]="onSiteTimeSpentData !== undefined"
+        [lastUpdated]="onSiteTimeSpentData?.caseDate"
+        [title]="Languages.get('kpi.onSiteTimeSpent', 'start') + '<br>' + Languages.get('filter.0-2hrs')"
+        [kpiValue]="onSiteTimeSpentData?.zeroToTwoHoursCases"
+        [kpiUnit]="Languages.get('global.cases', 'start')">
+    </app-dashboard-card>
+    <app-dashboard-card
+        *ngIf="(!showAlertsOnly || onSiteTimeSpentData?.twoToFourHoursCases > 0) && hasKpiView('casesByOnsiteHours')"
+        [id]="5"
+        link="/onsitetime/2"
+        [isAlert]="onSiteTimeSpentData?.twoToFourHoursCases > 0"
+        [alternativeAlertColor]="AppConfiguration.onSiteTime.warningCardColor"
+        [isLoaded]="onSiteTimeSpentData !== undefined"
+        [lastUpdated]="onSiteTimeSpentData?.caseDate"
+        [title]="Languages.get('kpi.onSiteTimeSpent', 'start') + '<br>' + Languages.get('filter.2-4hrs')"
+        [kpiValue]="onSiteTimeSpentData?.twoToFourHoursCases"
+        [kpiUnit]="Languages.get('global.cases', 'start')">
+    </app-dashboard-card>
+    <app-dashboard-card
+        *ngIf="(!showAlertsOnly || onSiteTimeSpentData?.fourToTwelveHoursCases > 0) && hasKpiView('casesByOnsiteHours')"
+        [id]="6"
+        link="/onsitetime/3"
+        [isAlert]="onSiteTimeSpentData?.fourToTwelveHoursCases > 0 "
+        [isLoaded]="onSiteTimeSpentData !== undefined"
+        [lastUpdated]="onSiteTimeSpentData?.caseDate"
+        [title]="Languages.get('kpi.onSiteTimeSpent', 'start') + '<br>' + Languages.get('filter.4-12hrs')"
+        [kpiValue]="onSiteTimeSpentData?.fourToTwelveHoursCases"
+        [kpiUnit]="Languages.get('global.cases', 'start')">
+    </app-dashboard-card>
+    <app-dashboard-card
+        *ngIf="(!showAlertsOnly || onSiteTimeSpentData?.twelveToTwentyFourHoursCases > 0) && hasKpiView('casesByOnsiteHours')"
+        [id]="7"
+        link="/onsitetime/4"
+        [isAlert]="onSiteTimeSpentData?.twelveToTwentyFourHoursCases > 0"
+        [isLoaded]="onSiteTimeSpentData !== undefined"
+        [lastUpdated]="onSiteTimeSpentData?.caseDate"
+        [title]="Languages.get('kpi.onSiteTimeSpent', 'start') + '<br>' + Languages.get('filter.12-24hrs')"
+        [kpiValue]="onSiteTimeSpentData?.twelveToTwentyFourHoursCases"
+        [kpiUnit]="Languages.get('global.cases', 'start')">
+    </app-dashboard-card>
+    <!-- Cases by area -->
+    <ng-container *ngFor="let area of AppConfiguration.casesByArea.areas; let i = index">
+        <app-dashboard-card
+            *ngIf="(!showAlertsOnly || casesByAreaData[i]?.percentageChange > area.averageTarget) && hasKpiView('casesByArea')"
+            [class.column-1]="i === 0 && !showAlertsOnly"
+            [id]="i + 8"
+            [link]="'/casesByArea/' + area.name"
+            [isLoaded]="casesByAreaData[i] !== undefined"
+            [isAlert]="casesByAreaData[i]?.percentageChange > area.averageTarget"
+            [title]="Languages.get('kpi.numberOfCases', 'start')+ '<br>' + Languages.get('filter.' + area.name, 'capitalizeFirst')"
+            [lastUpdated]="casesByAreaData[i]?.lastUpdatedDate"
+            [kpiUnit]="Languages.get('global.cases', 'upper')"
+            [kpiValue]="casesByAreaData[i]?.lastUpdatedDayAverage"
+            [previousAverage]="casesByAreaData[i]?.previousDayAverage"
+            [previousAverageUnit]="Languages.get('global.cases', 'start')"
+            [percentageChange]="casesByAreaData[i]?.percentageChange"
+            [previousDayDate]="casesByAreaData[i]?.previousDayDate">
+        </app-dashboard-card>
+    </ng-container>
+    <!-- SLA -->
+    <ng-container *ngFor="let zone of AppConfiguration.casesByZones.zones; let i = index">
+        <app-dashboard-card
+            *ngIf="(!showAlertsOnly || slaIsAlertValidation(casesBySLAData[i], zone.averageTarget) )
+            && hasKpiView('serviceLevelAgreement')"
+            [class.column-1]="i === 0 && !showAlertsOnly"
+            [id]="i + 8"
+            [link]="'/sla/' + zone.apiKey"
+            [isLoaded]="casesBySLAData[i] !== undefined"
+            [isAlert]="slaIsAlertValidation(casesBySLAData[i], zone.averageTarget)"
+            [title]="Languages.get('kpi.serviceLevelAgreement', 'start')+ '<br>' +  Languages.get('filter.' + zone.key, 'capitalizeFirst')"
+            [lastUpdated]="casesBySLAData[i]?.lastUpdatedDate"
+            [kpiUnitType]="'percentage'"
+            [kpiValue]="(casesBySLAData[i]?.lastUpdatedDayAverage === 0 && casesBySLAData[i]?.total === 0) ? notAvailable : casesBySLAData[i]?.lastUpdatedDayAverage"
+            [previousAverage]="casesBySLAData[i]?.previousDayAverage"
+            [previousAverageUnit]="Languages.get('global.percentUnit')"
+            [percentageChange]="casesBySLAData[i]?.percentageChange"
+            [previousDayDate]="casesBySLAData[i]?.previousDayDate">
+        </app-dashboard-card>
+    </ng-container>
+</div>
+<div class="no-alerts" *ngIf="noAlerts && isDashboardLoaded">
+    <div>{{Languages.get('global.noAlerts', 'start')}}</div>
+    <button routerLink="/dashboard" mat-button mat-raised-button color="primary">
+        {{Languages.get('global.showDashboard', 'start')}}
+    </button>
+</div>

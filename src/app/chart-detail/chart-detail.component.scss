@@ -1,0 +1,344 @@
+@import '../app.common';
+
+$content-padding-top: 10px;
+$content-padding-bottom: 15px;
+$content-padding-left: 10px;
+$content-padding-right: 13px;
+
+$content-item-height: 64px;
+
+$dialog-max-height: 80vh;
+$dialog-max-width: 90vw;
+$dialog-header-height: 64px;
+
+:host /deep/ .chart-detail-dialog {
+    &.cdk-overlay-pane {
+        @include desktop-only {
+            display: none;
+        }
+    }
+    /deep/ .mat-dialog-container {
+        padding: 0;
+        overflow: hidden;
+        max-height: $dialog-max-height;
+        .chart-detail-container {
+            /deep/ .mat-expansion-panel-header-title {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                .machine-details {
+                    font-size: 14px !important;
+                    color: #a37759 !important;
+                }
+            }
+            .mat-expansion-panel-body {
+                max-height: calc(#{$dialog-max-height} - #{$dialog-header-height} - #{$content-padding-top} - #{$content-padding-bottom});
+                overflow-y: auto;
+            }
+        }
+    }
+}
+
+.chart-detail-container {
+    /deep/ .mat-expansion-panel-header-title {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        .machine-details {
+            font-size: 14px !important;
+            color: #a37759 !important;
+        }
+    }
+    /deep/ .mat-expansion-panel-body {
+        padding: $content-padding-top $content-padding-right $content-padding-bottom $content-padding-left;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+}
+
+.chart-data {
+    min-width: 400px;
+    @include tablet {
+        display: none;
+    }
+    .close-button {
+        @include desktop-only {
+            display: none;
+        }
+    }
+    .mat-expansion-panel-header-description {
+        float: right;
+        margin-left: 100px;
+    }
+}
+
+.value-box {
+    text-align: center;
+    border-radius: 4px;
+    color: #fff;
+    min-width: 80px;
+    display: flex;
+    justify-content: center;
+    @include desktop-only {
+        padding: 5px;
+    }
+    p {
+        margin: 5px;
+    }
+    div {
+        width: 100%;
+        padding: 7px;
+        margin: 0px;
+    }
+    .phonefix-box {
+        background: #92D963;
+        border-radius: 4px 0 0 4px;
+    }
+    .dispatch-box {
+        background: #4A4A4A;
+        border-radius: 0 4px 4px 0;
+    }
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid rgb(226, 224, 224);
+    margin: 1em 0;
+    padding: 0;
+}
+
+.accordion-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    @include tablet {
+        display: none;
+    }
+    .title-box {
+        margin-right: 20px;
+        .title {
+            text-align: left;
+            margin: 0;
+            font-size: 18px;
+            color: mat-color($app-primary, 500);
+        }
+        .subtitle {
+            float: left;
+            margin: 0;
+            font-size: 13px;
+            color: mat-color($mat-grey, 500);
+        }
+    }
+}
+
+.mat-expansion-panel-header,
+.mat-expansion-panel-header[aria-disabled='true'],
+.mat-expansion-panel-header.mat-expanded:hover,
+.mat-expansion-panel-header.mat-expanded:focus {
+    background-color: mat-color($mat-grey, 200);
+    color: black;
+    padding: 0 14px;
+}
+
+.mat-expansion-panel-header-description {
+    flex-grow: 0;
+}
+
+::content .mat-expansion-panel {
+    background-color: mat-color($mat-grey, 50);
+    /deep/ .mat-expansion-panel-content {
+        height: 100%;
+        overflow-y: auto;
+        .mat-list {
+            padding-top: 0;
+            overflow: hidden;
+            #zone-details{
+                .mat-list-item-content{
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 14px;
+                    .label{
+                        display: flex;
+                        align-content: center;
+                        width: 50%;
+                        /deep/ .circle {
+                            width: 0.515em;
+                            height: 0.515em;
+                            border-radius: 0.35em;
+                            margin-right: 0.4em;
+                            margin-top: 0.40em;
+                            @include phone-only {
+                                margin-top: 0.15em;
+                            }
+                        }
+                    }
+                }
+            }
+            .mat-list-item {
+                .value {
+                    text-align: center;
+                    border-radius: 4px;
+                    h4 {
+                        font-size: 15px;
+                        color: mat-color($app-toolbar-palette, 50);
+                        margin: 0 0.5em 0 0.5em;
+                        white-space: nowrap;
+                        padding: 2px;
+                        min-width: 65px;
+                    }
+                }
+
+                .case-type-box {
+                    border: 1px solid rgba(77, 77, 78, 0.67);
+                    text-align: center;
+                    border-radius: 4px;
+                    color: rgba(77, 77, 78, 0.67);
+                    min-width: 55px;
+                    font-size: 10px;
+                    padding: 0;
+                    margin: 0 0 0 5px;
+                    span {
+                        padding-top: 2px;
+                        display: block;
+                    }
+                }
+                &:not(:last-child) {
+                    border-bottom: 1px solid mat-color($mat-grey, 300);
+                    padding-bottom: 4px;
+                }
+                &:not(:first-child) {
+                    padding-top: 10px;
+                }
+                &.mat-3-line {
+                    height: auto;
+                    .mat-list-item-content {
+                        height: auto;
+                        min-height: $content-item-height;
+
+                        &:not(:last-child) {
+                            border-bottom: 1px solid mat-color($mat-grey, 300);
+                            //  padding-bottom: 10px;
+                        }
+
+                        padding: 0;
+                        align-items: flex-start;
+                        .mat-list-text {
+                            p {
+                                &.desc-line-one {
+                                    color: mat-color($mat-red, 600);
+                                    font-size: 0.7rem;
+                                    &.location {
+                                        padding-left: 10px;
+                                        &:before {
+                                            font-family: "Material Icons";
+                                            content: '\E0C8';
+                                            font-size: 0.9rem;
+                                            float: left;
+                                            margin-left: -10px;
+                                            margin-right: 4px;
+                                        }
+                                    }
+                                }
+                                &.desc-line-two {
+                                    color: mat-color($mat-grey, 500);
+                                    font-size: 0.6rem;
+                                }
+                                &.desc-line-three {
+                                    color: mat-color($mat-grey, 700);
+                                    font-size: 0.7rem;
+                                }
+                            }
+                            .location ~ p {
+                                padding-left: 19px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.on-site-detail-panel {
+        /deep/ .mat-expansion-panel-content {
+            .mat-expansion-panel-body {
+                padding: 0;
+            }
+            .mat-list {
+                .mat-list-item {
+                    padding: 0;
+                }
+                .container {
+                    font-size: 14px;
+                    @include phone-only {
+                        font-size: 13px;
+                    }
+                    width: 100%;
+                    .circle {
+                        width: 0.715em;
+                        height: 0.715em;
+                        border-radius: 0.35em;
+                        margin-right: 0.4em;
+                        @include phone-only {
+                            margin-top: 0.15em;
+                        }
+                    }
+                    .mat-grid-tile:first-child .mat-figure {
+                        justify-content: flex-start;
+                    }
+                    .mat-grid-tile:last-child .mat-figure {
+                        justify-content: flex-end;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mat-list-item {
+    #weekday {
+        font-size: 13px;
+    }
+    #dayData {
+        font-size: 12px;
+        color: rgba(77, 77, 78, 0.67);
+        min-width: 58px;
+        margin: 0 0 0 5px;
+        width: 150px;
+        text-align: right;
+    }
+}
+
+.mat-list-item {
+    #line-one {
+        color: mat-color($mat-red, 600);
+        font-size: 0.7rem;
+    }
+    #line-two {
+        color: mat-color($mat-grey, 500);
+        font-size: 0.7rem;
+        .inner-line-two {
+            color: mat-color($mat-grey, 700);
+        }
+    }
+    #line-three {
+        color: mat-color($mat-grey, 700);
+        font-size: 0.7rem;
+    }
+    .location {
+        padding-left: 10px;
+        &:before {
+            font-family: "Material Icons";
+            content: '\E0C8';
+            font-size: 0.9rem;
+            float: left;
+            margin-left: -10px;
+            margin-right: 4px;
+        }
+    }
+    .location ~ p {
+        padding-left: 19px;
+    }
+}

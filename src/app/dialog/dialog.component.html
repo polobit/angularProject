@@ -1,0 +1,41 @@
+<div class="dialog-box">
+    <!-- <div class="close-section">
+        <button mat-dialog-close>
+            <mat-icon mat-dialog-close class="mat-18"></mat-icon>
+        </button>
+    </div> -->
+    <div class="dialog-content" [ngClass]="{'save-confirm-box' : isConfirm, 'delete-confirm-box' :  isDeleteConfirm}">
+        <img class="RRSlogo" *ngIf="showLogo" src="assets/images/Revolution-Retail-Systems-logo_mobile.png" />
+        <div class="success-content">
+            <img class="successLogo" src="assets/images/Group.svg" *ngIf="isSuccess" />
+            <span>
+                <mat-icon class="yellow-icon" *ngIf="isConfirm">warning</mat-icon>
+                <mat-icon class="red-icon" *ngIf="isDeleteConfirm">delete</mat-icon>
+            </span>
+            <span class="message-title" *ngIf="messageTitle">
+                {{messageTitle}}
+            </span>
+            <span class="confirm-title" *ngIf="confirmTitle">
+                {{confirmTitle}}
+            </span>
+            <span class="message-content" *ngIf="messageContent">
+                {{messageContent}}
+            </span>
+            <span class="message-content" *ngIf="isDeleteConfirm">
+                <p>{{userName}}</p>
+                <p>{{userEmail}}</p>              
+            </span>
+        </div>
+        <a href="{{authUrl}}" *ngIf="isLoginRedirect">
+            <button mat-raised-button mat-dialog-close color="primary">Sign In</button>
+        </a>
+        <button mat-raised-button mat-dialog-close *ngIf="isLogout" color="primary" (click)="LogOut()">Sign In</button>
+
+        <button class="closeBtn" mat-raised-button mat-dialog-close color="primary" *ngIf="isCloseDialog">Close</button>
+        <span class="confirmation-btn-section" *ngIf="isConfirm || isDeleteConfirm">
+            <button mat-button mat-dialog-close color="primary" (click)="onConfirm()" *ngIf="isConfirm">Yes</button>
+            <button mat-button mat-dialog-close color="warn" (click)="onConfirm()" *ngIf="isDeleteConfirm">Yes</button>
+            <button mat-button mat-dialog-close>No</button>
+        </span>
+    </div>
+</div>

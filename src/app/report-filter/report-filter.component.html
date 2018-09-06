@@ -1,0 +1,16 @@
+<div class="report-type">
+  <mat-form-field class="report-name">
+      <mat-select placeholder="{{Languages.get('filter.reportType', 'upper')}}"
+                  [(value)]="selectedReport" (change)="change(selectedReport)">
+          <!-- <mat-option *ngFor="let report of reportList" [value]="report.route">
+            {{ reportlabel ===  Languages.get('filter.' + report.label, 'start') ? Languages.get('filter.' + report.label, 'start')}}
+          </mat-option> -->
+          <mat-option [value]="'user-exp'" *ngIf="reportlabeluser"> 
+              {{ Languages.get('filter.userExperience' , 'start')}}
+          </mat-option>
+          <mat-option [value]="'intervention'" *ngIf="reportlabeldriver">
+              {{Languages.get('filter.interventionDriver' , 'start')}}
+          </mat-option>
+      </mat-select>
+  </mat-form-field>
+</div>

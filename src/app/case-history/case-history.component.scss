@@ -1,0 +1,190 @@
+@import '../app.common';
+.card {
+    margin: 15px;
+    padding: 15px;
+    min-height: 500px;
+    .container {
+        width: 100%;
+        overflow: hidden;
+        .heading-container {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            @include phone {
+                padding: 0 0 10px 0;
+            }
+            .heading {
+                font-size: 21px;
+                color: #000;
+                text-align: left;
+                @include phone {
+                    font-size: 15px;
+                }
+            }
+            .separator {
+                width: 0;
+                border: 0.5px solid #979797;
+                height: 25px;
+                margin: 0 10px;
+            }
+            .mat-icon {
+                color: #008000;
+                font-size: 20px;
+                height: 20px;
+            }
+            .location {
+                @include phone {
+                    font-size: 12px;
+                }
+            }
+        }
+        .detail-section {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            @include phone {
+                margin-left: -10px;
+            }
+            @include phone-small {
+                flex-direction: column;
+                align-items: center;
+            }
+            .img-container {
+                img {
+                    width: 170px;
+                    height: 180px;
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    @include tablet {
+                        height: 230px;
+                    }
+                    @include phone {
+                        width: 95px;
+                        height: 120px;
+                        padding: 0;
+                    }
+                    @include phone-small {
+                        width: 130px;
+                        height: auto;
+                    }
+                }
+            }
+            .detail-container {
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+                @include laptop {
+                    width: 75%;
+                }
+                @include tablet {
+                    width: 70%;
+                }
+                @include phone {
+                    width: 58%;
+                }
+                @include phone-small {
+                    width: auto;
+                }
+                .machine-name {
+                    font-size: 21px;
+                    color: #E43232;
+                    margin-bottom: 30px;
+                    @include phone {
+                        font-size: 18px;
+                        margin-bottom: 5px;
+                    }
+                }
+                .machine-detail {
+                    display: flex;
+                    @include phone {
+                        flex-direction: column;
+                    }
+                    .gauge-chart {
+                        margin-right: 5%;
+                    }
+                    .detail-wrapper {
+                        display: flex;
+                        justify-content: space-around;
+                        width: 100%;
+                        flex-direction: column;
+                        @include phone {
+                            margin-left: -60%;
+                        }
+                        @include phone-small {
+                            margin-left: -12%;
+                        }
+                        .row-wrapper {
+                            display: flex;
+                            @include laptop {
+                                flex-direction: column;
+                            }
+                            .detail-row {
+                                display: flex;
+                                @include laptop {
+                                    margin-bottom: 15px;
+                                }
+                                @include phone-small {
+                                    margin: 0px;
+                                    flex-direction: column;
+                                }
+                                .details {
+                                    display: flex;
+                                    flex-direction: column; // padding: 0 15px;
+                                    min-width: 200px;
+                                    margin-right: 15px;
+                                    @include tablet {
+                                        min-width: 138px;
+                                    }
+                                    @include phone {
+                                        margin-top: 10px;
+                                        min-width: 150px;
+                                    }
+                                    @include phone-small {
+                                        margin-top: 15px;
+                                        min-width: 175px;
+                                    }
+                                    .heading {
+                                        font-size: 11px;
+                                        color: rgba(77, 77, 78, 0.6);
+                                    }
+                                    .value {
+                                        color: #333333;
+                                        font-size: 12px;
+                                        display: flex;
+                                        justify-content: space-between;
+                                        width: 85%;
+                                        flex-wrap: wrap;
+                                        .total {
+                                            font-weight: bold;
+                                        }
+                                        // .bnr {
+                                        //     color: #0E8127;
+                                        // }
+                                        // .bcr {
+                                        //     color: #D8A11F;
+                                        // }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .view-history {
+            display: none;
+            button {
+                border-radius: 25px;
+                height: 30px;
+                width: 130px;
+                line-height: 10px;
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+            @include phone {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+}

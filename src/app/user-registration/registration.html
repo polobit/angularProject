@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <META HTTP-EQUIV="REFRESH" CONTENT="csrf_timeout_in_seconds" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" type="text/css" href="dialog-polyfill.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/scripts.js"></script>
+
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+
+        body {
+            background-color: #f0fafe;
+            font-family: "Helvetica Neue", sans-serif;
+            padding-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .welcome-message {
+            margin: 15px 0 5px 0;
+            font-size: 16px;
+            font-weight: 100;
+            color: #718c9d;
+            font-family: Roboto-Light, "Helvetica Neue", sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .guideline-message {
+            font-size: 12px;
+            font-weight: 100;
+            color: #8F979D;
+            font-family: Roboto-Light, "Helvetica Neue", sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .login-card {
+            height:60%;
+            width: 50%;
+            border-radius: 4px;
+            background-color: #fff;
+            margin: 20px 0;
+            padding: 15px;
+            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+            /* display: flex;
+            flex-wrap: wrap; */
+        }
+
+        .mdl-textfield__input {
+            color: black;
+        }
+
+        .left-side {
+
+            float: left;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+
+        .right-side {
+
+            float: right;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        /* .left-side div {
+            display: block;
+        }
+        .right-side div {
+            display: block;
+        } */
+
+        .sign-up {
+            color: #1266a5;
+        }
+
+        .forgotten-button {
+            font-size: 15px;
+            color: grey;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #1266a5;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .sign-up-section {
+            background-color: white;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .action-container {
+            display: flex;
+            justify-content: flex-end;
+
+        }
+
+        .mdl-button {
+            background-color: #0065A4;
+            color: #fff;
+            border: none;
+            font-size: 14px;
+            width: 215px;
+            height: 35px;
+            margin-top: 20px;
+            text-transform: capitalize;
+            top: 350px;
+        }
+
+        /* table td {
+            color: white;
+        } */
+
+        /* div p {
+            text-align: center;
+        } */
+
+        input {
+            width: 95%;
+            height: 40px;
+            margin: 5px 0 10px 0;
+            background-color: #EFF4F6;
+            border: none;
+            font-size: 13px;
+            padding-left: 15px;
+            outline: none;
+        }
+
+        .input-label {
+            font-family: "Helvetica Neue", sans-serif;
+            font-size: 12px;
+            color: #7F7F7F;
+            letter-spacing: 0;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        input[type=submit] {
+            background-color: #39B54A;
+            color: #fff;
+            width: 150px;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 8px;
+        }
+
+        p {
+            color: #aaa;
+            font-size: 15px;
+            padding: 0px;
+        }
+
+        .sign-up-section {
+            padding-top: 20px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        @media only screen and (max-width: 1024px) {
+            .login-card {
+                width: auto;
+                height:auto;
+            }
+        }
+
+        @media only screen and (max-width: 425px) {
+        }
+    </style>
+</head>
+
+<body>
+
+    <img src="images/Revolution-Retail-Systems-logo_mobile.png" />
+
+    <!-- image link would be available at hosting location -->
+    <span class="welcome-message">Welcome back to RRS Customer Portal</span>
+    <span class="guideline-message">Please signIn to continue</span>
+    <div class="login-card">
+        <form name="f" action="/auth/login" method="POST">
+
+            <div class="left-side">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" name="firstname" />
+                    <label class="mdl-textfield__label">First Name</label>
+                </div>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="email" name="username" />
+                    <label class="mdl-textfield__label">Email</label>
+                </div>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" name="phNumber" />
+                    <label class="mdl-textfield__label">Phone number</label>
+                </div>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="password" id="password" name="password" />
+                    <label class="mdl-textfield__label">Password</label>
+                </div>
+
+            </div>
+            <div class="right-side">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" name="lastname" />
+                    <label class="mdl-textfield__label">Last Name</label>
+                </div>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" name="jobTitle" />
+                    <label class="mdl-textfield__label">Job Title</label>
+                </div>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" name="location" />
+                    <label class="mdl-textfield__label">Location</label>
+                </div>
+
+            </div>
+            <br>
+            <div class="action-container" colspan="2">
+
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="submit">
+                    Sign Up
+                </button>
+            </div>
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+        </form>
+    </div>
+</body>
+
+</html>

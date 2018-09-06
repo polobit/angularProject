@@ -1,0 +1,88 @@
+<mat-card class="card"
+          [routerLink]="link"
+          [class.red]="isAlert"
+          [class.green]="!isAlert || isGreenCircle">
+    <mat-card-header>
+        <mat-card-title>
+            <ng-container *ngFor="let subtitle of title.split('<br>'); let i = index">{{subtitle}}<br
+                *ngIf="i + 1 < title.split('<br>').length"></ng-container>
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{Languages.get('global.lastUpdated', 'start')}}: {{lastUpdated ?
+            moment(lastUpdated,
+            AppConfiguration.global.apiTimeFormat).format(AppConfiguration.global.displayTimeFormat) :
+            Languages.get('global.na', 'upper')}}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content *appLoading="isLoaded">
+        <ng-container *ngIf="kpiValue !== null && kpiValue !== undefined; else noData">
+            <div class="circle-container">
+                <div class="circle-component"
+                     [class.red]="isAlert"
+                     [class.green]="!isAlert || isGreenCircle"
+                     [style.color]="alternativeColor && !isAlert ? alternativeColor : alternativeAlertColor && isAlert ? alternativeAlertColor : ''">
+                    <h1 id="{{title}}_Value">{{kpiValue === '0.00' ? 0 : kpiValue}}<span *ngIf="kpiUnitType === 'percentage' && kpiValue !== 'NA'">%</span></h1>
+                    <p *ngIf="kpiValue !== 'NA'">{{kpiUnit}}</p>
+                    <!-- <div class="circle-text color-light-grey">
+                        <mat-icon>warning</mat-icon>
+                        <p>{{averageTimeSpentOnSiteData.percentageChange}}%</p>
+                    </div>
+                    <span class="font-size-11 color-light-grey">above target</span> -->
+                </div>
+            </div>
+            <div class="bottom-card-section"
+                 *ngIf="isNumber(previousAverage) && kpiValue !== 'NA'">
+                <div class="change-indicator"
+                     *ngIf="percentageChange && !isGreen"
+                     [class.red]="percentageChange > 0 "
+                     [class.green]="percentageChange < 0">
+                    <mat-icon *ngIf="toNumber(percentageChange) !== 0">
+                        {{toNumber(percentageChange) <= 0 ? 'arrow_drop_down' : 'arrow_drop_up' }}
+                    </mat-icon>
+                    <span>{{round(percentageChange, 0)}}%</span>
+                </div>
+                <div class="change-indicator"
+                     *ngIf="percentageChange && isGreen"
+                     [class.red]="percentageChange < 0 "
+                     [class.green]="percentageChange > 0">
+                    <mat-icon *ngIf="toNumber(percentageChange) !== 0">
+                        {{toNumber(percentageChange) <= 0 ? 'arrow_drop_down' : 'arrow_drop_up'}}
+                    </mat-icon>
+                    <span>{{round(percentageChange, 0)}}%</span>
+                </div>
+                <div class="color-light-grey grey-section">
+                    <span>&nbsp;{{Languages.get('global.from')}}&nbsp;</span>
+                    <span class="color-dark-grey font-bold">
+                        {{round(previousAverage, 2)}}
+                        <!-- <span *ngIf="kpiUnitType === 'percentage'">%</span>  -->
+                        {{previousAverageUnit}}
+                    </span>
+                </div>
+                <div class="color-light-grey grey-section" *ngIf="previousDayDate">
+                        <span>&nbsp;{{Languages.get('global.on')}}&nbsp;{{moment(previousDayDate, AppConfiguration.global.apiTimeFormat)
+                            .format(AppConfiguration.global.displayTimeFormat)}}</span>
+                </div>
+            </div>
+        </ng-container>
+    </mat-card-content>
+</mat-card>
+
+<ng-template #noData>
+    <div class="no-data-section">
+        <h3 class="mt-20">
+            {{Languages.get('global.noData', 'start')}}
+        </h3>
+    </div>
+</ng-template>
+
+<ng-template #today>
+    <div class="color-light-grey date-section mt-20 color-dark-grey font-bold">
+        <span>
+            <mat-icon>today</mat-icon>
+        </span>
+        <span>
+            {{moment().format('ll')}}
+            <!-- {{moment().add(-1, 'day').format('ll')}} -->
+        </span>
+    </div>
+</ng-template>

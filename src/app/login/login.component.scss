@@ -1,0 +1,493 @@
+@import '../app.common';
+$roboto-thin: Roboto-Thin,
+"Helvetica Neue",
+sans-serif;
+.heading-text {
+    font-family: $roboto-thin;
+    font-size: 42px;
+    color: #105AA0;
+    font-weight: 300;
+    @include phone {
+        font-size: 30px;
+    }
+}
+
+.thin-font {
+    letter-spacing: 0.4px;
+    font-family: $roboto-thin;
+    font-weight: 300;
+}
+
+.signin-section {
+    background-size: cover;
+    height: 660px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 100px;
+    @include tablet {
+        background-position-x: -100px;
+    }
+    @include phone {
+        background-image: url('../../assets/images/landing-page/mobile/Banner-Image.png');
+        background-position-x: 0;
+        padding-left: 12px;
+        height: 550px;
+        align-items: flex-end;
+        justify-content: center;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        .title {
+            font-size: 20px;
+            color: #888;
+            margin-bottom: 10px;
+            margin-left: 1px;
+            @include phone {
+                font-size: 10px;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.10);
+                font-weight: 500;
+            }
+        }
+        .heading {
+            font-size: 36px;
+            color: #0065A4;
+            font-family: Roboto-Black, "Helvetica Neue", sans-serif;
+            font-weight: bold;
+            margin-bottom: 5px;
+            @include phone {
+                font-size: 18px;
+            }
+        }
+        .description {
+            opacity: 0.7;
+            font-size: 20px;
+            color: #0065A4;
+            margin-left: 1px;
+            @include phone {
+                font-size: 10px;
+                font-weight: 500;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.10);
+            }
+        }
+        .signin-container {
+            margin-top: 50px;
+            @include phone {
+                margin: 30px 0;
+            }
+            .mat-button {
+                width: 150px;
+                height: 42px;
+                border-radius: 100px;
+                margin-right: 20px;
+                @include phone {
+                    width: 125px;
+                    height: 36px;
+                    font-size: 10px;
+                }
+            }
+            .get-access-btn {
+                background-color: #0065A4;
+                color: #fff;
+            }
+            .signin-btn {
+                border: 1px solid #0065A4;
+                color: #0065A4;
+            }
+        }
+    }
+}
+
+.customer-section {
+    background-color: #F5F8FC;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include phone {
+        height: 400px;
+    }
+    .container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        @include phone {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .heading {
+            display: flex;
+            flex-direction: column;
+            padding-left: 200px;
+            width: 30%;
+            @include tablet {
+                padding-left: 50px;
+                width: 50%;
+            }
+            @include phone {
+                width: auto;
+                padding-left: 10px;
+            }
+        }
+        .divider {
+            border-right: 1px solid #ccc;
+            height: 300px;
+            margin: 0px 60px;
+        }
+        .description {
+            display: flex;
+            align-items: center;
+            padding: 0 175px 0 20px;
+            font-size: 20px;
+            color: #30383F;
+            width: 30%;
+            @include tablet {
+                padding: 0 50px 0 20px;
+                width: 50%;
+            }
+            @include phone {
+                width: auto;
+                padding: 20px 10px;
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+.executive-section {
+    background-color: #FAFAFD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 100px 100px 0 100px;
+        @include laptop {
+            padding: 100px 0 0 0;
+        }
+        @include phone {
+            padding: 100px 0;
+        }
+        img {
+            width: 100%;
+        }
+        .heading {
+            margin-bottom: 20px;
+        }
+        .description {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            color: #30383F;
+            text-align: center;
+            padding: 0 15px;
+            @include phone {
+                font-size: 15px;
+                padding: 10px;
+            }
+        }
+        .customer-list {
+            display: flex;
+            justify-content: center;
+            @include tablet {
+                margin: 0;
+            }
+            @include phone {
+                flex-direction: column;
+            }
+            .customer-wrapper {
+                display: flex;
+                .mat-card {
+                    background-color: #fff;
+                    width: 200px;
+                    height: 200px;
+                    margin: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    @include laptop {
+                        width: 165px;
+                        height: 165px;
+                    }
+                    @include tablet {
+                        width: 100px;
+                        height: 100px;
+                    }
+                    @include phone {
+                        margin: 10px;
+                    }
+                    img {
+                        @include laptop {
+                            width: 165px;
+                        }
+                        @include tablet {
+                            width: 130px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.common-section {
+    background-color: #F5F8FC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 185px;
+        overflow: hidden;
+        @include laptop {
+            padding-left: 60px;
+        }
+        @include phone {
+            flex-direction: column;
+            padding: 70px 0;
+        }
+        .content-wrapper {
+            width: 40%;
+            @include laptop {
+                width: 50%;
+            }
+            @include phone {
+                width: auto;
+                display: flex;
+                flex-direction: column;
+                padding-left: 20px;
+            }
+            .heading {
+                display: flex;
+                margin-bottom: 20px;
+                align-items: center;
+                img {
+                    height: 8px;
+                    margin: 15px;
+                }
+            }
+            .description {
+                display: flex;
+                align-items: center;
+                font-size: 18px;
+                color: #30383F;
+                width: 85%;
+                margin-bottom: 30px;
+                @include phone {
+                    font-size: 15px;
+                    width: auto;
+                    padding-right: 20px;
+                }
+            }
+            .extended-description {
+                margin-bottom: 40px;
+            }
+        }
+        .img-wrapper {
+            width: 60%;
+            @include phone {
+                width: auto;
+            }
+        }
+        .img-align {
+            padding-left: 200px;
+            @include laptop {
+                padding-left: 60px;
+            }
+            @include phone {
+                padding: 0;
+            }
+        }
+    }
+}
+
+.analytics-section {
+    .container {
+        .img-wrapper {
+            img {
+                @include tablet {
+                    margin-left: -20%;
+                }
+                @include phone {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+.mobile-app-section {
+    .container {
+        @include tablet {
+            padding: 0;
+        }
+        @include phone {
+            flex-direction: column-reverse;
+        }
+        .img-wrapper {
+            width: 40%;
+            @include phone {
+                width: auto;
+            }
+        }
+    }
+}
+
+.white-bg {
+    background-color: #fff;
+}
+
+.our-customer-section {
+    .container {
+        .description {
+            margin-bottom: 70px;
+            @include phone {
+                margin-bottom: 40px;
+            }
+        }
+    }
+}
+
+.contact-section {
+    background-color: #1B4A76;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 100px 0;
+        @include phone {
+            width: auto;
+        }
+        .heading {
+            margin-bottom: 20px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+        }
+        .description {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #999;
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        .contact-form {
+            display: flex;
+            justify-content: center;
+            @include tablet {
+                flex-direction: column;
+                align-items: center;
+                width: auto;
+            }
+            .input-section{
+                display:flex;
+                flex-direction: column;
+                input {
+                    background: rgba(255, 255, 255, 0.07);
+                    border: 1px solid rgba(255, 255, 255, 0.20);
+                    border-radius: 100px;
+                    width: 230px;
+                    padding-left: 25px;
+                    height: 40px;
+                    outline: none;
+                    margin: 10px;
+                    color: rgb(221, 203, 203);
+                    // @include phone {
+                    //     width: 90%;
+                    // }
+                }
+                .error-msg {
+                    color: #FF0000;
+                    font-size: 10px;
+                    text-align: center;
+                }
+            }
+            .mat-button {
+                background: #328BDE;
+                border-radius: 100px;
+                color: #fff;
+                width: 150px;
+                height: 43px;
+                margin: 10px;
+                cursor: pointer;
+                @include phone {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.footer-section {
+    .container {
+        height: 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #FAFAFD;
+        padding: 0 100px;
+        @include tablet {
+            flex-direction: column-reverse;
+            padding: 10px;
+        }
+        .copy-right {
+            font-size: 11px;
+            color: #999EA8;
+        }
+        .action {
+            display: flex;
+            align-items: center;
+            @include tablet {
+                padding: 10px;
+                width: 100%;
+                justify-content: space-around;
+            }
+            .footer-menu {
+                display: flex;
+                align-items: center;
+                @include phone {
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+                }
+                .menu-wrapper {
+                    display: flex;
+                    .menu-title {
+                        font-size: 14px;
+                        color: #999EA8;
+                        margin: 0 20px;
+                        @include tablet {
+                            margin: 5px 10px;
+                            min-width: 75px;
+                        }
+                    }
+                }
+            }
+            .mat-button {
+                width: 100px;
+                height: 36px;
+                border-radius: 100px;
+                margin-right: 20px;
+                border: 1px solid #0065A4;
+                color: #0065A4;
+                margin-left: 50px;
+                @include tablet {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

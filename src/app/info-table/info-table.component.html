@@ -1,0 +1,193 @@
+<div class="info-table">
+    <ng-container [ngTemplateOutlet]="infoTable"></ng-container>
+</div>
+<ng-template #infoTable>
+    <div class="card-title" *ngIf="reportType === 'storeDetail'">
+        <span>
+            {{Languages.get('global.successRatioby', 'start')}} {{Languages.get('global.store', 'start')}}
+        </span>
+        <mat-icon color="primary" (click)="onNoClick()" class="close-button">close</mat-icon>
+    </div>
+    <div class="card-title" *ngIf="reportType === 'caseHistory'">
+        <span>
+            {{Languages.get('global.caseHistory', 'start')}}
+        </span>
+        <mat-icon color="primary" (click)="onNoClick()" class="close-button">close</mat-icon>
+    </div>
+    <div class="card-title" *ngIf="reportType === 'interventionByStore'">
+        <span>{{Languages.get('global.interventionCount', 'start')}} {{Languages.get('global.store', 'start')}}</span>
+        <mat-icon color="primary" (click)="onNoClick()" class="close-button">close</mat-icon>
+    </div>
+    <div class="card-title" *ngIf="reportType === 'interventionByUser'">
+        <span> {{Languages.get('global.interventionRatio', 'start')}} {{Languages.get('global.user', 'start')}} </span>
+        <mat-icon color="primary" (click)="onNoClick()" class="close-button">close</mat-icon>
+    </div>
+    <div class="card-title" *ngIf="reportType === 'interventionByTransaction'">
+        <span>{{Languages.get('global.interventionCount', 'start')}} {{Languages.get('global.transDetails', 'start')}}</span>
+        <mat-icon color="primary" (click)="onNoClick()" class="close-button">close</mat-icon>
+    </div>
+    <div class="table-container mat-elevation-z8" *ngIf="reportType === 'storeDetail'">
+        <mat-table #table [dataSource]="data">
+            <div class="table-data">
+                <ng-container matColumnDef="store">
+                    <mat-header-cell *matHeaderCellDef> Store </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.store}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="interventionCount">
+                    <mat-header-cell *matHeaderCellDef> Intervention Count </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.interventionCount}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="financialTransactions">
+                    <mat-header-cell *matHeaderCellDef> Financial Transaction </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.financialTransactions}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="successRatio">
+                    <mat-header-cell *matHeaderCellDef> Success Ratio </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.successRatio | number : '1.2-2'}}% </mat-cell>
+                </ng-container>
+            </div>
+            <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnList;"></mat-row>
+        </mat-table>
+    </div>
+    <div class="table-container mat-elevation-z8" *ngIf="reportType === 'caseHistory'">
+        <mat-table #table [dataSource]="data">
+            <div class="table-data">
+                <ng-container matColumnDef="caseNumber">
+                    <mat-header-cell *matHeaderCellDef> Case No. </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> #{{element.caseNumber}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="caseDate">
+                    <mat-header-cell *matHeaderCellDef> Incident Date</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.caseDate}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="phoneFix">
+                    <mat-header-cell *matHeaderCellDef> Phone Fix</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.phoneFix === true ? 'Yes' : 'No'}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="jobType">
+                    <mat-header-cell *matHeaderCellDef> Job Type </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.jobType}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <mat-header-cell *matHeaderCellDef>Job Type Description </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                    <mat-cell *matCellDef="let element" [ngClass]="{'font-red': element.status === 'Open'}"> {{element.status}} </mat-cell>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="comments">
+                    <mat-header-cell *matHeaderCellDef> Case Details Comments </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.comments}} </mat-cell>
+                </ng-container> -->
+            </div>
+            <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnList;"></mat-row>
+        </mat-table>
+    </div>
+    <!--interventionByStore-->
+    <div class="table-container mat-elevation-z8" *ngIf="reportType === 'interventionByStore'">
+        <mat-table #table [dataSource]="data">
+            <div class="table-data">
+                <ng-container matColumnDef="store">
+                    <mat-header-cell *matHeaderCellDef> Customer </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.store}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="interventionCount">
+                    <mat-header-cell *matHeaderCellDef> Intervention Count </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.interventionCount}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="financialTransactions">
+                    <mat-header-cell *matHeaderCellDef>Financial Transactions</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.financialTransactions}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="successRatio">
+                    <mat-header-cell *matHeaderCellDef> Success Ratio </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.successRatio | number : '1.2-2'}}% </mat-cell>
+                </ng-container>
+            </div>
+            <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnList;"></mat-row>
+        </mat-table>
+    </div>
+
+    <!--interventionByUser-->
+    <div class="table-container mat-elevation-z8" *ngIf="reportType === 'interventionByUser'">
+        <mat-table #table [dataSource]="data">
+            <div class="table-data">
+                <ng-container matColumnDef="user">
+                    <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.user}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="store">
+                    <mat-header-cell *matHeaderCellDef> Store</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.store}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="interventionCount">
+                    <mat-header-cell *matHeaderCellDef> Intervention Count </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.interventionCount}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="financialTransactions">
+                    <mat-header-cell *matHeaderCellDef>Financial Transactions</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.financialTransactions}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="interventionRatio">
+                    <mat-header-cell *matHeaderCellDef> Intervention Ratio </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.interventionRatio | number : '1.2-2'}}% </mat-cell>
+                </ng-container>
+            </div>
+            <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnList;"></mat-row>
+        </mat-table>
+    </div>
+
+    <!--interventionByTransaction-->
+    <div class="table-container mat-elevation-z8" *ngIf="reportType === 'interventionByTransaction'">
+        <mat-table #table [dataSource]="data">
+            <div class="table-data">
+                <ng-container matColumnDef="txdetail">
+                    <mat-header-cell *matHeaderCellDef> Transaction Detail </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.txdetail}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="interventionCount">
+                    <mat-header-cell *matHeaderCellDef> Intervention Count </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.interventionCount}} </mat-cell>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="financialTransactions">
+                    <mat-header-cell *matHeaderCellDef>
+                        Financial Transactions
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{element.financialTransactions}}
+                    </mat-cell>
+                </ng-container> -->
+
+                <ng-container matColumnDef="interventionRatio">
+                    <mat-header-cell *matHeaderCellDef> % of Intervention </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.interventionRatio | number : '1.2-2'}}% </mat-cell>
+                </ng-container>
+            </div>
+            <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnList;"></mat-row>
+        </mat-table>
+    </div>
+</ng-template>

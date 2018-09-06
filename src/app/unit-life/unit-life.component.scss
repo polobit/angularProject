@@ -1,0 +1,222 @@
+@import '../app.common';
+.card {
+    margin: 15px;
+    padding: 15px;
+    min-height: 500px;
+    .heading-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        @include phone {
+            align-items: flex-start;
+        }
+        .heading {
+            color: #0066A4;
+            font-size: 18px;
+            .time-stamp {
+                font-size: 12px;
+                color: #000;
+                opacity: 0.5;
+            }
+        }
+        .filter-section {
+            .filter-container {
+                width: 100px;
+                color: rgba(77, 77, 78, 0.67);
+                .num-percent {
+                    font-size: 13px;
+                    display: inline;
+                    .mat-select-trigger {
+                        min-width: 50px;
+                    }
+                }
+                .mat-select-trigger {
+                    height: 1.16em;
+                }
+            }
+        }
+    }
+    .mat-paginator /deep/ {
+        .mat-paginator-container {
+            @include phone {
+                padding: 0;
+                .mat-paginator-page-size {
+                    padding: 0;
+                    .mat-form-field-infix {
+                        padding: 0;
+                        border: none;
+                    }
+                    .mat-form-field-wrapper {
+                        padding: 0;
+                    }
+                }
+            }
+        }
+        .mat-select-trigger {
+            min-width: 50px;
+        }
+        .mat-paginator-range-label {
+            margin: 0 15px 0 0px;
+        }
+    }
+    .list-container {
+        .row {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            cursor: pointer;
+            .section-one {
+                display: flex;
+                align-items: center;
+                @include phone {
+                    width: 60%;
+                    justify-content: space-between;
+                }
+                @include phone-small {
+                    width: 85%;
+                }
+                .img-container {
+                    img {
+                        width: 70px;
+                        height: 100px;
+                        @include phone {
+                            width: 50px;
+                            height: 60px;
+                        }
+                    }
+                }
+                .machine-details {
+                    display: flex;
+                    flex-direction: column;
+                    padding-left: 15px;
+                    min-width: 160px;
+                    max-width: 160px;
+                    font-size: 13px;
+                    @include phone {
+                        padding: 0;
+                        margin-left: 20px;
+                    }
+                    .name {
+                        font-weight: bold;
+                        color: #E43232;
+                    }
+                    .location {
+                        display: flex;
+                        margin-left: -3px;
+                        align-items: center;
+                        font-size: 10px;
+                        color: #808080;
+                        mat-icon {
+                            color: #41D148;
+                            font-size: 15px;
+                            width: 15px;
+                            height: 15px;
+                        }
+                    }
+                }
+            }
+            .section-second {
+                display: flex;
+                align-items: center;
+                width: 80%;
+                @include laptop {
+                    width: 70%;
+                }
+                @include tablet {
+                    width: 60%;
+                }
+                @include phone {
+                    width: 100%;
+                    justify-content: space-between;
+                }
+                .detail-wrapper {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                    @include phone-small {
+                        flex-direction: column;
+                    }
+                    .details {
+                        display: flex;
+                        flex-direction: column; // padding: 0 15px;
+                        min-width: 100px;
+                        @include phone {
+                            margin-top: 10px;
+                        }
+                        .heading {
+                            font-size: 11px;
+                            color: rgba(77, 77, 78, 0.6);
+                        }
+                        .value {
+                            color: #333333;
+                            font-size: 12px;
+                            display: flex;
+                            justify-content: space-between;
+                            width: 85%;
+                            .total {
+                                font-weight: bold;
+                            } // .bnr {
+                            //     color: #0E8127;
+                            // }
+                            // .bcr {
+                            //     color: #D8A11F;
+                            // }
+                        }
+                    }
+                    .tab-hide {
+                        @include tablet {
+                            display: none;
+                        }
+                    }
+                }
+                .gauge-chart {
+                    margin-left: 15px;
+                    @include phone {
+                        margin-top: -20%;
+                    }
+                    @include phone-small {
+                        margin-top: 0;
+                    }
+                }
+            }
+            .as-component {
+                width: 55%;
+                @include phone {
+                    width: 100%;
+                    margin-top: 5px;
+                }
+            }
+        }
+        .row-divider {
+            border-bottom: 1px solid #e4e3e3;
+        }
+        .dashboard-row {
+            flex-wrap: nowrap;
+            @include phone {
+                flex-wrap: wrap;
+            }
+        }
+        .cursor-default{
+            cursor: default;
+        }
+    }
+}
+
+.as-component-card {
+    margin: 0;
+    min-height: 368px;
+    max-height: 368px;
+    border-radius: 8px;
+    border: 1px solid #999;
+    @include laptop {
+        padding: 0 10px;
+    }
+    @include phone {
+        max-height: 400px;
+    }
+    @include phone-small {
+        max-height: 500px;
+    }
+}

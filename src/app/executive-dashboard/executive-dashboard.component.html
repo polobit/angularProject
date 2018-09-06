@@ -1,0 +1,234 @@
+<app-bar-chart-toolbar [periodChips]="periodChips" [customerChips]="customerChips" [modelChips]="modelChips"></app-bar-chart-toolbar>
+<div class="box-wrapper">
+  <span class="box-container" *ngIf="tilesData">
+    <mat-card>
+      <span class="number">{{tilesData.user | number}}</span>
+      <span class="text">{{Languages.get('global.users', 'start')}}</span>
+    </mat-card>
+    <mat-card>
+      <span class="number">{{tilesData.location | number}}</span>
+      <span class="text">{{Languages.get('global.locations', 'start')}}</span>
+    </mat-card>
+  </span>
+  <span class="box-container" *ngIf="tilesData">
+    <mat-card>
+      <span class="number phonefix">{{tilesData.phoneFix | number}}</span>
+      <span class="text">{{Languages.get('global.phoneFix', 'start')}}</span>
+    </mat-card>
+    <mat-card>
+      <span class="number dispatch">{{tilesData.dispatch | number}}</span>
+      <span class="text">{{Languages.get('global.dispatches', 'start')}}</span>
+    </mat-card>
+  </span>
+</div>
+<div class="section-2">
+  <div class="report-wrapper">
+    <div class="report-container donut-container" *ngIf="userExperinceChart">
+      <span class="heading-container">
+        <span class="heading">{{Languages.get('filter.userExperience', 'upper')}}</span>
+        <button id="userexp-details" mat-button routerLink="/user-exp">{{Languages.get('global.details', 'start')}}
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      </span>
+      <mat-card class="donut-chart">
+        <app-donut-chart 
+          height="225" 
+          width="250" 
+          radius="120"
+          [centerTitle]="userExperinceChartValue" 
+          [centerSubTitle]="userExperienceSubTitle"
+          [titleColor]="titleColor" 
+          [data]="userExperinceChart" 
+          [donutThickness]="15">
+        </app-donut-chart>
+      </mat-card>
+    </div>
+    <div class="report-container">
+      <span class="heading-container">
+        <span class="heading">{{Languages.get('global.pieChartTitle', 'upper')}}</span>
+      </span>
+      <mat-card class="pie-chart">
+        <app-pie-chart  *ngIf="pieChartResponse?.length > 0" 
+          [width]="220" 
+          [height]="220" 
+          pieChartId="abc" 
+          [data]="pieChartData" 
+          [showLegend]="true">
+        </app-pie-chart>
+        <div class="no-data" *ngIf="pieChartResponse?.length < 1">
+            {{Languages.get('global.nothingToShow')}}
+        </div>
+      </mat-card>
+    </div>
+    </div>
+    <div class="kpi-wrapper">
+      <div class="kpi-container" *ngIf="averageOnsiteData || averageOnsiteData === 0">
+        <span class="heading-container">
+          <span class="heading">{{Languages.get('kpi.averageNumberOfHoursOnSite', 'upper')}}</span>
+          <button id="avgHrs-details" mat-button routerLink="/averageHours/report">{{Languages.get('global.details', 'start')}}
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </span>
+        <span class="card-container">
+          <app-dashboard-card
+            [id]="averageOnsiteCard" 
+            [link]="'/averageHours/report'" 
+            [isLoaded]="averageOnsiteData !== undefined" 
+            [isAlert]="averageOnsiteData !== 0 && averageOnsiteData > 2" 
+            [title]="Languages.get('kpi.averageNumberOfHoursOnSite', 'start')" 
+            [lastUpdated]="averageOnsiteTimeLastUpdated" 
+            [kpiValue]="averageOnsiteData === 0 ? notAvailable : averageOnsiteData"
+            [kpiUnit]="Languages.get('global.hours', 'start')">
+          </app-dashboard-card>
+        </span>
+      </div>
+      <div class="kpi-container" *ngIf="slaZoneData">
+        <span class="heading-container">
+          <span class="heading">{{Languages.get('global.sla', 'upper')}}</span>
+          <button id="sla-details" mat-button routerLink="/sla/ALL">{{Languages.get('global.details', 'start')}}
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </span>
+        <span class="card-container">
+          <app-dashboard-card 
+            [id]="slaZoneData" 
+            [link]="'/sla/ALL'" 
+            [isLoaded]="slaZoneData !== undefined" 
+            [isAlert]="slaZoneData?.total !== 0 && slaZoneData?.inTimePercentage < 93" 
+            [title]="Languages.get('kpi.slaAllZone')" 
+            [lastUpdated]="slaTimeStamp" 
+            [kpiUnitType]="'percentage'" 
+            [kpiValue]="slaZoneData?.total === 0 ? notAvailable : round(slaZoneData?.inTimePercentage, 2)">
+          </app-dashboard-card>
+        </span>
+      </div>
+      <div class="kpi-container" *ngIf="firstTimeFixData">
+        <span class="heading-container">
+          <span class="heading">{{Languages.get('kpi.firstTimeFix', 'upper')}}</span>
+          <button id="ftfix-details" mat-button routerLink="/first-time-fix">{{Languages.get('global.details', 'start')}}
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </span>
+        <span class="card-container">
+          <app-dashboard-card
+            id="firstTimeFix" 
+            link="/first-time-fix" 
+            [isLoaded]="firstTimeFixData !== undefined"
+            [isAlert]="firstTimeFixData?.total !== 0 && firstTimeFixData?.percentage < 95" 
+            [title]="Languages.get('kpi.firstTimeFix', 'start')" 
+            [lastUpdated]="firstTimeFixTimeStamp" 
+            [kpiUnitType]="'percentage'"
+            [kpiValue]="firstTimeFixData?.total === 0 ? notAvailable : firstTimeFixData?.percentage">
+          </app-dashboard-card>
+        </span>
+      </div>
+  </div>
+</div>
+<div class="report-wrapper">
+  <div class="report-container">
+      <span class="heading-container">
+        <span class="heading">{{Languages.get('global.interventionOnly', 'upper')}}</span>
+      </span>
+      <mat-card class="top-low-details">
+          <div class="title-box">
+            <span class="title-container">
+              <span class="title">{{Languages.get('global.interventionOnly', 'start')}}</span>
+              <span class="note">{{Languages.get('global.selectNote', 'start')}}</span>
+            </span>
+            <mat-select (change)="changeIntervention()" [(ngModel)]="selectedInterventionValue">
+              <mat-option *ngFor="let value of values" [value]="value.code">{{ value.name }}</mat-option>
+            </mat-select>
+          </div>
+          <div class="table-container mat-elevation-z8">
+            <mat-table [dataSource]="interventionTableData">
+              <ng-container matColumnDef="store">
+                <mat-header-cell *matHeaderCellDef> Store </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.store}} </mat-cell>
+              </ng-container>
+          
+              <ng-container matColumnDef="interventionCount">
+                <mat-header-cell *matHeaderCellDef> Count </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.interventionCount | number}} </mat-cell>
+              </ng-container>
+          
+              <mat-header-row *matHeaderRowDef="interventionColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: interventionColumns;"></mat-row>
+            </mat-table>
+          </div>
+          <div class="no-data" *ngIf="interventionTableData?.length < 1">
+              {{Languages.get('global.nothingToShow')}}
+          </div>
+      </mat-card>
+  </div>
+  <div class="report-container">
+      <span class="heading-container">
+        <span class="heading">{{Languages.get('global.dispatch', 'upper')}}</span>
+      </span>
+      <mat-card class="top-low-details">
+          <div class="title-box">
+            <span class="title-container">
+              <span class="title">{{Languages.get('global.dispatch', 'start')}}</span>
+              <span class="note">{{Languages.get('global.selectNote', 'start')}}</span>
+            </span>
+            <mat-select (change)="changeDispatch()" [(ngModel)]="selectedDispatchValue">
+              <mat-option *ngFor="let value of values" [value]="value.code">{{ value.name }}</mat-option>
+            </mat-select>
+          </div>
+          <div class="table-container mat-elevation-z8">
+            <mat-table [dataSource]="dispatchTableData">
+              <ng-container matColumnDef="store">
+                <mat-header-cell *matHeaderCellDef> Store </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.store}} </mat-cell>
+              </ng-container>
+          
+              <ng-container matColumnDef="dispatch">
+                <mat-header-cell *matHeaderCellDef> Dispatch </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.dispatch | number}} </mat-cell>
+              </ng-container>
+          
+              <mat-header-row *matHeaderRowDef="dispatchColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: dispatchColumns;"></mat-row>
+            </mat-table>
+          </div>
+          <div class="no-data" *ngIf="dispatchTableData?.length < 1">
+              {{Languages.get('global.nothingToShow')}}
+          </div>
+      </mat-card>
+  </div>
+  <div class="report-container" *ngIf="unitLifeSummary">
+    <span class="heading-container">
+      <span class="heading">{{Languages.get('global.averageDailyNoteVolume', 'upper')}}</span>
+    </span>
+    <mat-card class="gauge-chart">
+      <app-gauge-chart 
+        [chartSize]="200" 
+        [width]="200" 
+        [height]="100" 
+        [ringWidth]="40" 
+        [gaugeId]="'noteCount'" 
+        [pointerValue]="unitLifeSummary.averageNotesCount" 
+        [limit]="30000"
+        [showLimit]="false"
+        [chartType]="'summary'">
+      </app-gauge-chart>
+      <span class="gauge-title">{{Languages.get('global.averageDailyNoteVolume')}}</span>
+    </mat-card>
+    <span class="percent-details">
+        <mat-card class="details">
+          <span class="value">{{unitLifeSummary.inRangePercentage | number: '1.2-2'}}%</span>
+          <span class="label">
+              {{Languages.get('global.locationsInRange', 'start')}}
+          </span>
+        </mat-card>
+        <mat-card class="details">
+          <span class="value">{{unitLifeSummary.outOfRangePercentage | number: '1.2-2'}}%</span>
+          <span class="label">
+              {{Languages.get('global.locationsOutRange', 'start')}}
+          </span>
+        </mat-card>
+      </span>
+  </div>
+</div>
+<div>
+  <app-dashboard-kpi [userType]="userType"></app-dashboard-kpi>
+</div>

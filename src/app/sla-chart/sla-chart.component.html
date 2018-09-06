@@ -1,0 +1,128 @@
+<app-bar-chart-toolbar *ngIf="!isDashboard" [periodChips]="periodChips" [customerChips]="customerChips" [modelChips]="modelChips" ></app-bar-chart-toolbar>
+<div class="flex-item-box">
+    <div class="chart-container" [ngClass]="{'dashboard-chart-container': isDashboard}">
+        <div class="report-heading"  [ngClass]="{'dashboard-heading': isDashboard}">
+                <div class="heading-container">
+                <app-bar-chart-header [kpiName]="kpiName" [selectedPeriod]="selectedPeriod"></app-bar-chart-header>
+
+                <div class="desktop-filter-container inner-filter" *ngIf="!isDashboard">
+                    <div class="cases-by">
+                        <mat-form-field class="num-percent">
+                            <mat-select placeholder="{{Languages.get('filter.casesBy', 'upper')}}" (change)="change()" [(value)]="selectedCase">
+                                <mat-option *ngFor="let case of cases" [value]="case">
+                                    {{Languages.get('filter.' + case, 'start')}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class='cases-by'>
+                        <mat-form-field class="num-percent">
+                            <mat-select placeholder="{{Languages.get('filter.slazone', 'upper')}}" (change)="change()" [(value)]="selectedZone">
+                                <mat-option *ngFor="let zone of zoneList" [value]="zone.apiKey" (click)="onSingleZoneSelect();">
+                                    {{zone.name}}
+                                    <span class="hour-limit">({{zone.hourLimit}})</span>
+                                </mat-option>
+                                <mat-option value="ALL" (click)="onAllZoneSelect();">
+                                    {{Languages.get('filter.all', 'start')}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="cases-by">
+                        <mat-form-field class="num-percent">
+                            <mat-select placeholder="{{Languages.get('filter.slaTime', 'upper')}}" (change)="change()" [(value)]="selectedSlaTime">
+                                <mat-option *ngFor="let time of slaTimeList" [value]="time">
+                                    {{time === 'inTime' ? Languages.get('global.made', 'start') : Languages.get('global.missed', 'start')}}
+                                </mat-option>
+                                <mat-option value="ALL" *ngIf="allZoneSelected">
+                                    {{Languages.get('filter.all', 'start')}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-heading" *ngIf="!isDashboard">
+                <div class="title-box">
+                    <div class="title">{{Languages.get('global.total', 'upper')}}</div>
+                </div>
+                <div class="value-box" *ngIf="averageValue">
+                    <p *ngIf="selectedCase === 'percentage'">{{round(averageValue,2)}} %</p>
+                    <p *ngIf="selectedCase === 'number'">{{averageValue | number}} {{ Languages.get('global.cases',
+                        'start')}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-filter-container" *ngIf="!isDashboard">
+            <div class="inner-filter">
+                <div class="cases-by">
+                    <mat-form-field class="num-percent">
+                        <mat-select placeholder="{{Languages.get('filter.casesBy', 'upper')}}" (change)="change()" [(value)]="selectedCase">
+                            <mat-option *ngFor="let case of cases" [value]="case">
+                                {{Languages.get('filter.' + case, 'start')}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class='cases-by'>
+                    <mat-form-field class="num-percent">
+                        <mat-select placeholder="{{Languages.get('filter.slazone', 'upper')}}" (change)="change()" [(value)]="selectedZone">
+                            <mat-option *ngFor="let zone of zoneList" [value]="zone.apiKey" (click)="onSingleZoneSelect();">
+                                {{zone.name}}
+                                <span class="hour-limit">({{zone.hourLimit}})</span>
+                            </mat-option>
+                            <mat-option value="ALL" (click)="onAllZoneSelect();">
+                                {{Languages.get('filter.all', 'start')}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="cases-by">
+                    <mat-form-field class="num-percent">
+                        <mat-select placeholder="{{Languages.get('filter.slaTime', 'upper')}}" (change)="change()" [(value)]="selectedSlaTime">
+                            <mat-option *ngFor="let time of slaTimeList" [value]="time">
+                                {{Languages.get('filter.' + time, 'start')}}
+                            </mat-option>
+                            <mat-option value="ALL" *ngIf="allZoneSelected">
+                                {{Languages.get('filter.all', 'start')}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <app-bar-chart 
+            [data]="chartData" 
+            (barClick)="onBarClick($event)" 
+            [type]="selectedCase" 
+            [barColor]="barColor"
+            [slots]="slotData" 
+            [width]="width" 
+            [height]="height" 
+            timeFormat="MMM D" 
+            [sortData]="true"
+            [aggregateValue]="averageValue">
+        </app-bar-chart>
+    </div>
+    <div class="divider" *ngIf="!isDashboard"></div>
+    <app-chart-detail *ngIf="!isDashboard"
+        [kpiName]="kpiName" 
+        [isCaseType]="true" 
+        [detailsByDate]="detailsByDate" 
+        [detailsType]="selectedZone === 'ALL' ? 'slaStacked' : 'byZone'"
+        [fromDate]="fromDate" 
+        [toDate]="toDate" 
+        [selectedBarValue]="selectedBarValue" 
+        [aggregateValue]="averageValue"
+        [aggregateUnit]="selectedCase === 'number' ? Languages.get('global.cases', 'capitalize') : '%'" 
+        [aggregateName]="Languages.get('global.total', 'upper')"
+        [kpiSubName]="selectedZone === 'ALL' ? Languages.get('filter.all', 'capitalizeFirst') : Languages.get('filter.' + selectedZone, 'capitalizeFirst')"
+        [allZoneData]="getDataByDate(selectedDate, allZoneData)" 
+        [selectedCase]="selectedCase" 
+        [selectedSlaTime]="selectedSlaTime"
+        #detail></app-chart-detail>
+</div>

@@ -1,0 +1,12 @@
+.title {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+
+    .subtitle {
+        float: left;
+        margin: 0;
+        font-size: 13px;
+        color: rgba(77, 77, 78, 0.67);
+    }
+}

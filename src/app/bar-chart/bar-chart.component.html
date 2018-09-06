@@ -1,0 +1,21 @@
+<ng-container *appLoading="data">
+    <div class="svg-container">
+        <svg id="{{chartName}}"></svg>
+    </div>
+    <mat-paginator
+        #paginator
+        *ngIf="barsPerPage !== 0"
+        [length]="(serverPagination && dataLength) ? toNumber(dataLength) : data.length"
+        [pageSize]="barsPerPage"
+        [pageIndex]="pageIndex"
+        (page)="onPageChange($event)">
+    </mat-paginator>
+    <i class="material-icons touch-hint">touch_app</i>
+    <div class="legend" *ngIf="showLegend">
+        <div class="container"
+             *ngFor="let slot of slots">
+            <div class="circle" [style.backgroundColor]="slot.color"></div>
+            <div>{{Languages.get('filter.' + slot.slot, 'capitalizeFirst')}}</div>
+        </div>
+    </div>
+</ng-container>

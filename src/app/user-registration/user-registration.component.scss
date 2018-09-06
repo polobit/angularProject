@@ -1,0 +1,114 @@
+@import '../app.common';
+$font-family: Roboto-Light,
+"Helvetica Neue",
+sans-serif;
+.container {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .welcome-message {
+        margin: 15px 0 5px 0;
+        font-size: 16px;
+        font-weight: 100;
+        color: #718c9d;
+        font-family: Roboto-Light, "Helvetica Neue", sans-serif;
+    }
+    .guideline-message {
+        font-size: 12px;
+        font-weight: 100;
+        color: #8F979D;
+        font-family: Roboto-Light, "Helvetica Neue", sans-serif;
+        letter-spacing: 1px;
+    }
+    .card {
+        height: auto;
+        border-radius: 4px;
+        margin: 20px 0;
+        @include desktop {
+            width: 40%;
+        }
+        @include tablet{
+            width: 60%;
+        }
+        @include phone {
+            width: 80%;
+        }
+        .form {
+            display: flex;
+            flex-direction: column;
+            .input-row {
+                @include desktop {
+                    display: flex;
+                    justify-content: space-between;
+                }
+                @include phone {
+                    display: block;
+                }
+                .text-field {
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 13px;
+                    color: #000;
+                    margin-bottom:10px;
+                    @include desktop {
+                        width: 48%;
+                    }
+                    @include phone {
+                        width: 100%;
+                    }
+                    .error-msg {
+                        color: #FF0000;
+                        margin: -10px 0 10px 0;
+                        font-size: 12px;
+                    }
+                    input {
+                        width: 95%;
+                        margin: 5px 0;
+                        border: none;
+                        font-size: 13px;
+                        padding: 0;
+                    }
+                    .email{
+                        color: #8F979D;
+                    }
+                    .eye-icon{
+                        display: flex;
+                        -ms-flex-pack: end;
+                        justify-content: flex-end;
+                        position: absolute;
+                        right: 0;
+                        top: 10px;
+                        cursor: pointer;
+                        opacity:0.5;
+                    }
+                    .error {
+                        transition: all .5s ease 0s;
+                    }
+                    input:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+        .mat-card-actions {
+            display: flex;
+            justify-content: center;
+            .mat-raised-button {
+                width: 150px;
+            }
+            .disabled {
+                cursor: not-allowed;
+            }
+        }
+    }
+    .validation-card {
+        margin: 30px 0;
+        width: 30%;
+        height: 30vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+}

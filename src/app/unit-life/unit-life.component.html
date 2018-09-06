@@ -1,0 +1,113 @@
+<app-bar-chart-toolbar [showPeriod]="false" [customerChips]="customerChips" [modelChips]="modelChips" *ngIf="!isDashboard"></app-bar-chart-toolbar>
+<mat-card class="card" [ngClass]="{'as-component-card': isDashboard}">
+  <div class="heading-container" *ngIf="!isDashboard">
+    <span class="heading">
+      {{Languages.get('machineDashboard.unitLife.heading')}}
+      <div class="time-stamp">
+        {{Languages.get('global.lastUpdated', 'start')}}: {{moment(timeStamp,AppConfiguration.global.apiTimeFormat).subtract(1, 'days').format(AppConfiguration.global.displayTimeFormat)}}
+      </div>
+    </span>
+    <span class="filter-section">
+      <mat-form-field class="filter-container">
+        <mat-select placeholder="{{Languages.get('machineDashboard.unitLife.sortThreshold', 'start')}}" (change)="change()" [(value)]="selectedThreshold">
+          <mat-option value="ALL">
+            {{Languages.get('filter.all', 'capitalizeFirst')}}
+          </mat-option>
+          <mat-option *ngFor="let threshold of thresholdList" [value]="threshold.value">
+            {{Languages.get('thresholdList.' + threshold.label, 'capitalizeFirst')}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </span>
+  </div>
+  <mat-divider *ngIf="!isDashboard"></mat-divider>
+  <mat-paginator *ngIf="unitData && !isDashboard" 
+    [length]="dataLength" 
+    [pageSize]="itemsPerPage" 
+    [pageSizeOptions]="pageSizeOptions"
+    [pageIndex]="pageIndex"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+  <div class="list-container" *ngIf="unitData">
+    <div class="row" [ngClass]="{'row-divider': i < unitData.length-1, 'dashboard-row': isDashboard, 'cursor-default': (userType === 'customer' || userType === 'customer-admin') }" *ngFor="let data of unitData;let i = index" (click)="getMachineDetail(data.serial)">
+      <span class="section-one">
+        <span class="img-container">
+          <img [src]="data.path | secure | async" />
+        </span>
+        <span class="machine-details">
+          <span class="name">
+            {{data?.serial === null ? notAvailable : data?.serial}}, {{data?.model === null ? notAvailable : data?.model}}
+          </span>
+          <span class="customer">
+            {{data?.customer === null ? notAvailable : data?.customer}}
+          </span>
+          <span class="location">
+            <mat-icon>location_on</mat-icon>
+            <span>{{data.location[0]?.text === null ? notAvailable : data.location[0]?.text}}</span>
+          </span>
+        </span>
+      </span>
+      <span class="section-second" [ngClass]="{'as-component': isDashboard}">
+        <span class="detail-wrapper">
+          <span class="details tab-hide" *ngIf="!isDashboard">
+            <span class="heading">
+              {{Languages.get('machineDashboard.unitLife.installDate', 'start')}}
+            </span>
+            <span class="value">
+              {{data?.installDate === null ? notAvailable : data?.installDate}}
+            </span>
+          </span>
+          <span class="details tab-hide" *ngIf="!isDashboard">
+            <span class="heading">
+              {{Languages.get('machineDashboard.unitLife.preventativeMaintenance', 'start')}}
+            </span>
+            <span class="value">
+              {{data?.preventiveMaintainenceCount === null ? notAvailable : data?.preventiveMaintainenceCount | number}}
+            </span>
+          </span>
+          <span class="details" *ngIf="!isDashboard">
+            <span class="heading">
+              {{Languages.get('machineDashboard.unitLife.lastPreventativeMaintenance', 'start')}}
+            </span>
+            <span class="value">
+              {{data?.lastPMDate === null ? notAvailable : data?.lastPMDate }}
+            </span>
+          </span>
+          <span class="details" *ngIf="!isDashboard">
+            <span class="heading">
+              {{Languages.get('machineDashboard.unitLife.nextPreventativeMaintenance', 'start')}}
+            </span>
+            <span class="value">
+              {{data?.nextPMDate === null ? notAvailable : data?.nextPMDate}}
+            </span>
+          </span>
+          <span class="details" [ngClass]="{'tab-hide': !isDashboard}">
+            <span class="heading">
+              {{Languages.get('machineDashboard.unitLife.fromLastPreventativeMaintenance', 'start')}}
+            </span>
+            <span class="value">
+              <img src="/assets/images/notes.png">
+              <span class="bnr">{{data?.bnrcount?.sinceMaintainenceCount === null ? notAvailable : data?.bnrcount?.sinceMaintainenceCount | number}}</span>
+              <img src="/assets/images/coins.png">
+              <span class="bcr">{{data?.bcrcount?.sinceMaintainenceCount === null ? notAvailable : data?.bcrcount?.sinceMaintainenceCount | number}}</span>
+            </span>
+          </span>
+        </span>
+        <span class="gauge-chart">
+          <app-gauge-chart 
+            [chartSize]="100" 
+            [width]="100" 
+            [height]="50" 
+            [ringWidth]="20" 
+            [gaugeId]="data.serial" 
+            [pointerValue]="data?.bnrcount?.sinceMaintainenceCount"
+            [limit]="200000">
+          </app-gauge-chart>
+        </span>
+      </span>
+    </div>
+  </div>
+  <div class="no-data" *ngIf="dataLength === 0">
+      {{Languages.get('global.nothingToShow')}}
+  </div>
+</mat-card>

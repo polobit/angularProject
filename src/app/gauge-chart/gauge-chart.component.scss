@@ -1,0 +1,13 @@
+.chart-wrapper {
+    .detail-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .value {
+            font-size: 12px;
+        }
+        .limit-container {
+            font-size: 10px;
+        }
+    }
+}

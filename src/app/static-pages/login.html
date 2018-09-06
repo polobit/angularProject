@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <META HTTP-EQUIV="REFRESH" CONTENT="csrf_timeout_in_seconds" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+
+        body {
+            background-color: #f0fafe;
+            font-family: Roboto-Light, "Helvetica Neue", sans-serif;
+            padding-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .welcome-message {
+            margin: 15px 0 5px 0;
+            font-size: 16px;
+            font-weight: 100;
+            color: #718c9d;
+            font-family: Roboto-Light, "Helvetica Neue", sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .guideline-message {
+            font-size: 12px;
+            font-weight: 100;
+            color: #8F979D;
+            font-family: Roboto-Light, "Helvetica Neue", sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .login-card {
+            width: 300px;
+            height: auto;
+            border-radius: 4px;
+            background-color: #fff;
+            margin: 20px 0;
+            padding: 15px;
+            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+        }
+
+        .sign-up {
+            color: #1266a5;
+        }
+
+        .forgotten-button {
+            font-size: 12px;
+            color: grey;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        a {
+            color: #000000;
+            opacity: 0.5;
+            font-size: 12px;
+            margin-left: 97px;
+        }
+
+        a:hover {
+            color: #1266a5;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .action-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        table td {
+            color: white;
+        }
+
+        .mdl-textfield__label {
+            color: black;
+        }
+
+        .mdl-textfield__label:after {
+            background-color: #8F979D;
+        }
+
+        .mdl-textfield .mdl-textfield__label {
+            color: #8F979D;
+        }
+
+        .mdl-textfield.is-focused .mdl-textfield__label {
+            color: #8F979D;
+        }
+
+        .mdl-textfield__input {
+            color: black;
+        }
+
+        .mdl-textfield__input:after {
+            background-color: #8F979D;
+        }
+
+        .mdl-button {
+            background-color: #0065A4;
+            color: #fff;
+            border: none;
+            font-size: 14px;
+            width: 120px;
+            height: 50px;
+            margin-top: 20px;
+            padding: 8px;
+            text-transform: capitalize;
+        }
+
+        table {
+            width: 100%;
+        }
+        
+          #password,input::-webkit-credentials-auto-fill-button {
+                                display: none !important;
+                            }
+        @media only screen and (max-width: 320px) {
+            .login-card {
+                width: 275px;
+            }
+        }
+
+        .imgSection {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .imgSection .keyImage {
+            margin-top: 35px;
+        }
+
+        .img-margin {
+            margin-top: 35px;
+        }
+
+        .mdl-dialog__title {
+
+            font-size: 24px;
+            color: #415C6C;
+            letter-spacing: 0;
+            text-align: center;
+        }
+
+        p {
+            opacity: 0.8;
+            font-size: 12px;
+            color: #8F979D;
+            letter-spacing: 0;
+            text-align: center;
+        }
+
+        .mdl-textfield__label:after {
+            background-color: #8F979D;
+        }
+
+        .mdl-textfield__label:is-focused {
+            background-color: #8F979D;
+            color: #8F979D;
+        }
+
+        .mdl-textfield__input {
+            color: black !important;
+        }
+
+        .mdl-textfield__input:after {
+            background-color: #8F979D;
+        }
+
+
+        .mdl-dialog__actions .mdl-button {
+            display: flex;
+            justify-content: center;
+            background-color: #0065A4;
+            font-size: 12px;
+            color: #FFFFFF;
+            margin-right: 114px;
+        }
+    </style>
+</head>
+
+<body>
+<img src="images/Revolution-Retail-Systems-logo_mobile.png" />
+<span class="welcome-message">Welcome back to RRS Customer Portal</span>
+<span class="guideline-message">Please signIn to continue</span>
+<div class="login-card">
+    <form name="f" action="/auth/login" method="POST">
+        <table align="center">
+            <tbody>
+            <tr>
+                <td>
+                    <div th:if="${param.error}">
+                        <span class="mdl-textfield__error">Invalid username or password.</span>
+                    </div>
+                    <div th:if="${param.logout}">
+                        <span class="mdl-textfield__error">You have been logged out.</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="email" name="username" />
+                        <label class="mdl-textfield__label">Email</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="password" id="password"  name="password" />
+                        <label class="mdl-textfield__label">Password</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="action-container" colspan="2">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" name="submit" >
+                        Sign In
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a id="forgotPwdLink" href="/password/forgot">Forgot Password?</a>
+                </td>
+            </tr>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<script>
+        $(document).ready(function () {
+            $.material.options.autofill = true;
+            $.material.init();
+        });
+    </script>
+</body>
+</html>

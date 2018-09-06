@@ -1,0 +1,553 @@
+@import '../app.common';
+.container {
+    padding: 0 15px;
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+    }
+    .user-container {
+        display: flex;
+        width: 100%;
+        @include tablet {
+            flex-direction: column;
+            align-items: center;
+        }
+        .user-info-section {
+            display: flex;
+            width: 100%;
+            .user-profile-card {
+                width: 100%;
+                // margin-right: 10px;
+                min-height: 60px;
+                height: auto;
+                display: flex;
+                @include phone {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                @include tablet {
+                    margin: 0;
+                }
+                .edit-button {
+                    font-weight: bolder;
+                    text-align: right;
+                    .mat-icon {
+                        margin-left: -15px;
+                    }
+                }
+                .mobile-edit {
+                    display: none;
+                    .edit-icon {
+                        height: 18px;
+                    }
+                    @include phone {
+                        display: flex;
+                        justify-content: flex-end;
+                        width: 100%;
+                    }
+                }
+                .profile-image {
+                    display: flex;
+                    width: 15%;
+                    justify-content: center;
+                    min-height: 80px;
+                    img {
+                        width: 72px;
+                        height: 72px;
+                        border-radius: 50%;
+                        position: relative;
+                    }
+                    .user-role {
+                        background-color: #3695D1;
+                        border-radius: 25px;
+                        font-size: 10px;
+                        color: #fff;
+                        min-width: 50px;
+                        text-align: center;
+                        line-height: 15px;
+                        height: 15px;
+                        position: absolute;
+                        top: 85px;
+                        padding: 0 5px;
+                    }
+                }
+                .user-info {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                    @include phone {
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .profile-details {
+                        text-align: center;
+                        .job{
+                            margin-left:27px;
+                        }
+                        @include phone{
+                        .job{
+                            margin-left:27px;
+                        }
+                    }
+                        h5 {
+                            color: #999;
+                            margin: 10px 0;
+                            display: flex;
+                            justify-content: center;
+                            .mat-icon{
+                                color:#008000;
+                                font-size: 16px;
+                            }
+                            span{
+                                flex-direction: row;
+                            }
+                        }
+                        
+                    }
+                    .profile-email{
+                        text-align: center;
+                        h5 {
+                            display: flex;
+                            margin: 10px 0;
+                        .mat-icon{
+                            color: #488AC7;
+                            font-size: 16px;
+                        }
+                        span{
+                            flex-direction: row;
+                        }
+                    }
+                    }
+                    .profile-contact{
+                        text-align: center;
+                        h5 {
+                            display: flex;
+                            margin: 10px 0;
+                        .mat-icon{
+                            font-size: 16px;
+                            color: #F48930;
+                            span{
+                                flex-direction: row;
+                            }
+                        }
+                    }
+                    @include phone-small{
+
+                    }
+                    }
+                    .profile-email,
+                    .profile-contact,
+                    .profile-edit {
+                        color:#999;
+                        display: flex;
+                        align-items: center;
+                        @include phone{
+                            // line-height: 20px;
+                        }
+                        // height:10px;
+                        .edit-icon {
+                            color:#0066a4;
+                            opacity:0.5;
+                            width: 20px;
+                            position:absolute;
+                            top:15px;
+                            right:15px;
+           
+                        }
+                    }
+                }
+            }
+        }
+        .user-count-section {
+            width: 40%;
+            display: flex;
+           
+            @include tablet {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: center;
+            }
+            @include phone {
+                flex-direction: column;
+            }
+            .section-1 {
+                display: flex;
+                width: 100%;
+                margin-left: 10px;
+                @include laptop-only {
+                    width:50%;
+                }
+                @include tablet-only{
+                    width: 100%;
+                }
+                @include phone {
+                    justify-content: space-between;
+                    margin-left: 0;
+                }
+                :first-child {
+                    margin-right: 10px;
+                }
+            }
+            .section-2 {
+                display: flex;
+                width: 100%;
+                @include laptop-only {
+                    width:50%;
+                }
+                @include tablet-only{
+                    width: 100%;
+                }
+                @include phone {
+                    justify-content: space-between;
+                    margin-top: 5px;
+                }
+                :first-child {
+                    margin-right: 10px;
+                }
+            }
+            .admin-section-1{
+                display: flex;
+                width: 100%;
+                margin-left: 10px;
+                @include phone-small {
+                    margin-left: -6px;
+                }
+                .user-card{
+                    width: 100%;
+                    margin-right: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    .viewer-count {
+                        color: #4092F6;
+                        margin-bottom: 1px;
+                    }
+                    .cutomerAdmin-count{
+                        color: #F48930;
+                    }
+                    .cutomer-count {
+                        color:#B366FA;
+                        margin-bottom: 10px;
+                        
+                    }
+                }
+            }
+            .user-type {
+                color: #999;
+                text-align: center;
+                min-width: 60px;
+            }
+            .count-size {
+                font-size: 36px;
+                font-weight: bold;
+            }
+            .user-type-card {
+                width: 100%;
+                margin-right: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                @include laptop-only {
+                    width:21%;
+                }
+                @include tablet-only{
+                    width: 100%;
+                }
+                @include phone {
+                    margin: 0;
+                    .admin-count{
+                        margin-bottom: 0;
+                    }
+                    .viewer-count{
+                        margin-bottom: 0;
+                    }
+                    .cutomer-count {
+                        margin-bottom: 0;
+                    }
+                }
+                .admin-count {
+                    color: #22A93F;
+                    margin-bottom: 10px;
+                }
+                .viewer-count {
+                    color: #4092F6;
+                    margin-bottom: 1px;
+                }
+                .cutomerAdmin-count{
+                    color: #F48930;
+                }
+                .cutomer-count {
+                    color:#B366FA;
+                    margin-bottom: 10px;
+                    
+                }
+            }
+            .customer-card {
+                margin:0px;
+                
+
+            }
+        }
+        .user-count-section2 {
+            display: flex;
+            margin-left: 10px;
+            @include tablet {
+                margin-left:0;
+                margin-top: 10px;
+                width: 100%;
+                justify-content: center;
+            }
+            @include phone {
+                margin-left:0;
+                flex-direction: column;
+            }
+            .section-2 {
+                display: flex;
+                width: 56%;
+                @include phone {
+                    width: 100%;
+                }
+                @include tablet {
+                    width: 100%;
+                }
+            }
+            .user-type {
+                color: #999;
+                text-align: center;
+            }
+            .count-size {
+                font-size: 36px;
+                font-weight: bold;
+            }
+            .user-type-card {
+                width: 100%;
+                margin-right: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                @include phone {
+                    margin: 0;
+                }
+                .cutomer-count {
+                    color: #F48930;
+                }
+            }
+            .customer-card {
+                margin: 0;
+
+            }
+        }
+    }
+    .action-card {
+        margin: 10px 0;
+        min-height: 350px;
+        height: auto;
+        // margin-right: 10px;
+        .revolution-list{
+            padding: 10px;
+            display: flex;
+            max-height: 250px;
+        }
+        .kpi-list-customer{
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            max-height: 250px;
+            .kpi-details {
+                hr {
+                    border: 0;
+                    border-top: 1px solid #e0e0e0;
+                    width: 40%;
+                    float: left;
+                }
+                .margin-40 {
+                    margin-left: 42px;
+                    width:40%;
+                }
+                .kpi-title {
+                    padding: 10px 0;
+                    .kpi-name {
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+        .cutomer-list,
+        .kpi-list,
+        .permission-section {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            max-height: 250px;
+            
+            .customer-name {
+                margin-left: 10px;
+            }
+            .padding-10 {
+                padding: 10px 0;
+            }
+            .kpi-details {
+                hr {
+                    border: 0;
+                    border-top: 1px solid #e0e0e0;
+                    width: 40%;
+                    float: left;
+                }
+                .margin-40 {
+                    margin-left: 42px;
+                    width:40%;
+                }
+                .kpi-title {
+                    padding: 10px 0;
+                    .kpi-name {
+                        margin-left: 10px;
+                    }
+                }
+            }
+            .kpi-options {
+                padding: 10px 0 10px 50px;
+                .option-name {
+                    font-size: 10px;
+                    color: #7a7a7a;
+                }
+            }
+            .role-desc {
+                color: #888;
+                margin: 5px 0 20px 30px;
+                font-size: 12px;
+            }
+        }
+        /deep/ .mat-checkbox {
+            padding: 5px;
+        }
+    }
+    .customer-card {
+        margin: 10px 0;
+        // width: 96%;
+        // @include phone {
+        //     width: 94%;
+        // }
+        .margin-40{
+            color: #000000;
+            opacity: 0.5;
+
+        }
+        .list{
+            padding: 10px;
+            display: flex;
+            max-height: 250px;
+        }
+        .profile-image {
+            display: flex;
+            // width:4%;
+            justify-content: center;
+            min-height: 80px;
+            img {
+                width: 36.6px;
+                height: 36.6px;
+                border-radius: 50%;
+                position: relative;
+            }
+        }
+        .store-heading{
+            font-size: 14px;
+            color: #1B89CD;
+            letter-spacing: 0;
+            margin-bottom: 2px;
+        }
+        .store-details {
+            display:flex;
+            margin-top:5px;
+            span{
+                line-height: 20px;
+                margin-left:5px
+            }
+            div{
+                display:flex;
+                #cust{
+                    flex-direction: row;
+                }
+            }
+            @include phone {
+                margin-left:0;
+                font-size:10px;
+            }
+            @include tablet {
+            }
+           
+            .custStoreDetails{
+                flex-direction: column;
+                font-size: 13px;
+                color: #000000;
+                font-weight:bold;
+                margin:10px;
+                
+            }
+            span .store-list{
+                flex-direction: column;
+                opacity: 0.5;
+                
+                font-size: 13px;
+                color: #000000;
+                letter-spacing: 0;
+                @include phone {
+                    margin-left:0;
+                    font-size:12px;
+                }
+            }
+        }
+        .list{
+            padding: 10px;
+            display: flex;
+            max-height: 250px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+            width:40%;
+            flex-direction: column;
+            @include phone {
+                width:70%;
+            }
+            @include tablet {
+                width:97%;
+            }
+            .revolution-list {
+                        font-size: 13px;
+                        color: #38383A;
+                        float: left;
+                        width:60%; 
+                        @include phone {
+                            font-size: 11px;
+                        }
+                        @include tablet {
+                            width:60%;
+                        }
+
+            }
+    
+            .revolution-name{
+                        font-size: 13px;
+                        color: #38383A;
+                        float:right;
+                        opacity: 0.5;
+                        width:40%;
+                        @include phone {
+                            font-size: 10px;
+                        }
+                        @include tablet {
+                        }
+                        
+            }
+       
+    }
+        
+    }
+}
+
+.no-margin {
+    margin: 0;
+}

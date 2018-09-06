@@ -1,0 +1,41 @@
+<section class="signin-section">
+    <div class="container">
+        <span class="title thin-font">{{Languages.get('homePage.signinSection.title', 'start')}}</span>
+        <span class="heading">{{Languages.get('homePage.signinSection.heading', 'upper')}}</span>
+        <span class="description thin-font">{{Languages.get('homePage.signinSection.description', 'start')}}</span>
+        <span class="signin-container">
+            <button id="getAccess" mat-button color="primary" class="get-access-btn" (click)="goToGetAccess()">{{Languages.get('homePage.getAccess', 'upper')}}</button>
+            <button id="signIn" mat-button class="signin-btn" (click)="goToSignIn()">{{Languages.get('homePage.signIn', 'start')}}</button>
+        </span>
+    </div>
+</section>
+
+<section id="accessSection" class="contact-section">
+    <div class="container">
+        <span class="content-wrapper">
+            <span class="heading heading-text">
+                {{Languages.get('homePage.getAccessSection.heading', 'start')}}
+            </span>
+            <span class="description thin-font">{{Languages.get('homePage.getAccessSection.description')}}</span>
+            <form class="form" [formGroup]="formGroup">
+                <span class="contact-form">
+                    <span class="input-section">
+                        <input placeholder="Name" formControlName="name">
+                        <p class="error-msg" *ngIf="formGroup.controls['name'].invalid && formGroup.controls['name'].touched">{{Languages.get('errorMessage.firstName', 'capitalizeFirst')}}</p>
+                    </span>
+                    <span class="input-section">
+                        <input placeholder="Email" formControlName="email">
+                        <p class="error-msg" *ngIf="formGroup.controls['email'].invalid && formGroup.controls['email'].touched">
+                            {{Languages.get('errorMessage.emailId', 'capitalizeFirst')}}
+                        </p>
+                    </span>
+                    <span class="input-section">
+                        <input placeholder="Organization" formControlName="organisation">
+                        <p class="error-msg" *ngIf="formGroup.controls['organisation'].invalid && formGroup.controls['organisation'].touched">{{Languages.get('errorMessage.organisation', 'capitalizeFirst')}}</p>
+                    </span>
+                    <button id="getAccessSubmit" mat-button type="submit" (click)="getAccessDetails(formGroup.value)" [disabled]="formGroup.invalid">{{Languages.get('homePage.getAccessSection.heading', 'start')}}</button>
+                </span>
+            </form>
+        </span>
+    </div>
+</section>

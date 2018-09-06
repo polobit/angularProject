@@ -1,0 +1,227 @@
+@import '../app.common';
+a {
+    text-decoration: none;
+}
+
+.card {
+    border-radius: 8px;
+    border: 2px solid mat-color($mat-grey, 400);
+    transition: ease all 0.5s;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    min-height: 370px;
+    height: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    @include desktop-small {
+        font-size: 0.9em;
+        min-height: 340px;
+        &.mat-card {
+            padding: 10px;
+        }
+    }
+    @include tablet {
+        font-size: 0.8em;
+        min-height: 280px;
+        &.mat-card {
+            padding: 10px;
+        }
+    }
+    @include phone {
+        font-size: 0.7em;
+        &.mat-card {
+            padding: 10px;
+        }
+        min-height: 240px;
+    }
+    /deep/ app-loading {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 90px;
+        height: auto;
+    }
+    .empty & {
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
+    .mat-card-header /deep/ {
+        .mat-card-header-text {
+            width: 100%;
+            text-align: center;
+            .mat-card-title {
+                line-height: 1.5em;
+                font-size: 1.15em;
+                color: mat-color($mat-grey, 800);
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                min-height: 55px;
+                @include phone{
+                    min-height: 60px;
+                }
+                @include tablet{
+                    min-height: 45px;
+                }
+            }
+            .mat-card-subtitle {
+                font-size: 0.8em;
+            }
+        }
+    }
+    &.red {
+        border: 2px solid mat-color($mat-red, 500);
+    }
+    &.green {
+        border: 2px solid mat-color($mat-green, 500);
+    }
+    &.orange {
+        border: 2px solid mat-color($mat-yellow, 800);
+    }
+    &.red:hover {
+        box-shadow: 0 0 9px 2px mat-color($mat-red, 300);
+    }
+    &.green:hover {
+        box-shadow: 0 0 9px 2px mat-color($mat-green, 300);
+    }
+    &.orange:hover {
+        box-shadow: 0 0 9px 2px mat-color($mat-yellow, 700);
+    }
+    .mat-card-content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-size: 1em;
+        .circle-container {
+            position: relative;
+            width: 85%;
+            margin-top: 5px;
+            @include tablet {
+                width: 75%;
+            }
+            &:before {
+                display: block;
+                content: "";
+                width: 100%;
+                padding-top: 100%;
+            }
+            .circle-component {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                border: 8px solid currentColor;
+                border-radius: 100%;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                @include tablet {
+                    border-width: 6px;
+                }
+                h1 {
+                    font-size: 2em;
+                    margin: 0;
+                    width: 100%;
+                    @include ellipsis;
+                    @include phone-only {
+                        font-size: 2em;
+                    }
+                }
+                p {
+                    margin: 0;
+                    font-size: 0.85em;
+                    text-transform: uppercase;
+                    @include phone-only {
+                        font-size: 0.7em;
+                    }
+                }
+                .circle-text {
+                    display: flex;
+                    justify-content: center;
+                    height: 15px;
+                    .mat-icon {
+                        font-size: 15px;
+                    }
+                }
+                &.red {
+                    color: mat-color($mat-red, 500);
+                }
+                &.green {
+                    color: mat-color($mat-green, 500);
+                }
+                &.orange {
+                    color: mat-color($mat-yellow, 800);
+                }
+            }
+        }
+        .no-data-section {
+            color: mat-color($mat-grey, 500);
+            margin-top: 80px;
+            @include phone-only {
+                margin-top: 40px;
+            }
+        }
+        .bottom-card-section {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            font-size: 1em;
+            align-items: flex-start;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            .change-indicator {
+                height: 24px;
+                display: flex;
+                align-items: center;
+                color: mat-color($mat-light-blue, 700);
+                &.red {
+                    color: mat-color($mat-red, 500);
+                }
+                &.green {
+                    color: mat-color($mat-green, 500);
+                }
+                .mat-icon {
+                    margin-left: -0.3em;
+                    margin-right: -0.1em;
+                }
+            }
+            .grey-section {
+                height: 24px;
+                display: flex;
+                align-items: center;
+            }
+        }
+        .date-section {
+            display: flex;
+            align-items: center;
+            color: mat-color($mat-grey, 600);
+            @include phone-only {
+                font-size: 0.7em;
+                margin-top: 10px;
+                .mat-icon {
+                    width: 15px;
+                    height: 15px;
+                    font-size: 1.5em;
+                }
+            }
+            .mat-icon {
+                margin-right: 5px;
+                margin-top: 4px;
+            }
+        }
+    }
+}
+
+.mt-20 {
+    margin-top: 20px;
+}

@@ -1,0 +1,101 @@
+<div class="toolbar">
+    <app-back-button></app-back-button>
+    <span class="add-user-button">
+        <button mat-raised-button color="primary" (click)="openDialog()
+      ">
+            <mat-icon class="mat-10">person_add</mat-icon> Invite User</button>
+    </span>
+</div>
+<div class="list-box">
+    <mat-card>
+        <mat-card-header>
+            <div class="first-header">
+                <span>Name</span>
+            </div>
+            <div class="second-header">
+                <span *ngIf="userType !== 'customer'">Customer Handling</span>
+                <span *ngIf="userType === 'customer' ">Belongs To</span>
+            </div>
+            <div class="third-header">
+                <span *ngIf="loginType ==='customer-admin'">Revolutions</span>
+            </div>
+        </mat-card-header>
+        <mat-card-content>
+        <span>
+            <div class="row" *ngFor="let user of userList">
+                <div class="column-1" (click)="getUserDetails(user)">
+                    <span class="user-details">
+                        <img mat-card-avatar src="assets/images/user.ico">
+                        <span class="detail-section">
+                            <span>
+                                {{user.firstName}} {{user.lastName}}
+                            </span>
+                            <span class="user-designation">
+                                {{user.jobTitle}}
+                            </span>
+                        </span>
+                    </span>
+
+                </div>
+                <div class="column-2">
+                    <div class="customer-section" (click)="getUserDetails(user)">
+                        <div *ngFor="let customer of user.customers;let index = index;">
+                            <span *ngIf="index < 2" mat-card-avatar>{{customer | slice:0:1}}</span>
+                        </div>
+                        <span mat-card-avatar class="more-customer" *ngIf="user?.customers?.length > 2"> {{user.customers.length - 2}} + </span>
+                    </div>
+                    <!-- <div *ngIf="loginType === 'super-admin' || 'customer-admin'">
+                        <mat-icon (click)="deleteUser(user.permissionId)"> delete </mat-icon>
+                    </div> -->
+                    <div *ngIf="loginType === 'super-admin' || loginType === 'admin'">
+                        <mat-icon (click)="openConfirmDialog(user)"> delete </mat-icon>
+                    </div>
+                </div>
+            </div>
+        </span>
+        <span *ngIf="loginType === 'customer-admin'">
+            <div class="row"  *ngFor="let cust of custListDetails">
+                    <div class="custcolumn-1" (click)="getUserDetails(cust)">
+                        <span class="user-details">
+                            <img mat-card-avatar src="assets/images/user.ico">
+                            <span class="detail-section">
+                                <span class="user-name">
+                                    {{cust.firstName}} {{cust.lastName}}
+                                </span>
+                                <span class="user-designation">
+                                    {{cust.jobDescription}}
+                                </span>
+                            </span>
+                        </span>
+    
+                    </div>
+                    <div class="custcolumn-2" (click)="getUserDetails(cust)">
+                            <span class="user-details">
+                              
+                                <span class="detail-section" *ngFor="let store of cust?.storeDetails">
+                                    <span>
+                                        {{store.customer}}({{store.companyName | slice:7}})
+                                    </span>
+                                   
+                                </span>
+                            </span>
+        
+                    </div>
+                    <div class="custcolumn-3">
+                    
+                        <div class="customer-section" (click)="getUserDetails(cust)">
+                           
+                            <div *ngFor="let store of cust?.storeDetails">
+                                {{store.serial}}({{store.model}})
+                            </div>
+                            <!-- <span mat-card-avatar class="more-customer" *ngIf="store.length > 2"> {{user.customers.length - 2}} + </span> -->
+                        </div>
+                        <div>
+                            <mat-icon (click)="openConfirmDialog(cust)"> delete </mat-icon>
+                        </div>
+                    </div>
+            </div>
+        </span>
+        </mat-card-content>
+    </mat-card>
+</div>

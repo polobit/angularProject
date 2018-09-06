@@ -1,0 +1,214 @@
+@import '~@angular/material/theming';
+@include mat-core();
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+$app-palette: ( 
+    50: #f0faff, // original #e3f2fd,
+    100: #bbdefb,
+    200: #90caf9,
+    300: #64b5f6,
+    400: #42a5f5,
+    500: #0066a4,
+    600: #1e88e5,
+    700: #1976d2,
+    800: #1565c0,
+    900: #0d47a1,
+    A100: #82b1ff,
+    A200: #448aff,
+    A400: #2979ff,
+    A700: #2962ff,
+    contrast: ( 
+        50: $black-87-opacity,
+        100: $black-87-opacity,
+        200: $black-87-opacity,
+        300: $black-87-opacity,
+        400: $black-87-opacity,
+        500: white,
+        600: white,
+        700: white,
+        800: $white-87-opacity,
+        900: $white-87-opacity,
+        A100: $black-87-opacity,
+        A200: white,
+        A400: white,
+        A700: white,
+    )
+);
+
+$app-toolbar-palette: ( 
+    50: #e3f2fd,
+    100: #bbdefb,
+    200: #90caf9,
+    300: #64b5f6,
+    400: #42a5f5,
+    500: white,
+    600: #1e88e5,
+    700: #1976d2,
+    800: #1565c0,
+    900: #0d47a1,
+    A100: #82b1ff,
+    A200: #448aff,
+    A400: #2979ff,
+    A700: #2962ff,
+    contrast: ( 
+        50: $black-87-opacity,
+        100: $black-87-opacity,
+        200: $black-87-opacity,
+        300: $black-87-opacity,
+        400: $black-87-opacity,
+        500: #0066a4,
+        600: white,
+        700: white,
+        800: $white-87-opacity,
+        900: $white-87-opacity,
+        A100: $black-87-opacity,
+        A200: white,
+        A400: white,
+        A700: white,
+    )
+);
+
+$app-primary: mat-palette($app-palette);
+$app-toolbar: mat-palette($app-toolbar-palette);
+$app-accent: mat-palette($mat-blue,
+A200,
+A100,
+A400);
+$app-warn: mat-palette($mat-red);
+$app-theme: mat-light-theme( 
+    $app-primary,
+    $app-accent,
+    $app-warn
+    );
+
+$app-toolbar-theme: mat-light-theme( 
+    $app-toolbar,
+    $app-accent,
+    $app-warn
+);
+
+@include angular-material-theme($app-theme);
+@include mat-toolbar-theme($app-toolbar-theme);
+@include mat-sidenav-theme($app-toolbar-theme);
+$desktop-small-width: 1200px;
+$laptop: 1024px;
+$tablet-width: 768px;
+$mobile-width: 600px;
+$small-mobile-width: 320px;
+$laptop-medium: 1280px;
+$laptop-large: 1440px;
+$desktop-large: 1920px;
+$fourK-screen: 2560px;
+
+@mixin fourK-screen {
+    @media (max-width: $fourK-screen) and (min-width: $laptop-large - 1 ) {
+        @content;
+    }
+}
+
+@mixin desktop-large {
+    @media (max-width: $desktop-large) and (min-width: $laptop-large + 1 ) {
+        @content;
+    }
+}
+
+@mixin laptop-large {
+    @media (max-width: $laptop-large) {
+        @content;
+    }
+}
+
+@mixin tablet-and-desktop {
+    @media (min-width: #{$mobile-width + 1}) {
+        @content;
+    }
+}
+
+@mixin desktop-small {
+    @media (max-width: $desktop-small-width) {
+        @content;
+    }
+}
+@mixin laptop {
+    @media (max-width: $laptop ){
+        @content;
+    }
+}
+@mixin laptop-medium {
+    @media (max-width: $laptop-medium ){
+        @content;
+    }
+}
+@mixin laptop-only {
+    @media (max-width: $laptop ) and (min-width:767px){
+        @content;
+    }
+}
+
+@mixin phone-small {
+    @media (max-width: $small-mobile-width) {
+        @content;
+    }
+}
+
+@mixin phone-only {
+    @media (max-width: $mobile-width){
+        @content;
+    }
+}
+
+@mixin phone {
+    @media (max-width: $mobile-width){
+        @content;
+    }
+}
+
+@mixin tablet-only {
+    @media (min-width: #{$mobile-width + 1}) and (max-width: $tablet-width) {
+        @content;
+    }
+}
+
+@mixin desktop-only {
+    @media (min-width: #{$tablet-width + 1}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @content;
+}
+
+@mixin tablet {
+    @media (max-width: $tablet-width) {
+        @content;
+    }
+}
+
+// @mixin landscape {
+//     @media (min-width: #{$small-mobile-width}) and (max-width: $laptop) and (orientation:landscape){
+//         @content;
+//     }
+// }
+
+@mixin iphoneX {
+    @media (min-width: 375px) and (max-width: 812px){
+                @content;
+        }
+}
+
+@mixin ellipsis($lines: 1) {
+    @if $lines == 1 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    } @else {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: $lines;
+        -webkit-box-orient: vertical;
+    }
+}
+
+

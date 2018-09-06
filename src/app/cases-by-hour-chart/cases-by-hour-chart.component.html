@@ -1,0 +1,63 @@
+<app-bar-chart-toolbar *ngIf="!isDashboard" [periodChips]="periodChips" [customerChips]="customerChips" [modelChips]="modelChips" ></app-bar-chart-toolbar>
+<div class="flex-item-box">
+    <div class="chart-container" [ngClass]="{'dashboard-chart-container': isDashboard}">
+            <div class="report-heading"  [ngClass]="{'dashboard-heading': isDashboard}">
+                <div class="heading-container">
+                <div class="title">
+                    <app-bar-chart-header [kpiName]="kpiName" [selectedPeriod]="selectedPeriod"></app-bar-chart-header>
+                </div>
+                <div class="inner-filter" *ngIf="!isDashboard">
+                    <div class="cases-by">
+                        <mat-form-field class="num-percent">
+                            <mat-select placeholder="{{Languages.get('filter.weekDay', 'upper')}}" (change)="change()" [(value)]="selectedDay">
+                                <mat-option *ngFor="let day of dayList" [value]="day.apiKey">
+                                    {{Languages.get('days.' + day.name, 'capitalizeFirst')}}
+                                </mat-option>
+                                <mat-option value="ALL">
+                                    {{Languages.get('filter.allDays', 'capitalizeFirst')}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-heading" *ngIf="!isDashboard">
+                <div class="title-box">
+                    <div class="title">{{Languages.get('global.average', 'upper')}}</div>
+                </div>
+                <!-- <div class="value-box">
+                    <p>{{round(averageValue, 2)}} {{Languages.get('global.hrs', 'start')}}</p>
+                </div> -->
+                <div *ngIf="dispatchAverage !== undefined && phoneFixAverage !== undefined" class="value-box">
+                        <div class="phonefix-box">{{round(phoneFixAverage,0)}}</div>
+                        <div class="dispatch-box">{{round(dispatchAverage,0)}}</div>
+                    </div>
+            </div>
+        </div>
+        <app-bar-chart
+            *ngIf="chartData"
+            [data]="chartData"
+            (barClick)="onBarClick($event)"
+            [width]="width"
+            [height]="height"
+            [slots]="caseTypes"
+            [type]="number" 
+            timeFormat="MMM D">
+        </app-bar-chart>
+    </div>
+    <div class="divider" *ngIf="!isDashboard"></div>
+    <app-chart-detail *ngIf="!isDashboard"
+        [kpiName]="kpiName"
+        [isCaseType]="true"
+        [aggregateName]="Languages.get('global.average', 'upper')"
+        [aggregateUnit]="Languages.get('global.cases', 'capitalize')"
+        [detailsByDate]="selectedDay === 'ALL'? '' : detailsByDate"
+        [detailsType]="selectedDay === 'ALL'? '' : 'byDay'"
+        [selectedDay]="selectedDay"
+        [selectedBarValue]="finalBarValue"
+        [dispatchAverage]="dispatchAverage"
+        [phoneFixAverage]="phoneFixAverage"
+        [detailsForAllDay]="selectedDay === 'ALL'? detailsForAllDay : ''"
+        [selectedHour]="selectedDay === 'ALL'? '' : selectedHour"
+        #detail></app-chart-detail>
+</div>

@@ -1,0 +1,100 @@
+@import '../app.common';
+.info-table {
+    @include phone {
+        display: none;
+    }
+}
+
+host /deep/ .info-table-dialog {
+    &.cdk-overlay-pane {
+        /deep/ .mat-dialog-container {
+            overflow: scroll;
+        }
+    }
+}
+.card-title {
+    font-size: 12px;
+    color: #0067A5;
+    font-weight: bolder;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .close-button {
+        display: none;
+        @include phone {
+            display: block;
+        }
+    }
+}
+
+.info-table-dialog {
+    top: 20%;
+}
+
+.table-container {
+    max-height: 295px;
+    min-height: 295px;
+    @include tablet {
+        max-height: 281px;
+        min-height: 281px;  
+    }
+    @include phone{
+        width:100%;
+
+    }
+    @include phone {
+        width: 100%;
+    }
+    overflow: auto;
+    border-radius: 0 0 3px 3px;
+    .mat-table {
+        margin-bottom: 50px;
+        .mat-header-row {
+            background: #95AFBE;
+            .mat-header-cell {
+                color: #fff;
+                font-size: 12px;
+                @include phone {
+                    font-size: 10px;
+                }
+            }
+        }
+        .mat-header-row,
+        .mat-row {
+            min-height: 35px;
+            border: none;
+            padding: 0 10px;
+            @include phone {
+                padding: 0 5px;
+            }
+            .mat-column-financialTransactions,
+            .mat-column-interventionCount {
+                text-align: center;
+            }
+            .mat-column-successRatio,.mat-column-interventionRatio {
+                text-align: right;
+            }
+        }
+        .mat-row {
+            .mat-cell {
+                font-size: 10px;
+                padding-right: 5px;
+            }
+            .mat-column-financialTransactions,
+            .mat-column-status {
+                color: #0A9729;
+            }
+            .font-red {
+                color: #EA6161;
+            }
+            .mat-column-caseNumber {
+                font-weight: bold;
+                font-size: 11px;
+            }
+        }
+        .mat-row:nth-child(odd) {
+            background: #EEEEEE
+        }
+    }
+}

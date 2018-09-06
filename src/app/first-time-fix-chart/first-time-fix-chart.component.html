@@ -1,0 +1,96 @@
+<app-bar-chart-toolbar *ngIf="!isDashboard" [periodChips]="periodChips" [customerChips]="customerChips" [modelChips]="modelChips" ></app-bar-chart-toolbar>
+<div class="flex-item-box">
+    <div class="chart-container" [ngClass]="{'dashboard-chart-container': isDashboard}">
+        <div class="report-heading"  [ngClass]="{'dashboard-heading': isDashboard}">
+          <div class="heading-container">
+              <app-bar-chart-header [kpiName]="kpiName" [selectedPeriod]="selectedPeriod"></app-bar-chart-header>
+
+              <div class="desktop-filter-container inner-filter" *ngIf="!isDashboard">
+                  <div class="cases-by">
+                      <mat-form-field class="num-percent">
+                          <mat-select placeholder="{{Languages.get('filter.casesBy', 'upper')}}" (change)="change()" [(value)]="selectedCase">
+                              <mat-option *ngFor="let case of cases" [value]="case">
+                                  {{Languages.get('filter.' + case, 'start')}}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+
+                  <div class='cases-by'>
+                      <mat-form-field class="num-percent">
+                          <mat-select placeholder="{{Languages.get('filter.caseType', 'upper')}}" (change)="change()" [(value)]="selectedCaseType">
+                              <mat-option *ngFor="let case of caseTypes" [value]="case.value">
+                                  {{Languages.get('filter.' + case.key, 'start')}}
+                              </mat-option>
+                              <mat-option value="ALL">
+                                  {{Languages.get('filter.all', 'start')}}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+              </div>
+          </div>
+          <div class="accordion-heading" *ngIf="!isDashboard">
+              <div class="title-box">
+                  <div class="title">{{Languages.get('global.total', 'upper')}}</div>
+              </div>
+              <div class="value-box" *ngIf="averageValue">
+                    <p *ngIf="selectedCase === 'percentage'">{{round(averageValue,2)}} %</p>
+                    <p *ngIf="selectedCase === 'number'">{{averageValue | number}} {{ Languages.get('global.cases',
+                        'start')}}</p>
+              </div>
+          </div>
+      </div>
+      <div class="mobile-filter-container" *ngIf="!isDashboard">
+          <div class="inner-filter">
+              <div class="cases-by">
+                  <mat-form-field class="num-percent">
+                      <mat-select placeholder="{{Languages.get('filter.casesBy', 'upper')}}" (change)="change()" [(value)]="selectedCase">
+                          <mat-option *ngFor="let case of cases" [value]="case">
+                              {{Languages.get('filter.' + case, 'start')}}
+                          </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+
+              <div class='cases-by'>
+                  <mat-form-field class="num-percent">
+                      <mat-select placeholder="{{Languages.get('filter.caseType', 'upper')}}" (change)="change()" [(value)]="selectedCaseType">
+                          <mat-option *ngFor="let case of caseTypes" [value]="case.value">
+                              {{Languages.get('filter.' + case.key, 'start')}}
+                          </mat-option>
+                          <mat-option value="ALL">
+                              {{Languages.get('filter.all', 'start')}}
+                          </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+          </div>
+      </div>
+      <app-bar-chart 
+          [data]="chartData" 
+          (barClick)="onBarClick($event)" 
+          [type]="selectedCase" 
+          [slots]="slotData" 
+          [width]="width" 
+          [height]="height" 
+          timeFormat="MMM D" 
+          [sortData]="true"
+          [aggregateValue]="averageValue">
+      </app-bar-chart>
+  </div>
+  <div class="divider" *ngIf="!isDashboard"></div>
+  <app-chart-detail *ngIf="!isDashboard"
+      [kpiName]="kpiName" 
+      [isCaseType]="true" 
+      [detailsByDate]="detailsByDate" 
+      [detailsType]="'byDate'"
+      [fromDate]="fromDate" 
+      [toDate]="toDate" 
+      [selectedBarValue]="selectedBarValue" 
+      [aggregateValue]="averageValue"
+      [aggregateUnit]="selectedCase === 'number' ? Languages.get('global.cases', 'capitalize') : '%'" 
+      [aggregateName]="Languages.get('global.total', 'upper')"
+      [casePriority]="'linked'"
+      #detail></app-chart-detail>
+</div>

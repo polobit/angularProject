@@ -1,0 +1,13 @@
+<mat-card class="error-message">
+    <mat-card-header>
+        <mat-icon>error</mat-icon>
+        <span class="header-message">{{Languages.get('global.error', 'start')}}</span>
+    </mat-card-header>
+    <mat-card-content><span>{{errorMessage}}</span></mat-card-content>
+    <mat-card-actions *ngIf="buttonText">
+        <button mat-button color="primary" (click)="refresh();">
+            <mat-icon>refresh</mat-icon>
+            {{buttonText}}
+        </button>
+    </mat-card-actions>
+</mat-card>

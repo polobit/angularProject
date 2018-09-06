@@ -1,0 +1,11 @@
+<ng-container *appLoading="data">
+  <div class="chart-wrapper">
+    <div class="chart-container" id="{{pieChartId}}"></div>
+    <div class="legend" *ngIf="showLegend">
+      <div class="container" *ngFor="let section of data">
+        <div class="rect" [style.backgroundColor]="section.color">{{section.value | number}}</div>
+        <div class="label">{{section.label}}</div>
+      </div>
+    </div>
+  </div>
+</ng-container>

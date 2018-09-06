@@ -1,0 +1,35 @@
+@import '../bar-chart/bar-chart.component';
+.chart-wrapper {
+    display: flex;
+    @include phone {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .chart-container {
+        width: 100%;
+    }
+    .legend {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        min-width: 175px;
+        .container {
+            margin: 5px;
+            .rect {
+                width: auto;
+                min-width: 70px;
+                height: 2em;
+                margin-right: 10px;
+                border-radius: 8px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+            }
+            .label {
+                color: #999;
+            }
+        }
+    }
+}

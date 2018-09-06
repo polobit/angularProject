@@ -1,0 +1,84 @@
+<div class="container">
+    <form *ngIf="userInfo" class="form" [formGroup]="formGroup" (ngSubmit)="checkUserType(formGroup.value);">
+            <div class="toolbar">
+                <app-back-button></app-back-button>
+                <span class="save-button" >
+                    <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid || storeError">Save Changes</button>
+                </span>
+            </div>
+            <div class="user-container">
+                <div class="user-info-section">
+                    <mat-card class="user-profile-card" [ngClass]="{'no-margin': adminUser}">
+                        
+                        <span class="profile-image">
+                            <img src="../../assets/images/user.ico" />
+                            <span class="user-role">
+                                {{userInfo?.userType | uppercase}}
+                            </span>
+                        </span>
+                        
+                        <div class="user-info">
+                            <div class="input-row">
+                                <div class="text-field">
+                                    <mat-form-field>
+                                        <input matInput placeholder="First Name" type="text" formControlName="firstName" [value]="userInfo?.firstName"/>
+                                    </mat-form-field>
+                                    <p class="error-msg" *ngIf="formGroup.controls['firstName'].invalid && formGroup.controls['firstName'].touched">{{Languages.get('errorMessage.firstName', 'capitalizeFirst')}}</p>
+                                </div>
+                                <div class="text-field">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Last Name" type="text" formControlName="lastName" [value]="userInfo?.lastName"
+                                            />
+                                    </mat-form-field>
+                                    <p class="error-msg" *ngIf="formGroup.controls['lastName'].invalid && formGroup.controls['lastName'].touched">{{Languages.get('errorMessage.lastName', 'capitalizeFirst')}}</p>
+                                </div>
+                                <div class="text-field">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Job Title" type="text" formControlName="jobTitle" [value]="userInfo?.jobTitle"/>
+                                        </mat-form-field>
+                                        <p class="error-msg" *ngIf="formGroup.controls['jobTitle'].invalid && formGroup.controls['jobTitle'].touched">{{Languages.get('errorMessage.jobTitle', 'capitalizeFirst')}}</p>
+                                </div>
+                                <div class="text-field">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Location" type="text" formControlName="location" [value]="userInfo?.location" />
+                                        </mat-form-field>
+                                        <p class="error-msg" *ngIf="formGroup.controls['location'].invalid && formGroup.controls['location'].touched">{{Languages.get('errorMessage.location', 'capitalizeFirst')}}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="input-row">
+                                    <div class="text-field">
+                                        <mat-form-field>
+                                                <mat-label>Email Id</mat-label>
+                                            <input matInput readonly placeholder="Email id" class="email" type="text" formControlName="emailId" [value]="userInfo?.emailId"/>
+                                        </mat-form-field>
+                                        <p class="error-msg" *ngIf="formGroup.controls['emailId'].invalid && formGroup.controls['emailId'].touched">{{Languages.get('errorMessage.emailId', 'capitalizeFirst')}}</p>
+                                    </div>
+                                    <div class="text-field">
+                                            <mat-form-field>
+                                                    <mat-label>Phone number</mat-label>
+                                                <input matInput placeholder="Phone number" type="text" pattern="^[0-9]*$" formControlName="contactNumber" [value]="userInfo?.contactNumber"/>
+                                            </mat-form-field>
+                                            <p class="error-msg" *ngIf="formGroup.controls['contactNumber'].invalid && formGroup.controls['contactNumber'].touched">{{Languages.get('errorMessage.contactNumber.required', 'capitalizeFirst')}}</p>
+                                            <p class="error-msg" *ngIf="(formGroup.get('contactNumber').hasError('max') || formGroup.get('contactNumber').hasError('min')) && formGroup.controls['contactNumber'].touched">{{Languages.get('errorMessage.contactNumber.length', 'capitalizeFirst')}}</p>
+                                    </div>
+                                    <div class="text-field" *ngIf="storeList">
+                                        <mat-form-field>
+                                                <mat-label>Store Number</mat-label>
+                                            <input matInput placeholder="Store Number" type="text" formControlName="storeNumber" (input)="removeStoreError($event.target.value);" [value]="storeList"/>
+                                        </mat-form-field>
+                                        <p class="error-msg" *ngIf="storeError">{{Languages.get('errorMessage.errorStore', 'capitalizeFirst')}}</p>
+                                        <p class="error-msg" *ngIf="formGroup.controls['storeNumber'].invalid && formGroup.controls['storeNumber'].touched">{{Languages.get('errorMessage.storeNumber', 'capitalizeFirst')}}</p>
+                                    </div>
+                                    
+                            </div>
+                            </div>
+                 </mat-card>
+                </div>
+
+            </div>
+    </form>
+</div>
+
+
+

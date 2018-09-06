@@ -1,0 +1,60 @@
+<app-bar-chart-toolbar *ngIf="!isDashboard" [periodChips]="periodChips" [customerChips]="customerChips" [modelChips]="modelChips" ></app-bar-chart-toolbar>
+<div class="flex-item-box">
+    <div class="chart-container" [ngClass]="{'dashboard-chart-container': isDashboard}">
+        <div class="report-heading" [ngClass]="{'dashboard-heading': isDashboard}">
+            <div class="heading-container">
+                <div class="title">
+                    <app-bar-chart-header [kpiName]="kpiName" [selectedPeriod]="selectedPeriod"></app-bar-chart-header>
+                </div>
+                <div class="inner-filter" *ngIf="!isDashboard">
+                    <div class="cases-by">
+                        <mat-form-field class="num-percent">
+                            <mat-select placeholder="{{Languages.get('filter.area', 'upper')}}" (change)="change()" [(value)]="selectedArea">
+                                <mat-option *ngFor="let area of areaList" [value]="area">
+                                    {{Languages.get('filter.' + area, 'capitalizeFirst')}}
+                                </mat-option>
+                                <mat-option value="ALL">
+                                    {{Languages.get('filter.all', 'capitalizeFirst')}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-heading" *ngIf="!isDashboard">
+                <div class="title-box">
+                    <div class="title">{{Languages.get('global.average', 'upper')}}</div>
+                </div>
+                <div class="value-box" *ngIf="averageValue">
+                    <p>{{averageValue | number }} {{Languages.get('global.stores', 'start')}}</p>
+                </div>
+            </div>
+        </div>
+        <app-bar-chart
+            *ngIf="chartData"
+            [data]="chartData"
+            [barsPerPage]="30"
+            (barClick)="onBarClick($event)"
+            [width]="width"
+            [height]="height"
+            [type]="selectedCase" 
+            [barColor]="barColor"
+            timeFormat="MMM D" 
+            [sortData]="true"
+            [aggregateValue]="averageValue">
+        </app-bar-chart>
+    </div>
+    <div class="divider" *ngIf="!isDashboard"></div>
+    <app-chart-detail *ngIf="!isDashboard"
+        [kpiName]="kpiName"
+        [kpiSubName]="selectedArea === 'ALL' ? Languages.get('filter.all', 'capitalizeFirst') : Languages.get('filter.' + selectedArea, 'capitalizeFirst')"
+        [isCaseType]="true"
+        [selectedBarValue]="selectedBarValue"
+        [aggregateName]="Languages.get('global.total', 'upper')"
+        [aggregateUnit]="Languages.get('global.cases', 'capitalize')"
+        [detailsByDate]="detailsByDate"
+        [aggregateValue]="averageValue"
+        [detailsType]="'byMachine'"
+        [selectedMachine]="selectedMachine"
+        #detail></app-chart-detail>
+</div>

@@ -1,0 +1,131 @@
+<div>
+    <app-back-button></app-back-button>
+</div>
+<mat-card class="card" *ngIf="machineData?.serial">
+  <div class="container">
+    <div class="heading-container">
+      <span class="heading">{{machineData?.customer === null ? notAvailable : machineData?.customer}}</span>
+      <span class="separator"></span>
+      <mat-icon>location_on</mat-icon>
+      <span class="location">{{machineData?.location[0]?.text === null ? notAvailable : machineData?.location[0]?.text}}</span>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="detail-section">
+      <span class="img-container">
+          <img [src]="machineData.path | secure | async" />
+      </span>
+      <span class="detail-container">
+        <div class="machine-name">
+          #{{machineData?.serial === null ? notAvailable : machineData?.serial}} - {{machineData?.model === null ? notAvailable : machineData?.model}}
+        </div>
+        <div class="machine-detail">
+          <span class="gauge-chart">
+            <app-gauge-chart 
+                [chartSize]="200" 
+                [width]="200" 
+                [height]="100" 
+                [ringWidth]="35" 
+                [gaugeId]="machineData.serial" 
+                [pointerValue]="machineData?.bnrcount?.sinceMaintainenceCount"
+                [limit]="toNumber(machineData.maxLimit)">
+            </app-gauge-chart>
+          </span>
+          <span class="detail-wrapper">
+            <span class="row-wrapper">
+              <span class="detail-row">
+                <span class="details">
+                  <span class="heading">
+                    {{Languages.get('machineDashboard.unitLife.installDate', 'start')}}
+                  </span>
+                  <span class="value">
+                    {{machineData?.installDate === null ? notAvailable : machineData?.installDate}}
+                  </span>
+                </span>
+                <span class="details">
+                  <span class="heading">
+                    {{Languages.get('machineDashboard.unitLife.preventativeMaintenance', 'start')}}
+                  </span>
+                  <span class="value">
+                    {{machineData?.preventiveMaintainenceCount === null ? notAvailable : machineData?.preventiveMaintainenceCount | number}}
+                  </span>
+                </span>
+              </span>
+              <span class="detail-row">
+                <span class="details">
+                  <span class="heading">
+                    {{Languages.get('machineDashboard.unitLife.lastPreventativeMaintenance', 'start')}}
+                  </span>
+                  <span class="value">
+                    {{machineData?.lastPMDate === null ? notAvailable : machineData?.lastPMDate}}
+                  </span>
+                </span>
+                <span class="details">
+                  <span class="heading">
+                    {{Languages.get('machineDashboard.unitLife.nextPreventativeMaintenance', 'start')}}
+                  </span>
+                  <span class="value">
+                    {{machineData?.nextPMDate === null ? notAvailable : machineData?.nextPMDate}}
+                  </span>
+                </span>
+              </span>
+            </span>
+            <span class="row-wrapper">
+              <span class="detail-row">
+                <!-- <span class="details tab-hide">
+                  <span class="heading">
+                    {{Languages.get('machineDashboard.unitLife.lifeTimeCount', 'start')}}
+                  </span>
+                  <span class="value">
+                    <span class="total">{{machineData.total.lifeTimeCount}}</span> -
+                    <span class="bnr">{{machineData.bnrcount.lifeTimeCount}}</span> |
+                    <span class="bcr">{{machineData.bcrcount.lifeTimeCount}}</span>
+                  </span>
+                </span> -->
+                <span class="details tab-hide">
+                  <span class="heading">
+                    {{Languages.get('machineDashboard.unitLife.notesCount')}}
+                  </span>
+                  <span class="value">
+                    <!-- <span class="total">{{machineData.total.sinceMaintainenceCount}}</span> - -->
+                    <span class="bnr">{{machineData?.bnrcount?.sinceMaintainenceCount === null ? notAvailable : machineData?.bnrcount?.sinceMaintainenceCount | number}}</span> 
+                  </span>
+                </span>
+                <span class="details tab-hide">
+                    <span class="heading">
+                      {{Languages.get('machineDashboard.unitLife.coinsCount')}}
+                    </span>
+                    <span class="value">
+                      <!-- <span class="total">{{machineData.total.sinceMaintainenceCount}}</span> - -->
+                      <span class="bcr">{{machineData?.bcrcount?.sinceMaintainenceCount === null ? notAvailable : machineData?.bcrcount?.sinceMaintainenceCount | number}}</span>
+                    </span>
+                  </span>
+              </span>
+              <span class="detail-row">
+                  <span class="details tab-hide">
+                      <span class="heading">
+                        {{Languages.get('machineDashboard.unitLife.phoneFix', 'start')}}
+                      </span>
+                      <span class="value">
+                          {{machineData?.phoneFixCount === null ? notAvailable : machineData?.phoneFixCount | number}}
+                      </span>
+                    </span>
+                <span class="details tab-hide">
+                  <span class="heading">
+                    {{Languages.get('machineDashboard.unitLife.dispatchCases', 'start')}}
+                  </span>
+                  <span class="value">
+                    {{machineData?.dispatchCount === null ? notAvailable : machineData?.dispatchCount | number}}
+                  </span>
+                </span>
+              </span>
+            </span>
+          </span>
+        </div>
+      </span>
+    </div>
+    <div class="view-history">
+      <button mat-raised-button (click)="viewCaseHistory()">View Case History <mat-icon>arrow_right</mat-icon></button>
+    </div>
+    <app-info-table [data]="tableData" [columnList]="columnList" [reportType]="'caseHistory'" #infoTable></app-info-table>
+  </div>
+</mat-card>

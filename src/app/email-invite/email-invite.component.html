@@ -1,0 +1,57 @@
+<div class="dialog-box">
+    <!-- <div class="close-section">
+        <button mat-dialog-close></button>
+    </div> -->
+    <div class="dialog-content">
+        <div class="success-content">
+            <img src="assets/images/Envolope.svg" />
+            <span class="message-title">{{messageTitle}}</span>
+            <span class="message-content">{{messageContent}}</span>
+        </div>
+        <mat-card-content>
+            <form class="form" [formGroup]="formGroup">
+                <div class="invite-roles">
+                    <span class="section-1">
+                        <mat-radio-button [checked]="this.userType === 'viewer'" (click)="selectRole('viewer')" *ngIf="this.loginType === 'super-admin' || this.loginType === 'admin'">
+                            RRS Viewer
+                        </mat-radio-button>
+                        <mat-radio-button [checked]="this.userType === 'admin'" (click)="selectRole('admin')" *ngIf="this.loginType === 'super-admin'">
+                            Admin
+                        </mat-radio-button>
+                    </span>
+                    <span class="section-2">
+                        <mat-radio-button [checked]="this.userType === 'customer-admin'" (click)="selectRole('customer-admin')" *ngIf="this.loginType === 'super-admin' || this.loginType === 'admin'">
+                            Customer Admin
+                        </mat-radio-button>
+                        <mat-radio-button [checked]="this.userType === 'customer'" (click)="selectRole('customer')" *ngIf="this.loginType === 'super-admin' || this.loginType === 'admin'">
+                            Customer
+                        </mat-radio-button>
+                    </span>
+                </div>
+                <div *ngIf="isCustomerInvite">
+                    <mat-form-field *ngIf="userType === 'customer' || userType === 'customer-admin'">
+                        <mat-select (change)="selectChange($event)" ([value])="customer" placeholder="Company" [ngClass]="{'error' : formGroup.controls['customer'].invalid && formGroup.controls['customer'].touched}"
+                            formControlName="customer">
+                            <mat-option *ngFor="let each of customers" [value]="each.customerName">
+                                {{each.customerName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <span class="error-msg" *ngIf="formGroup.controls['customer'].invalid && formGroup.controls['customer'].touched">
+                        {{Languages.get('errorMessage.company', 'capitalizeFirst')}}
+                    </span>
+                </div>
+                <mat-form-field>
+                    <input matInput type="email" placeholder="Email Id" value="" [ngClass]="{'error' : formGroup.controls['registeredEmailId'].invalid && formGroup.controls['registeredEmailId'].touched}"
+                        formControlName="registeredEmailId" [disabled]="formGroup.controls['customer'].invalid && formGroup.controls['customer'].touched">
+                </mat-form-field>
+                <span class="error-msg" *ngIf="formGroup.controls['registeredEmailId'].invalid && formGroup.controls['registeredEmailId'].touched">
+                    {{Languages.get('errorMessage.emailId', 'capitalizeFirst')}}
+                </span>
+
+                <button mat-raised-button color="primary" (click)="sendEmail(formGroup.value)" type="submit" [disabled]="formGroup.invalid"
+                    mat-dialog-close>Invite to RRS</button>
+            </form>
+        </mat-card-content>
+    </div>
+</div>

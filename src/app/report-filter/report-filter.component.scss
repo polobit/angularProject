@@ -1,0 +1,13 @@
+.report-type{
+    font-size: 14px;
+    font-family: Roboto-Medium;
+    color: #0066A4;
+    padding-top: 12px;
+    font-weight: bold;
+    .mat-select /deep/ {
+         .mat-select-value-text {
+            color: #0066A4;
+        }
+    }
+
+}

@@ -1,0 +1,73 @@
+<app-bar-chart-toolbar *ngIf="!isDashboard" [periodChips]="periodChips" [customerChips]="customerChips" [modelChips]="modelChips" ></app-bar-chart-toolbar><div class="flex-item-box">
+    <div class="chart-container" [ngClass]="{'dashboard-chart-container': isDashboard}">
+        <div class="report-heading"  [ngClass]="{'dashboard-heading': isDashboard}">
+                <div class="heading-container">
+                <app-bar-chart-header [kpiName]="kpiName" [selectedPeriod]="selectedPeriod"></app-bar-chart-header>
+                <div class="inner-filter" *ngIf="!isDashboard">
+                    <div class="cases-by">
+                        <mat-form-field class="num-percent">
+                            <mat-select placeholder="{{Languages.get('filter.casesBy', 'upper')}}" (change)="change()"
+                                        [(value)]="selectedCase">
+                                <mat-option *ngFor="let case of casesBy" [value]="case">
+                                    {{Languages.get('filter.' + case, 'start')}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class='cases-by'>
+                        <mat-form-field class="num-percent">
+                            <mat-select placeholder="{{Languages.get('filter.onSiteTime', 'upper')}}"
+                                        (change)="change()" [(value)]="selectedTime">
+                                <mat-option *ngFor="let period of timePeriods; let i = index" [value]="i + 1">
+                                    {{Languages.get('filter.' + period.slot, 'start')}}
+                                </mat-option>
+                                <mat-option [value]="0">{{Languages.get('filter.all', 'capitalize')}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-heading" *ngIf="!isDashboard">
+                <div class="title-box">
+                    <div class="title">{{selectedCase === 'number' ? Languages.get('global.total', 'upper') :
+                        Languages.get('global.%ofAllCases', 'upper')}}
+                    </div>
+                </div>
+                <div class="value-box" *ngIf="averageValue">
+                    <p *ngIf="selectedCase === 'percentage'">{{round(averageValue,2)}} %</p>
+                    <p *ngIf="selectedCase === 'number'">{{averageValue | number}} {{ Languages.get('global.cases',
+                        'start')}}</p>
+                </div>
+            </div>
+        </div>
+        <app-bar-chart
+            [data]="chartData"
+            (barClick)="onBarClick($event)"
+            [width]="width"
+            [height]="height"
+            [type]="selectedCase"
+            [slots]="AppConfiguration.onSiteTime.timePeriods"
+            [slotNumber]="selectedTime - 1"
+            timeFormat="MMM D"
+            [sortData]="true"
+            [aggregateValue]="averageValue">
+        </app-bar-chart>
+    </div>
+    <div class="divider" *ngIf="!isDashboard"></div>
+    <app-chart-detail *ngIf="!isDashboard"
+        [kpiName]="kpiName"
+        [kpiSubName]="selectedTime === 0 ? Languages.get('filter.all', 'start') : Languages.get('filter.' + timePeriods[selectedTime - 1].slot, 'start')"
+        [isHour]="true"
+        [detailsByDate]="detailsByDate"
+        [fromDate]="fromDate"
+        [toDate]="toDate"
+        [selectedBarValue]="selectedBarValue"
+        [aggregateValue]="averageValue"
+        [aggregateName]="selectedCase === 'number' ? Languages.get('global.total', 'upper') : Languages.get('global.%ofAllCases', 'upper')"
+        [aggregateUnit]="selectedCase === 'number' ? Languages.get('global.cases', 'capitalize') : '%'"
+        [detailsType]="selectedTime === 0 ? 'stacked' : 'byDate'"
+        [stackedData]="getDataByDate(selectedDate, stackedData)"
+        [selectedCase]="selectedCase"
+        #detail>
+    </app-chart-detail>
+</div>

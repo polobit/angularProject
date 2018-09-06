@@ -1,0 +1,136 @@
+@import '../bar-chart/bar-chart.component';
+.filter-section{
+    display: flex;
+    padding-left: 20px;
+    flex-direction: row;
+    div {
+        font-size: 12px;
+        color: #000;
+        opacity:0.5;
+        margin-left: 20%;
+        margin-top: 2%;
+    }
+    @include phone {
+        flex-direction: column;
+        div {
+            margin-bottom: 4%;
+            margin-right: 26%;
+            text-align: center;
+        }
+    }
+}
+.report-container {
+    padding-bottom: 15px;
+    .section {
+        margin: 10px 15px 0 0;
+        display: flex;
+        @include phone {
+            flex-direction: column;
+            margin: 0 15px 0 0;
+        }
+        .flex-item-box {
+            margin: 0 0 0 15px;
+            padding: 15px;
+            min-height: 242px;
+            @include phone {
+                margin: 0 0 15px 15px;
+            }
+            .chart-container {
+                width: 100%;
+                overflow: hidden;
+            }
+        }
+        .donut-chart {
+            width: 22%;
+            min-width: 255px;
+            @include phone {
+                width: auto;
+            }
+            .flex-item-box {
+                .chart-container {
+                    align-items: center;
+                    min-height:222px;
+                    justify-content: center;
+                    @include phone {
+                        height: auto;
+                    }
+                }
+            }
+            .last-updated-date {
+                color: #A8A8A8;
+                font-size: 10px;
+            }
+            .bottom-card-section {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                font-size: 1em;
+                align-items: flex-start;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 10px;
+                .change-indicator {
+                    height: 24px;
+                    display: flex;
+                    align-items: center;
+                    color: mat-color($mat-light-blue, 700);
+                    font-size: 13px;
+                    &.red {
+                        color: mat-color($mat-red, 500);
+                    }
+                    &.green {
+                        color: mat-color($mat-green, 500);
+                    }
+                    .mat-icon {
+                        margin-left: -0.3em;
+                        margin-right: -0.1em;
+                    }
+                }
+                .grey-section {
+                    height: 24px;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+        .area-chart {
+            width: 80%;
+            min-width: 70%;
+            @include tablet {
+                min-width: 50%;
+            }
+            @include phone {
+                width: auto;
+            }
+        }
+        .card-title {
+            font-size: 12px;
+            color: #0067A5;
+            font-weight: bolder;
+            margin-bottom: 5px;
+        }
+        .bar-chart {
+            width: 60%;
+            @include phone {
+                width: auto;
+            }
+            .flex-item-box{
+                min-height: 300px;
+            }
+        }
+        .info-table {
+            width: 40%;
+            @include phone {
+                width: auto;
+                display:none;
+            }
+            .flex-item-box {
+                padding: 0px;
+            }
+        }
+        .chart-container {
+            width: 100%;
+            overflow: hidden;
+        }
+    }
+}

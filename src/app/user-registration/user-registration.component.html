@@ -1,0 +1,96 @@
+<div class="container" *appLoading="invitedUserInfo || alreadyRegistered">
+    <img src="assets/images/Revolution-Retail-Systems-logo_mobile.png" />
+    <span class="welcome-message">Welcome back to RRS Customer Portal</span>
+    <span class="guideline-message" *ngIf="!alreadyRegistered">Please register with us to continue </span>
+    <mat-card class="card" *ngIf="invitedUserInfo">
+        <form class="form" [formGroup]="formGroup" (ngSubmit)="isStoreNumberExists(formGroup.value)">
+            <mat-card-content>
+                <div class="input-row">
+                    <div class="text-field">
+                        <mat-form-field>
+                            <input matInput placeholder="First Name" type="text" formControlName="firstName" [ngClass]="{'error' : formGroup.controls['firstName'].invalid && formGroup.controls['firstName'].touched}"
+                            />
+                        </mat-form-field>
+                        <span class="error-msg" *ngIf="formGroup.controls['firstName'].invalid && formGroup.controls['firstName'].touched">{{Languages.get('errorMessage.firstName', 'capitalizeFirst')}}</span>
+                    </div>
+                    <div class="text-field">
+                        <mat-form-field>
+                            <input matInput placeholder="Last Name" type="text" formControlName="lastName" [ngClass]="{'error' : formGroup.controls['lastName'].invalid && formGroup.controls['lastName'].touched}"
+                            />
+                        </mat-form-field>
+                        <span class="error-msg" *ngIf="formGroup.controls['lastName'].invalid && formGroup.controls['lastName'].touched">{{Languages.get('errorMessage.lastName', 'capitalizeFirst')}}</span>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="text-field">
+                        <mat-form-field>
+                            <input matInput placeholder="Email Id" type="email" class="email" formControlName="emailId" [value]="invitedUserInfo.registeredEmailId"
+                                [ngClass]="{'error' : formGroup.controls['emailId'].invalid && formGroup.controls['emailId'].touched}"
+                                readonly/>
+                        </mat-form-field>
+                        <span class="error-msg" *ngIf="formGroup.controls['emailId'].invalid && formGroup.controls['emailId'].touched">{{Languages.get('errorMessage.emailId', 'capitalizeFirst')}}</span>
+                    </div>
+                    <div class="text-field">
+                        <mat-form-field>
+                            <input matInput placeholder="Job Title" type="text" formControlName="jobTitle" [ngClass]="{'error' : formGroup.controls['jobTitle'].invalid && formGroup.controls['jobTitle'].touched}"
+                            />
+                        </mat-form-field>
+                        <span class="error-msg" *ngIf="formGroup.controls['jobTitle'].invalid && formGroup.controls['jobTitle'].touched">{{Languages.get('errorMessage.jobTitle', 'capitalizeFirst')}}</span>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="text-field">
+                        <mat-form-field>
+                            <input matInput placeholder="Phone Number" type="text" pattern="^[0-9]*$" formControlName="contactNumber" [ngClass]="{'error' : (formGroup.controls['contactNumber'].hasError('max') || formGroup.controls['contactNumber'].hasError('min') || formGroup.controls['contactNumber'].hasError('required')) && formGroup.controls['contactNumber'].touched}"
+                            />
+                        </mat-form-field>
+                        <span class="error-msg" *ngIf="formGroup.controls['contactNumber'].hasError('required') && formGroup.controls['contactNumber'].touched">{{Languages.get('errorMessage.contactNumber.required', 'capitalizeFirst')}}</span>
+                        <span class="error-msg" *ngIf="(formGroup.get('contactNumber').hasError('max') || formGroup.get('contactNumber').hasError('min')) && formGroup.controls['contactNumber'].touched">{{Languages.get('errorMessage.contactNumber.length', 'capitalizeFirst')}}</span>
+                    </div>
+                    <div class="text-field">
+                        <mat-form-field>
+                            <input matInput placeholder="Location" type="text" formControlName="location" [ngClass]="{'error' : formGroup.controls['location'].invalid && formGroup.controls['location'].touched}"
+                            />
+                        </mat-form-field>
+                        <span class="error-msg" *ngIf="formGroup.controls['location'].invalid && formGroup.controls['location'].touched">{{Languages.get('errorMessage.location', 'capitalizeFirst')}}</span>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="text-field">
+                        <mat-form-field>
+                            <input matInput placeholder="Password" [type]="inputType" class="password" formControlName="password" [ngClass]="{'error' : formGroup.controls['password'].invalid && formGroup.controls['password'].touched}"
+                                (input)="passwordValueValidator($event.target.value);" />
+                            <span class="eye-icon" (click)="showPassword(formGroup.controls['password'].value);">
+                                <i class="material-icons">remove_red_eye</i>
+                            </span>
+                        </mat-form-field>
+                        <span class="error-msg" *ngIf="formGroup.controls['password'].invalid && formGroup.controls['password'].touched">{{Languages.get('errorMessage.password', 'capitalizeFirst')}}</span>
+                        <span class="error-msg" *ngIf="invalidPassword">{{Languages.get('errorMessage.invalidPassword', 'capitalizeFirst')}}</span>
+                    </div>
+                    <div class="text-field">
+                        <mat-form-field *ngIf="invitedUserInfo.userType === 'customer' && invitedUserInfo.userType !== 'viewer' && invitedUserInfo.userType !== 'admin' || invitedUserInfo.userType === 'customer-admin'  && invitedUserInfo.userType !== 'viewer' && invitedUserInfo.userType !== 'admin'">
+                            <input matInput placeholder="Store Number" type="text" formControlName="storeNumber" [ngClass]="{'error' : formGroup.controls['storeNumber'].invalid && formGroup.controls['storeNumber'].touched}" (input)="removeStoreError($event.target.value)" [hidden]=""/>
+                        </mat-form-field>
+                        <span class="error-msg" *ngIf="formGroup.controls['storeNumber'].invalid && formGroup.controls['storeNumber'].touched || emptyStorenumber">{{Languages.get('errorMessage.storeNumber', 'capitalizeFirst')}}</span>
+                        <p class="error-msg" *ngIf="storeError">{{Languages.get('errorMessage.errorStore', 'capitalizeFirst')}}</p>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button type="submit" [ngClass]=" {'disabled' : formGroup.invalid}" [disabled]="formGroup.invalid || invalidPassword || storeError" color="primary">Sign Up</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+    <mat-card class="validation-card" *ngIf="alreadyRegistered">
+        <mat-card-content>
+            <h2>This user is already registered.</h2>
+        </mat-card-content>
+        <mat-card-actions>
+            <a href="{{authUrl}}">
+                <button mat-raised-button color="primary">
+                    Sign In
+                </button>
+            </a>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,0 +1,155 @@
+<section class="signin-section">
+    <div class="container">
+        <span class="title thin-font">{{Languages.get('homePage.signinSection.title', 'start')}}</span>
+        <span class="heading">{{Languages.get('homePage.signinSection.heading', 'upper')}}</span>
+        <span class="description thin-font">{{Languages.get('homePage.signinSection.description', 'start')}}</span>
+        <span class="signin-container">
+            <button mat-button color="primary" class="get-access-btn" *ngIf="!isLogin">{{Languages.get('homePage.getAccess', 'upper')}}</button>
+            <button mat-button class="signin-btn" (click)="goToSignIn()" *ngIf="!isLogin">{{Languages.get('homePage.signIn', 'start')}}</button>
+            <button id="goToDashboard" mat-button class="signin-btn" routerLink="/exec-dashboard" *ngIf="isLogin">{{Languages.get('homePage.goToDashboard', 'start')}}</button>
+        </span>
+    </div>
+</section>
+<section class="customer-section">
+    <div class="container">
+        <span class="heading heading-text">
+            <span>{{Languages.get('homePage.customerSection.why', 'start')}}</span>
+            <span>{{Languages.get('homePage.customerSection.heading', 'start')}}</span>
+        </span>
+        <span class="divider"></span>
+        <span class="description thin-font">{{Languages.get('homePage.customerSection.description')}}</span>
+    </div>
+</section>
+<section class="executive-section">
+    <div class="container">
+        <span class="heading heading-text">
+            {{Languages.get('homePage.executiveDashboard.heading', 'start')}}
+        </span>
+        <span class="description thin-font">{{Languages.get('homePage.executiveDashboard.description')}}</span>
+        <img class="hide-phone" src="../../assets/images/landing-page/Executive Dashboard @2x.png" />
+        <img class="show-phone" src="../../assets/images/landing-page/mobile/Executive Dashboard image@2x.png" />
+    </div>
+</section>
+<section class="common-section white-bg">
+    <div class="container">
+        <span class="content-wrapper">
+            <span class="heading heading-text">
+                {{Languages.get('homePage.realTimeAnalytics.heading', 'start')}}
+            </span>
+            <span class="description thin-font">{{Languages.get('homePage.realTimeAnalytics.description')}}</span>
+        </span>
+        <span class="img-wrapper">
+            <img class="hide-phone" src="../../assets/images/landing-page/Real time Analytics image.png" />
+            <img class="show-phone" src="../../assets/images/landing-page/mobile/Real time Analytics image@2x.png" />
+        </span>
+    </div>
+</section>
+<section class="alert-by-metrics common-section">
+    <div class="container">
+        <span class="img-wrapper">
+            <img class="hide-tab" src="../../assets/images/landing-page/Alert Cards.png" />
+            <img class="show-tab" src="../../assets/images/landing-page/mobile/Alert Cards.png" />
+        </span>
+        <span class="content-wrapper">
+            <span class="heading heading-text">
+                <span>{{Languages.get('homePage.alertsByMetrics.heading', 'start')}}</span>
+                <img src="../../assets/images/landing-page/Arrows Red _ Green@2x.png" />
+            </span>
+            <span class="description thin-font">{{Languages.get('homePage.alertsByMetrics.description')}}</span>
+        </span>
+    </div>
+</section>
+<section class="common-section analytics-section">
+    <div class="container">
+        <span class="content-wrapper">
+            <span class="coming-soon thin-font">{{Languages.get('homePage.comingSoon', 'start')}}</span>
+            <span class="heading heading-text">
+                {{Languages.get('homePage.predictiveAnalytics.heading', 'start')}}
+            </span>
+            <span class="description thin-font">{{Languages.get('homePage.predictiveAnalytics.description')}}</span>
+        </span>
+        <span class="img-wrapper">
+            <img class="hide-phone" src="../../assets/images/landing-page/Predictive Analytics .png" />
+            <img class="show-phone" src="../../assets/images/landing-page/mobile/Predictive Analytics Image@2x.png" />
+        </span>
+    </div>
+</section>
+<section class="common-section mobile-app-section">
+    <div class="container">
+        <span class="img-wrapper">
+            <img class="hide-phone" src="../../assets/images/landing-page/mobile/Mobile Application mobile image@2x.png" />
+            <img class="show-phone" src="../../assets/images/landing-page/mobile/Mobile Application mobile image@2x.png" />
+        </span>
+        <span class="content-wrapper">
+            <span class="heading heading-text">
+                {{Languages.get('homePage.mobileApplication.heading', 'start')}}
+            </span>
+            <span class="description thin-font">{{Languages.get('homePage.mobileApplication.description')}}</span>
+            <span class="extended-description thin-font">{{Languages.get('homePage.mobileApplication.extendedDescription')}}</span>
+        </span>
+    </div>
+</section>
+<!-- <section class="executive-section our-customer-section">
+    <div class="container">
+        <span class="heading heading-text">
+            {{Languages.get('homePage.ourCustomers.heading', 'start')}}
+        </span>
+        <span class="description thin-font">{{Languages.get('homePage.ourCustomers.description')}}</span>
+        <span class="customer-list">
+            <span class="customer-wrapper">
+                <mat-card>
+                    <img class="hide-phone" src="../../assets/images/landing-page/mobile/walmart logo@2x.png" />
+                    <img class="show-phone" src="../../assets/images/landing-page/mobile/walmart logo.png" />
+                </mat-card>
+                <mat-card>
+                    <img class="hide-phone" src="../../assets/images/landing-page/mobile/costco logo@2x.png" />
+                    <img class="show-phone" src="../../assets/images/landing-page/mobile/costco logo.png" />
+                </mat-card>
+            </span>
+            <span class="customer-wrapper">
+                <mat-card>
+                    <img class="hide-phone" src="../../assets/images/landing-page/mobile/Sam's club logo@2x.png" />
+                    <img class="show-phone" src="../../assets/images/landing-page/mobile/Sam's club logo.png" />
+                </mat-card>
+                <mat-card>
+                    <img class="hide-phone" src="../../assets/images/landing-page/mobile/Mc Donalds logo@2x.png" />
+                    <img class="show-phone" src="../../assets/images/landing-page/mobile/Mc Donalds logo.png" />
+                </mat-card>
+            </span>
+        </span>
+    </div>
+</section> -->
+<section class="contact-section" *ngIf="!isLogin">
+    <div class="container">
+        <span class="content-wrapper">
+            <span class="heading heading-text">
+                {{Languages.get('homePage.getAccessSection.heading', 'start')}}
+            </span>
+            <span class="description thin-font">{{Languages.get('homePage.getAccessSection.description')}}</span>
+            <span class="contact-form">
+                <input placeholder="Name">
+                <input placeholder="Email">
+                <input placeholder="Organization">
+                <button mat-button type="submit">{{Languages.get('homePage.getAccessSection.heading', 'start')}}</button>
+            </span>
+        </span>
+    </div>
+</section>
+<section class="footer-section">
+    <div class="container">
+        <span class="copy-right">{{Languages.get('homePage.footer.copyRight', 'start')}}</span>
+        <span class="action">
+            <span class="footer-menu">
+                <span class="menu-wrapper">
+                    <span class="menu-title">{{Languages.get('homePage.footer.menuList.about', 'start')}}</span>
+                    <span class="menu-title">{{Languages.get('homePage.footer.menuList.solutions', 'start')}}</span>
+                </span>
+                <span class="menu-wrapper">
+                    <span class="menu-title">{{Languages.get('homePage.footer.menuList.customers', 'start')}}</span>
+                    <span class="menu-title">{{Languages.get('homePage.footer.menuList.contact', 'start')}}</span>
+                </span>
+            </span>
+            <button mat-button (click)="goToSignIn()" *ngIf="!isLogin">{{Languages.get('homePage.signIn', 'upper')}}</button>
+        </span>
+    </div>
+</section>

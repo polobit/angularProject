@@ -1,0 +1,48 @@
+<app-bar-chart-toolbar *ngIf="!isDashboard" [periodChips]="periodChips" [customerChips]="customerChips" [modelChips]="modelChips" ></app-bar-chart-toolbar>
+<div class="flex-item-box">
+    <div class="chart-container" [ngClass]="{'dashboard-chart-container': isDashboard}">
+        <div class="report-heading"  [ngClass]="{'dashboard-heading': isDashboard}">
+            <div class="heading-container">
+                <app-bar-chart-header [kpiName]="kpiName" [selectedPeriod]="selectedPeriod"></app-bar-chart-header>
+            </div>
+            <div class="accordion-heading"  *ngIf="!isDashboard">
+                <div class="title-box">
+                    <div class="title">{{Languages.get('global.average', 'upper')}}</div>
+                </div>
+                <div class="value-box" *ngIf="averageValue" 
+                     [style.backgroundColor]="averageValue > AppConfiguration.averageHours.target ?
+         AppConfiguration.global.colors.aggregateValueBad : averageValue < AppConfiguration.averageHours.target ?
+         AppConfiguration.global.colors.aggregateValueGood : AppConfiguration.global.colors.aggregateValueNeutral">
+                    <p>{{round(averageValue, 2)}} {{Languages.get('global.hrs', 'start')}}</p>
+                </div>
+            </div>
+        </div>
+        <app-bar-chart
+            [data]="chartData"
+            (barClick)="onBarClick($event)"
+            [threshold]="AppConfiguration.averageHours.target"
+            [width]="width"
+            [height]="height"
+            timeFormat="MMM D"
+            [sortData]="true"
+            [aggregateValue]="averageValue">
+        </app-bar-chart>
+    </div>
+    <div class="divider" *ngIf="!isDashboard"></div>
+    <app-chart-detail *ngIf="!isDashboard"
+        [kpiName]="kpiName"
+        [isHour]="true"
+        [selectedBarValue]="selectedBarValue"
+        [detailsByDate]="detailsByDate"
+        [detailsType]="'byDate'"
+        [fromDate]="fromDate"
+        [toDate]="toDate"
+        [aggregateValue]="averageValue"
+        [aggregateName]="Languages.get('global.average', 'upper')"
+        [aggregateUnit]="Languages.get('global.hrs', 'start')"
+        [aggregateValueColor]="averageValue > AppConfiguration.averageHours.target ?
+         AppConfiguration.global.colors.aggregateValueBad : averageValue < AppConfiguration.averageHours.target ?
+         AppConfiguration.global.colors.aggregateValueGood : AppConfiguration.global.colors.aggregateValueNeutral"
+        #detail>
+    </app-chart-detail>
+</div>

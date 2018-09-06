@@ -1,0 +1,6 @@
+<div class="title">
+    <span>{{kpiName}}</span>
+    <span *ngIf="selectedPeriod" class="subtitle">
+        {{Languages.get('global.' + AppConfiguration.global.periods.titles[AppConfiguration.global.periods.values.indexOf(selectedPeriod)], 'start')}}
+    </span>
+</div>

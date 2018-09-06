@@ -1,0 +1,89 @@
+@import '../app.common';
+ 
+.card-container {
+  
+   
+    display: grid;
+    // margin: 0 auto;
+    grid-template-columns: repeat(4, minmax(10vw, 270px));
+    grid-template-rows: repeat(auto-fill, minmax(300px, 1fr));
+    padding: 15px;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    justify-content: center;
+    align-content: center;
+    // grid-template-areas:"header"
+    // "card";
+    @include desktop-small {
+        padding: 20px;
+        grid-template-columns: repeat(4, minmax(15vw, 250px));
+    }
+    @include tablet-only {
+        padding: 15px;
+        grid-template-columns: repeat(3, minmax(15vw, 230px));
+    }
+    @include phone-only {
+        padding: 2px;
+        grid-row-gap: 5px;
+        grid-column-gap: 5px;
+        grid-template-columns: repeat(2, minmax(15vw, 170px));
+        grid-template-rows: repeat(auto-fill, minmax(240px, 1fr));
+    }
+    a {
+        text-decoration: none;
+    }
+    .card-row {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        width: 100%;
+    }
+    > app-dashboard-card {
+        @for $i from 1 through 4 {
+            &.column-#{$i} {
+                grid-column: #{$i};
+            }
+        }
+
+        @for $i from 1 through 20 {
+            &.row-#{$i} {
+                grid-row: #{$i};
+            }
+        }
+    }
+}
+// .header { grid-area: header; }
+.no-alerts {
+    display: flex;
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    @include phone-only {
+        top: 56px;
+    }
+    > div:not(:last-child) {
+        margin-bottom: 1.5em;
+    }
+}
+
+/*
+@include tablet {
+    .card-container {
+        display: flex;
+        justify-content: center;
+    }
+}*/
+
+.heading-alert {
+    display: flex;
+    color: #0067A5;
+    font-weight: bold;
+    justify-content: space-around;
+    margin-top: 10px;
+}

@@ -1,0 +1,134 @@
+@import '../app.common';
+$font-family: Roboto-Light,
+"Helvetica Neue",
+sans-serif;
+.dialog-box {
+    display: flex;
+    flex-direction: column;
+    // @include landscape{
+    //     height: 90vh;
+    // }
+    .close-section {
+        display: flex;
+        justify-content: flex-end;
+        button {
+            float: right;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            .mat-icon {
+                color: #0065A4;
+                cursor: pointer;
+            }
+        }
+        
+    }
+    .dialog-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        height: 55vh;
+        margin-top: 5%;
+        // @include landscape{
+        //     height: 65vh;
+        // }
+        // .RRSlogo{
+        //     @include landscape{
+        //         margin-top: -7%;
+        //     }          
+        // }
+    
+        @include phone {
+            height: 65vh;
+        }
+        @include phone-small {
+            margin-top: 3%;
+        }
+        // .closeBtn{
+        //     @include landscape{
+        //         margin-top: 5%;
+        //     }    
+        // }
+        .success-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            @include phone-small{
+                padding-top: 10px;
+            }
+            .mat-icon {
+                height: 40px;
+                width: auto;
+                font-size: 40px;
+                padding: 20px;
+                border-radius: 100%;
+            }
+            .yellow-icon{
+                color: #FF9800;
+                border: 3px solid #FF9800;  
+                // @include landscape{
+                //     margin-top: 35%;
+                // }          
+            }
+            .red-icon{
+                color: #F60022;
+                border: 3px solid #F60022;     
+            }
+            .message-title {
+                font-size: 20px;
+            }
+            .confirm-title {
+                font-size: 16px;
+                margin: 20px 20px 0 20px;
+                text-align: center;
+                font-weight: bold;
+                // @include landscape{
+                //     margin-top: 10%;
+                // }
+            }
+            .message-content {
+                margin-top: 10px;
+                font-size: 16px;
+                font-weight: 100;
+                color: #8F979D;
+                font-family: $font-family;
+                letter-spacing: 1px;
+                text-align: center;
+            }
+        }
+        .button {
+            background-color: #39B54A;
+            color: #fff;
+            width: 150px;
+            height: 40px;
+            font-size: 14px;
+            outline: none;
+        }
+        .confirmation-btn-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+           
+            // @include landscape{
+            //     position:absolute;
+            //     bottom:10%;
+            // }
+           
+        }
+    }
+    .save-confirm-box {
+        height: 30vh;
+        padding: 0;
+    }
+    .delete-confirm-box {
+        height: 45vh;
+        padding: 0;
+    }
+}

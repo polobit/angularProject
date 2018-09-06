@@ -1,0 +1,162 @@
+<div class="filter-section">
+  <app-report-filter></app-report-filter>
+  <app-bar-chart-toolbar [periodChips]="periodChips" [customerChips]="customerChips" [modelChips]="modelChips" [isBack]="false"></app-bar-chart-toolbar>
+</div>
+<div class="filter-section last-update">
+  <span>
+      {{Languages.get('global.lastUpdated', 'start')}}: 
+      {{timeStamp ? moment(timeStamp, AppConfiguration.global.apiTimeFormat).subtract(1, 'days').format(AppConfiguration.global.displayTimeFormat) :
+      Languages.get('global.na', 'upper')}}
+  </span>
+</div>
+<div class="report-container">
+  <div class="section">
+    <div class="donut-chart"  *ngIf="interventionByUsedonutChartData">
+      <div class="flex-item-box">
+        <div class="chart-container">
+          <app-donut-chart
+              height="225" 
+              width="250" 
+              radius="120" 
+              [centerTitle]="donutCenterTitle" 
+              [centerSubTitle]="donutCenterSubTitle"
+              [titleColor]="titleColor" 
+              [data]="interventionByUsedonutChartData" 
+              [donutThickness]="15">
+          </app-donut-chart>
+        </div>
+      </div>
+    </div>
+    <div class="area-chart" *ngIf="chartData">
+      <div class="flex-item-box">
+        <div class="chart-container">
+          <span class="card-title">
+            {{Languages.get('global.interventionCount', 'start')}} {{Languages.get('periods.' + periodChips.text, 'start')}}
+          </span>
+          <app-area-chart 
+            [data]="chartData" 
+            [type]="selectedCase" 
+            [period]="selectedPeriod">
+          </app-area-chart>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+   <!--InterventionByStoreChartData-->
+   <div class="section" *ngIf="interventionByStoreChartData && interventionByStoretableData"> 
+      <div class="bar-chart" *ngIf="interventionByStoreChartData">
+        <div class="flex-item-box">
+          <div class="chart-container">
+            <span class="card-title">
+                {{Languages.get('global.interventionCount', 'start')}} {{Languages.get('global.store', 'start')}}
+            </span>
+            <app-bar-chart 
+                [serverPagination]="true"
+                [dataLength]="interventionByStoreLength" 
+                [data]="interventionByStoreChartData" 
+                [barsPerPage]="30" 
+                (barClick)="onStoreChartBarClick($event)" 
+                (pageChange)="onPageChange($event, 'interventionByStore')"
+                [barsPerPage]="30" 
+                [width]="width"
+                [chartFor]="'report'" 
+                [type]="selectedCase" 
+                [barColor]="'rgba(234,70,70,1)'" 
+                timeFormat="MMM D" 
+                [tickAngle]="'-40'" 
+                [sortData]="true"
+                [chartName]="'storeChart'"
+                [noData]="noData">
+            </app-bar-chart>
+          </div>
+        </div>
+      </div>
+  
+      <div class="info-table" *ngIf="interventionByStoretableData">
+        <div class="flex-item-box">
+          <div class="chart-container">
+            <app-info-table [data]="interventionByStoretableData" [columnList]="storeColumnList" [reportType]="'interventionByStore'" #infoTable></app-info-table>
+          </div>
+        </div>
+      </div>
+  </div>
+  <!--InterventionByUserChartData-->
+  <div class="section" *ngIf="interventionByUserChartData && interventionByUsertableData"> 
+    <div class="bar-chart" *ngIf="interventionByUserChartData">
+      <div class="flex-item-box">
+        <div class="chart-container">
+          <span class="card-title">
+              {{Languages.get('global.interventionRatio', 'start')}} {{Languages.get('global.user', 'start')}} 
+          </span>
+          <app-bar-chart 
+              [serverPagination]="true"
+              [dataLength]="interventionByUserLength" 
+              [data]="interventionByUserChartData" 
+              [barsPerPage]="30" 
+              (barClick)="onUserChartBarClick($event)" 
+              (pageChange)="onPageChange($event, 'interventionByUser')"
+              [barsPerPage]="30" 
+              [width]="width"
+              [chartFor]="'report'" 
+              [type]="'percentage'" 
+              [barColor]="'rgba(54,100,228,1)'" 
+              timeFormat="MMM D" 
+              [tickAngle]="'-40'" 
+              [sortData]="true"
+              [barRadius]="5"
+              [chartName]="'userChart'"
+              [noData]="noData">
+          </app-bar-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-table" *ngIf="interventionByUsertableData">
+      <div class="flex-item-box">
+        <div class="chart-container">
+          <app-info-table [data]="interventionByUsertableData" [columnList]="userColumnList" [reportType]="'interventionByUser'" #infoTable3></app-info-table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--InterventionByTransactionChartData-->
+  <div class="section" *ngIf="interventionByTransChartData && interventionByTranstableData"> 
+    <div class="bar-chart">
+      <div class="flex-item-box">
+        <div class="chart-container">
+          <span class="card-title">
+              {{Languages.get('global.interventionCount', 'start')}} {{Languages.get('global.transDetails', 'start')}}
+          </span>
+          <app-bar-chart 
+              [serverPagination]="true"
+              [dataLength]="interventionByTransLength" 
+              [data]="interventionByTransChartData" 
+              [barsPerPage]="30" 
+              (barClick)="onTransChartBarClick($event)" 
+              (pageChange)="onPageChange($event, 'interventionByTransaction')"
+              [width]="width"
+              [chartFor]="'report'" 
+              [type]="selectedCase" 
+              [barColor]="'rgba(37,206,68,1)'" 
+              timeFormat="MMM D" 
+              [tickAngle]="'-40'" 
+              [sortData]="true"
+              [barRadius]="10"
+              [chartName]="'transactionChart'"
+              [noData]="noData">
+          </app-bar-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-table" *ngIf="interventionByTranstableData">
+      <div class="flex-item-box">
+        <div class="chart-container">
+          <app-info-table [data]="interventionByTranstableData" [columnList]="transColumnList" [reportType]="'interventionByTransaction'" #infoTable2></app-info-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

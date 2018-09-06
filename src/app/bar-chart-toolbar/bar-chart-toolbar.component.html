@@ -1,0 +1,83 @@
+<mat-toolbar-row>
+    <span class="action-section" [ngClass]="{'align-right': !isBack}">
+        <app-back-button *ngIf="isBack"></app-back-button>
+        <span class="vertical-divider"  *ngIf="isFilterEnabled && isBack"></span>
+        <a mat-button class="clear-all" color="primary" (click)="clearAllFilter()"  *ngIf="isFilterEnabled">
+            <span>Clear all</span>
+        </a>
+    </span>
+    <span class="filter-section" *ngIf="isFilterEnabled">
+        <span class="vertical-divider"></span>
+        <mat-chip-list *ngIf="customerChips">
+            <span class="filter-title"> Customers : </span>
+            <span class="chip-section">
+                <span *ngFor="let chip of customerChips; let i = index">
+                    <mat-chip *ngIf="chip.text === 'ALL'">
+                        <span class="text">All Customer</span>
+                    </mat-chip>
+                    <mat-chip *ngIf="chip.text !== 'ALL' && i < chipsLimit" [removable]="chip.removable" (removed)="onChipRemoved(i, chip.text, 'customer')"
+                        class="filter-chips">
+                        <span matTooltip="{{chip.text}}" class="text">{{chip.text}}</span>
+                        <mat-icon matChipRemove *ngIf="chip.removable">cancel</mat-icon>
+                    </mat-chip>
+                </span>
+                <mat-chip [matMenuTriggerFor]="filterList" class="filter-count" *ngIf="customerChips.length > chipsLimit"
+                    selected="true" color="primary">
+                    + {{customerChips.length - chipsLimit}}
+                </mat-chip>
+            </span>
+            <mat-menu #filterList="matMenu">
+                <span class="filter-list" *ngFor="let chip of customerChips; let i = index">
+                    <span *ngIf="chip.text !== 'ALL' && i > countLimit">
+                        <span class="text">{{chip.text}}</span>
+                        <mat-icon *ngIf="chip.removable" (click)="onChipRemoved(i, chip.text, 'customer')">clear</mat-icon>
+                    </span>
+                    <mat-divider *ngIf="i > countLimit"></mat-divider>
+                </span>
+            </mat-menu>
+        </mat-chip-list>
+
+        <span class="vertical-divider"></span>
+
+        <mat-chip-list *ngIf="modelChips" class="model-section">
+            <span class="filter-title"> Models : </span>
+            <span class="chip-section">
+                <span *ngFor="let chip of modelChips; let i = index">
+                    <mat-chip *ngIf="chip.text === 'ALL'">
+                        <span class="text">All Models</span>
+                    </mat-chip>
+                    <mat-chip *ngIf="chip.text !== 'ALL' && i < chipsLimit" [removable]="chip.removable" (removed)="onChipRemoved(i, chip.text, 'model')"
+                        class="filter-chips">
+                        <span matTooltip="{{chip.text}}" class="text">{{chip.text}}</span>
+                        <mat-icon matChipRemove *ngIf="chip.removable">cancel</mat-icon>
+                    </mat-chip>
+                </span>
+                <mat-chip [matMenuTriggerFor]="filterList" class="filter-count" *ngIf="modelChips.length > chipsLimit"
+                    selected="true" color="primary">
+                    + {{modelChips.length - chipsLimit}}
+                </mat-chip>
+            </span>
+            <mat-menu #filterList="matMenu">
+                <span class="filter-list" *ngFor="let chip of modelChips; let i = index">
+                    <span *ngIf="chip.text !== 'ALL' && i > countLimit">
+                        <span class="text">{{chip.text}}</span>
+                        <mat-icon *ngIf="chip.removable" (click)="onChipRemoved(i, chip.text, 'model')">clear</mat-icon>
+                    </span>
+                    <mat-divider *ngIf="i > countLimit"></mat-divider>
+                </span>
+            </mat-menu>
+        </mat-chip-list>
+
+        <span class="vertical-divider" *ngIf="isPeriodEnabled"></span>
+
+        <mat-chip-list *ngIf="periodChips && isPeriodEnabled" class="period-section">
+            <span class="filter-title"> Period : </span>
+            <mat-chip [removable]="periodChips.removable" (removed)="onChipRemoved(0, periodChips.text, 'period')">
+                <span class="text">
+                    {{Languages.get('periods.' + periodChips.text, 'start')}}
+                </span>
+                <mat-icon matChipRemove *ngIf="periodChips.removable">cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+    </span>
+</mat-toolbar-row>

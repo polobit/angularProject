@@ -1,0 +1,107 @@
+<div class="kpi-wrapper">
+    <div class="kpi-container card-wrapper" *ngIf="userType === 'super-admin' || userType === 'admin'">
+      <span class="heading-container" *ngIf="alertCard">
+        <span class="heading">{{Languages.get('global.alerts', 'upper')}}<span class="count hide-phone">(1 of {{alertCount}})</span></span>
+        <button id="alert-cards" mat-button routerLink="/alert">{{Languages.get('global.details', 'start')}}
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      </span>
+      <span class="card-container" [ngClass]="{'dashboard-card-container': alertCard?.previousAverage !== ''}">   <app-dashboard-card 
+            *ngIf="alertCard else noAlerts"
+            [id]="alertCard"
+            [link]="alertCard?.link"
+            [isLoaded]="alertCard !== undefined"
+            [isAlert]="true"
+            [title]="alertCard?.title"
+            [lastUpdated]="alertCard?.lastUpdated"
+            [kpiUnit]="alertCard?.kpiUnit"
+            [kpiUnitType]="alertCard?.kpiUnitType"
+            [kpiValue]="alertCard?.kpiValue"
+            [previousAverage]="alertCard?.previousAverage"
+            [previousAverageUnit]="alertCard?.previousAverageUnit"
+            [percentageChange]="alertCard?.percentageChange"
+            [previousDayDate]="alertCard?.previousDayDate">
+        </app-dashboard-card>
+      </span>
+    </div>
+    <!-- <div class="kpi-container chart-wrapper">
+      <span class="heading-container" *ngIf="alertCard">
+        <span class="heading">{{Languages.get('global.analysis', 'upper')}}</span>
+        <button mat-button [disableRipple]="true" [routerLink]="alertCard?.link">{{Languages.get('global.details', 'start')}}
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      </span>
+      <span class="chart-container" *ngIf="alertCard">
+        <app-average-bar-chart 
+            *ngIf="alertCard?.kpiName === 'averageHoursSpentOnsite'" 
+            [height]="285" 
+            [isDashboard]="true">
+        </app-average-bar-chart>
+        <app-high-frequency-stores-chart 
+            *ngIf="alertCard?.kpiName === 'highFrequencyDispatch'" 
+            [height]="214" 
+            [isDashboard]="true">
+        </app-high-frequency-stores-chart>
+        <app-first-time-fix-chart 
+            *ngIf="alertCard?.kpiName === 'firstTimeFix'" 
+            [height]="275" 
+            [isDashboard]="true">
+        </app-first-time-fix-chart>
+        <app-onsite-bar-chart 
+            *ngIf="alertCard?.kpiName === 'casesByOnsiteHours'" 
+            [height]="285" 
+            [selectedTime]="alertCard?.onsiteSlot" 
+            [isDashboard]="true">
+        </app-onsite-bar-chart>
+        <app-cases-by-area-bar-chart 
+            *ngIf="alertCard?.kpiName === 'casesByArea'" 
+            area="alertCard?.area" 
+            [height]="262" 
+            [isDashboard]="true">
+        </app-cases-by-area-bar-chart>
+        <app-sla-chart 
+            *ngIf="alertCard?.kpiName === 'serviceLevelAgreement'" 
+            zone="alertCard?.zone" 
+            [height]="262" 
+            [isDashboard]="true">
+        </app-sla-chart>
+      </span>
+    </div> -->
+    <div class="kpi-container unit-life-container" [ngClass]="{'chart-wrapper': (userType === 'super-admin' || userType === 'admin')}">
+      <span class="heading-container">
+        <span class="heading">{{Languages.get('machineDashboard.unitLife.execHeading', 'upper')}}</span>
+        <button id="unit-life-details" mat-button routerLink="/unit-life" *ngIf="userType !== 'customer-admin' && userType !== 'customer'">{{Languages.get('global.details', 'start')}}
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      </span>
+      <span class="unit-life">
+        <app-unit-life [isDashboard]="true"></app-unit-life>
+      </span>
+    </div>
+    <div class="kpi-container card-wrapper" *ngIf="userType === 'super-admin' || userType === 'admin'">
+      <span class="heading-container" *ngIf="dashboardCard">
+        <span class="heading">{{Languages.get('global.dashboard', 'upper')}}<span class="count hide-phone">(1 of {{dashboardCount}})</span></span>
+        <button id="dashboard-cards" mat-button [disableRipple]="true" routerLink="/dashboard">{{Languages.get('global.details', 'start')}}
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      </span>
+      <span class="card-container" [ngClass]="{'dashboard-card-container': dashboardCard?.previousAverage !== ''}"> 
+      <app-dashboard-card 
+          *ngIf="dashboardCard"
+          [id]="dashboardCard"
+          [link]="dashboardCard?.link"
+          [isLoaded]="dashboardCard !== undefined"
+          [isAlert]="false"
+          [title]="dashboardCard?.title"
+          [lastUpdated]="dashboardCard?.lastUpdated"
+          [kpiUnit]="dashboardCard?.kpiUnit"
+          [kpiUnitType]="dashboardCard?.kpiUnitType"
+          [kpiValue]="dashboardCard?.kpiValue"
+          [previousAverage]="dashboardCard?.previousAverage"
+          [previousAverageUnit]="dashboardCard?.previousAverageUnit"
+          [percentageChange]="dashboardCard?.percentageChange"
+          [previousDayDate]="dashboardCard?.previousDayDate">
+      </app-dashboard-card>
+      </span>
+    </div>
+  </div>

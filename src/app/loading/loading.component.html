@@ -1,0 +1,12 @@
+<div class="loading">
+    <!-- mat-progress-spinner mode="indeterminate"></mat-progress-spinner -->
+    <div class="spinner-container">
+        <svg *ngIf="!isTimeout" class="spinner" width="65px" height="65px" viewBox="0 0 66 66"
+             xmlns="http://www.w3.org/2000/svg">
+            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+        </svg>
+        <div *ngIf="isTimeout" class="color-light-grey">
+            <div>{{Languages.get('global.problemLoadingData', 'start')}}</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,192 @@
+<div class="main-toolbar">
+    <mat-toolbar color="primary" [class.phone-hide]="hideToolbar" *ngIf="!hideToolbar">
+        <button mat-icon-button (click)="menuNav.toggle()" id="menu" class="menu-button">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span class="header-nav">
+            <img class="logo" src="assets/images/RRS Logo web.png" />
+            <img class="logo-mobile" src="assets/images/Revolution-Retail-Systems-logo_mobile.png" />
+            <span>
+                <button mat-icon-button (click)="filterNav.toggle();openSideNav('filter');" id="filter" class="filter-button" *ngIf="isFilterEnabled">
+                    <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTEuOTk5IDUxMS45OTkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMS45OTkgNTExLjk5OTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik01MTAuMDc4LDM1LjUwOWMtMy4zODgtNy4zMDQtMTAuNzA5LTExLjk3Ny0xOC43NjEtMTEuOTc3SDIwLjY4MmMtOC4wNTEsMC0xNS4zNzIsNC42NzItMTguNzYxLDExLjk3NyAgICBzLTIuMjMsMTUuOTExLDIuOTY5LDIyLjA2bDE4My4zNjQsMjE2LjgyOHYxNDYuMzI0YzAsNy44MzMsNC40MjYsMTQuOTk1LDExLjQzMywxOC40OTlsOTQuMTI3LDQ3LjA2MyAgICBjMi45MTksMS40Niw2LjA4OCwyLjE4Myw5LjI0OSwyLjE4M2MzLjc4MiwwLDcuNTUyLTEuMDM2LDEwLjg3NC0zLjA4OWM2LjA5Ny0zLjc2OSw5LjgwOS0xMC40MjYsOS44MDktMTcuNTk0VjI3NC4zOTcgICAgTDUwNy4xMSw1Ny41NjlDNTEyLjMwOSw1MS40Miw1MTMuNDY2LDQyLjgxMyw1MTAuMDc4LDM1LjUwOXogTTI4Ny4yNywyNTMuNDY5Yy0zLjE1NywzLjczNC00Ljg4OSw4LjQ2Ni00Ljg4OSwxMy4zNTVWNDM0LjMyICAgIGwtNTIuNzYzLTI2LjM4MVYyNjYuODI1YzAtNC44OS0xLjczMy05LjYyMS00Ljg5LTEzLjM1NUw2NS4yNTksNjQuODk2aDM4MS40ODJMMjg3LjI3LDI1My40Njl6IiBmaWxsPSIjMDA2NWE0Ii8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg=="
+                    />
+                </button>
+
+                <button mat-icon-button (click)="filterNav.toggle();openSideNav('notify');" id="notify" class="filter-button">
+                    <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDUxMCA1MTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMCA1MTA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0ibm90aWZpY2F0aW9ucy1ub25lIj4KCQk8cGF0aCBkPSJNMjU1LDUxMGMyOC4wNSwwLDUxLTIyLjk1LDUxLTUxSDIwNEMyMDQsNDg3LjA1LDIyNi45NSw1MTAsMjU1LDUxMHogTTQyMC43NSwzNTdWMjE2Ljc1ICAgIGMwLTc5LjA1LTUzLjU1LTE0Mi44LTEyNy41LTE2MC42NVYzOC4yNUMyOTMuMjUsMTcuODUsMjc1LjQsMCwyNTUsMGMtMjAuNCwwLTM4LjI1LDE3Ljg1LTM4LjI1LDM4LjI1VjU2LjEgICAgYy03My45NSwxNy44NS0xMjcuNSw4MS42LTEyNy41LDE2MC42NVYzNTdsLTUxLDUxdjI1LjVoNDMzLjVWNDA4TDQyMC43NSwzNTd6IE0zNjkuNzUsMzgyLjVoLTIyOS41VjIxNi43NSAgICBDMTQwLjI1LDE1MywxOTEuMjUsMTAyLDI1NSwxMDJzMTE0Ljc1LDUxLDExNC43NSwxMTQuNzVWMzgyLjV6IiBmaWxsPSIjMDA2NWE0Ii8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg=="
+                    />
+                    <span *ngIf="notificationList" class="notifyNum">{{notificationCount}}</span>
+                </button>
+                <button id="profile" mat-icon-button class="user-button" [matMenuTriggerFor]="profileMenu">
+                    <img class="user" src="assets/images/user.ico" height="25" />
+                </button>
+                <mat-menu #profileMenu="matMenu" class="profile-menu">
+                    <button mat-menu-item routerLink="/user-profile">View Profile</button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="changePassword()">Change Password</button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="logout()">Logout</button>
+                </mat-menu>
+            </span>
+        </span>
+    </mat-toolbar>
+    <mat-toolbar class="home-toolbar" *ngIf="homeToolbar">
+        <button mat-icon-button (click)="menuNav.toggle()" id="menu" class="menu-button" *ngIf="isLogin">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span class="header-nav">
+            <span class="logo-container">
+                <img class="logo" src="../assets/images/landing-page/mobile/Logo Mobile@2x.png" />
+                <img class="logo-mobile" src="../assets/images/landing-page/mobile/Logo Mobile@2x.png" />
+            </span>
+            <!-- <span class="title hide-phone">
+                {{Languages.get('homePage.title')}}
+            </span> -->
+            <span class="signin-container" *ngIf="!isLogin">
+                <button id="signIn" mat-button class="signin-btn" (click)="signIn()">{{Languages.get('homePage.signIn', 'start')}}</button>
+                <button id="getAccess" mat-button class="get-access-btn" (click)="goToGetAccess()">{{Languages.get('homePage.getAccess', 'upper')}}</button>
+            </span>
+            <span *ngIf="isLogin">
+                <button mat-icon-button (click)="filterNav.toggle();openSideNav('notify');" id="notify" class="filter-button">
+                    <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDUxMCA1MTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMCA1MTA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0ibm90aWZpY2F0aW9ucy1ub25lIj4KCQk8cGF0aCBkPSJNMjU1LDUxMGMyOC4wNSwwLDUxLTIyLjk1LDUxLTUxSDIwNEMyMDQsNDg3LjA1LDIyNi45NSw1MTAsMjU1LDUxMHogTTQyMC43NSwzNTdWMjE2Ljc1ICAgIGMwLTc5LjA1LTUzLjU1LTE0Mi44LTEyNy41LTE2MC42NVYzOC4yNUMyOTMuMjUsMTcuODUsMjc1LjQsMCwyNTUsMGMtMjAuNCwwLTM4LjI1LDE3Ljg1LTM4LjI1LDM4LjI1VjU2LjEgICAgYy03My45NSwxNy44NS0xMjcuNSw4MS42LTEyNy41LDE2MC42NVYzNTdsLTUxLDUxdjI1LjVoNDMzLjVWNDA4TDQyMC43NSwzNTd6IE0zNjkuNzUsMzgyLjVoLTIyOS41VjIxNi43NSAgICBDMTQwLjI1LDE1MywxOTEuMjUsMTAyLDI1NSwxMDJzMTE0Ljc1LDUxLDExNC43NSwxMTQuNzVWMzgyLjV6IiBmaWxsPSIjRkZGRkZGIi8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg=="
+                    />
+                    <span *ngIf="notificationList" class="notifyNum">{{notificationCount}}</span>
+                </button>
+                <button id="profile" mat-icon-button class="user-button" [matMenuTriggerFor]="profileMenu">
+                    <img class="user" src="assets/images/user.ico" height="25" />
+                </button>
+                <mat-menu #profileMenu="matMenu" class="profile-menu">
+                    <button mat-menu-item routerLink="/user-profile">View Profile</button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="changePassword()">Change Password</button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="logout()">Logout</button>
+                </mat-menu>
+            </span>
+        </span>
+    </mat-toolbar>
+    <mat-sidenav-container [class.full-height]="hideToolbar">
+        <mat-sidenav #menuNav [mode]="sideNavMode" [opened]="false" class="main-menu">
+            <mat-nav-list (click)="menuNav.toggle()">
+                <mat-list-item *ngFor="let item of menuList;let i=index" [class.selected]="item.route === currentRoute.base" 
+                [routerLink]="item.route ? item.route : '/'">
+                    <mat-icon>{{item.icon}}</mat-icon>
+                    <p>
+                        <a mat-line [attr.id]="i">{{Languages.get('menu.' + item.item, 'start')}}</a>
+                    </p>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav id="filterNav" position="end" #filterNav [mode]="sideNavMode" [opened]="false">
+            <div *ngIf="filterSection" class="filter-container">
+                <div class="filter-header">
+                    <mat-toolbar color="primary">
+                        <span>{{Languages.get('filter.filterBy', 'upper')}}</span>
+                        <span class="fill-remaining-space"></span>
+                        <span>
+                            <button mat-icon-button (click)="filterNav.toggle();cancelFilter();">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </span>
+                    </mat-toolbar>
+                </div>
+                <mat-accordion [multi]="true">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{Languages.get('filter.customers', 'start')}}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div class="customers-list">
+                            <mat-checkbox [value]="'ALL'" color="primary" [checked]="isAllCustomerChecked" (change)="getSelectedCustomer('ALL', $event.checked);" *ngIf="customerList.length > 1">
+                                {{Languages.get('filter.allCustomers', 'start')}}
+                            </mat-checkbox>
+                            <mat-checkbox *ngFor="let customer of customerList;" [checked]="isCustomerAvailable(customer.customerName)" [value]="customer.customerName"
+                                (change)="getSelectedCustomer(customer.customerName, $event.checked);" color="primary">
+                                {{customer.customerName}}
+                            </mat-checkbox>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{Languages.get('filter.models', 'start')}}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="model-list">
+                            <mat-checkbox [value]="'ALL'" color="primary" [checked]="isAllModelChecked" (change)="getSelectedModel('ALL', $event.checked);"
+                                [disabled]="allModelChecked">
+                                {{Languages.get('filter.allModels', 'start')}}
+                            </mat-checkbox>
+                            <mat-checkbox *ngFor="let model of modelList" [checked]="isModelAvailable(model.model)" [value]="model.model" (change)="getSelectedModel(model.model, $event.checked);"
+                                color="primary">
+                                {{model.model}}
+                            </mat-checkbox>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel *ngIf="isPeriodEnabled" [expanded]="expandedFilterOption === 'period'" (opened)="expandedFilterOption = 'period'">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{Languages.get('filter.period', 'start')}}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-radio-group class="period-list" [(ngModel)]="selectedFilters.period">
+                            <mat-radio-button *ngFor="let period of AppConfiguration.global.periods.values" [checked]="period === currentFilters.period"
+                                [value]="period" color="primary">
+                                {{Languages.get('periods.' + period, 'start')}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-list class="action-box">
+                    <mat-list-item>
+                        <span>
+                            <button mat-button color="warn" (click)="filterNav.toggle();cancelFilter();">{{Languages.get('global.cancel', 'start')}}</button>
+                        </span>
+                        <span class="fill-remaining-space"></span>
+                        <span>
+                            <button mat-button color="accent" (click)="filterNav.toggle();applyFilter();">{{Languages.get('global.apply', 'start')}}</button>
+                        </span>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+            <div *ngIf="notifySection">
+                <div class="filter-header">
+                    <mat-toolbar color="primary">
+                        <!-- <span>{{Languages.get('filter.filterBy', 'upper')}}</span> -->
+                        <span>Notifications</span>
+                        <span class="fill-remaining-space"></span>
+                        <span>
+                            <button mat-icon-button (click)="filterNav.toggle();cancelFilter();">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </span>
+                    </mat-toolbar>
+                </div>
+                <div class="list-box">
+                    <mat-list *ngFor="let notification of notificationList">
+                        <mat-list-item *ngIf="notification.status === false" (click)="updateNotificationFlag(notification);navigateToUserProfile(notification);filterNav.toggle()">
+                            <img mat-card-avatar src="assets/images/user.ico" height="25">&nbsp;&nbsp;
+                            <span>{{notification.firstName}} {{notification.lastName}}
+                                <span>has accepted and registered to RRS Customer Portal</span>
+                            </span>
+
+                            <mat-divider></mat-divider>
+                        </mat-list-item>
+
+                    </mat-list>
+
+                </div>
+
+            </div>
+        </mat-sidenav>
+
+        <div class="content dashboard-wrapper">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-container>
+</div>
+<div class="landscape-view">
+
+</div>

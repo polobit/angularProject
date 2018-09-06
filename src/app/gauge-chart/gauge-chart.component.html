@@ -1,0 +1,10 @@
+<div class="chart-wrapper">
+    <div id="{{gaugeId}}"></div>
+    <div class="detail-container">
+        <span class="value">{{round(actualPointerValue, 0) | number}}</span>
+        <span class="limit-container" *ngIf="showLimit">
+            <span>Rated At : </span>
+            <span>{{limit | number}}</span>
+        </span>
+    </div>
+</div>

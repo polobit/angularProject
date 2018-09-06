@@ -1,0 +1,311 @@
+<div class="container" *appLoading="userInfo">
+    <div class="toolbar">
+        <app-back-button></app-back-button>
+        <span class="save-button" *ngIf="conditionVar.savePermission">
+            <button mat-raised-button color="primary" (click)="openConfirmDialog()">Save Permissions</button>
+        </span>
+    </div>
+    <div class="user-container">
+
+        <div class="user-info-section">
+            <mat-card class="user-profile-card" [ngClass]="{'no-margin': adminUser}">
+                <span class="profile-image">
+                    <img src="../../assets/images/user.ico" />
+                    <span class="user-role">
+                        {{userInfo.userType | uppercase}}
+                    </span>
+                    <!-- <span class="user-role" *ngIf="userInfo && userInfo.userType ==='executive'">Executive</span> -->
+                </span>
+
+
+                <div class="user-info">
+                    <span class="profile-details">
+                        <h3 class="no-margin">
+                            {{userInfo?.firstName}} {{userInfo?.lastName}}
+                        </h3>
+                        <h5>{{userInfo?.jobTitle}}</h5>
+                        <h5 *ngIf="userInfo.location">
+                            <mat-icon>location_on</mat-icon>
+                            <span>{{userInfo?.location}}</span>
+                        </h5>
+                    </span>
+                    <span class="profile-email">
+                        <h5 class="no-margin">
+                            <mat-icon>email</mat-icon>
+                            <span> {{userInfo?.emailId}}</span>
+                        </h5>
+                    </span>
+                    <span class="profile-contact">
+                        <h5 class="no-margin">
+                            <!-- <img src="../../assets/images/Phone_Number.svg" /> {{userInfo?.contactNumber}} -->
+                            <mat-icon>phone</mat-icon>
+                            <span>{{userInfo?.contactNumber}}</span>
+                        </h5>
+                    </span>
+
+                    <div class="profile-edit" *ngIf="this.conditionVar.editProfile" mat-button color="primary" (click)="getProfileDetails()">
+
+                        <mat-icon class="edit-icon">mode_edit</mat-icon>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="user-count-section" *ngIf="this.conditionVar.countVisible">
+            <span class="section-1">
+                <mat-card class="user-type-card" (click)="goToUserList('admin')">
+                    <span class="admin-count count-size no-margin">
+                        {{userCount?.adminCount}}
+                    </span>
+                    <h5 class="user-type no-margin">Admin</h5>
+                </mat-card>
+                <mat-card class="user-type-card" (click)="goToUserList('viewer')">
+                    <span class="viewer-count count-size no-margin">
+                        {{userCount?.viewerCount}}
+                    </span>
+                    <h5 class="user-type no-margin">RRS Viewers</h5>
+                </mat-card>
+            </span>
+            <span class="section-2">
+                <mat-card class="user-type-card customer-card" (click)="goToUserList('customer-admin')">
+                    <span class="cutomerAdmin-count count-size no-margin">
+                        {{userCount?.customerAdminCount}}
+                    </span>
+                    <h5 class="user-type no-margin">Customer Admins</h5>
+                </mat-card>
+                <mat-card class="user-type-card customer-card" (click)="goToUserList('customer')">
+                    <span class="cutomer-count count-size no-margin">
+                        {{userCount?.customerCount}}
+                    </span>
+                    <h5 class="user-type no-margin">Customers</h5>
+                </mat-card>
+            </span>
+        </div>
+        <div class="user-count-section" *ngIf="this.conditionVar.adminCount">
+                <span class="admin-section-1">
+                    <mat-card class="user-card" (click)="goToUserList('viewer')">
+                        <span class="viewer-count count-size no-margin">
+                            {{userCount?.viewerCount}}
+                        </span>
+                        <h5 class="user-type no-margin">RRS Viewers</h5>
+                    </mat-card>
+                    <mat-card class="user-card" (click)="goToUserList('customer-admin')">
+                        <span class="cutomerAdmin-count count-size no-margin">
+                            {{userCount?.customerAdminCount}}
+                        </span>
+                        <h5 class="user-type no-margin">Customer Admins</h5>
+                    </mat-card>
+                    <mat-card class="user-card" (click)="goToUserList('customer')">
+                        <span class="cutomer-count count-size no-margin">
+                            {{userCount?.customerCount}}
+                        </span>
+                        <h5 class="user-type no-margin">Customers</h5>
+                    </mat-card>
+                </span>
+        </div>
+        <div class="user-count-section2" *ngIf="this.conditionVar.custCount">
+            <span class="section-2" (click)="goToUserList('customer')" *ngIf="custStoreDetails">
+                <mat-card class="user-type-card customer-card" >
+                    <span class="cutomer-count count-size no-margin">
+                        {{custStoreDetails?.customerCount}}
+                    </span>
+                    <h5 class="user-type no-margin">Customers</h5>
+                </mat-card>
+            </span>
+            <span class="section-2" (click)="goToUserList('customer')" *ngIf="userCount">
+                <mat-card class="user-type-card customer-card" >
+                    <span class="cutomer-count count-size no-margin">
+                        {{userCount?.customerCount}}
+                    </span>
+                    <h5 class="user-type no-margin">Customers</h5>
+                </mat-card>
+            </span>
+        </div>
+    </div>
+    <mat-card class="action-card" *ngIf="this.conditionVar.allPermissionSection">
+        <mat-tab-group>
+            <mat-tab label="Manage Customers" *ngIf="this.conditionVar.customerHandling">
+                <div class="cutomer-list">
+                    <mat-checkbox *ngFor="let customer of customerList;let i = index" [checked]="isCustomerAvailable(customer.customerName)"
+                        color="primary" (change)="getSelectedCustomer($event.checked, customer.customerName)">
+                        <span class="customer-name">
+                            {{customer.customerName}}
+                        </span>
+                    </mat-checkbox>
+                </div>
+            </mat-tab>
+            <mat-tab label="Revolutions" *ngIf="this.userInfo.userType === 'customer'">
+                <div class="revolution-list" *ngFor="let storeDetails of custStoreDetails?.revolutions">
+                    <mat-checkbox *ngFor="let store of storeDetails?.location" [checked]="isRevolutionAvailable(storeDetails.serial)" color="primary"
+                        (change)="getSelectedRevolution($event.checked, storeDetails.serial)">
+                        <span class="customer-name">
+                            {{storeDetails?.serial}} ,{{storeDetails?.model}}
+                        </span>
+                    </mat-checkbox>
+                </div>
+                <div class="cutomer-list" *ngIf="userPermission">
+                    <div class="kpi-details" *ngFor="let revolution of userPermission?.revolutions">
+                        <div class="kpi-title">
+                            <div class="kpi-name">
+                                {{revolution}}
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Manage KPI Permissions" *ngIf="this.conditionVar.manageKPI">
+                <div class="kpi-list">
+                    <div class="kpi-details" *ngFor="let kpi of kpiList; let i = index">
+                        <div class="kpi-title">
+                            <mat-checkbox [checked]="isKpiAvailable(kpi.apiKey)" color="primary" (change)="getSelectedKpi($event.checked, kpi.apiKey)">
+                                <span class="kpi-name">
+                                    {{kpi.name}}
+                                </span>
+                            </mat-checkbox>
+                        </div>
+                        <!-- <div class="kpi-options">
+                            <mat-checkbox value="" color="primary">
+                                <span class="option-name">0 - 2 Hours</span>
+                            </mat-checkbox>
+                            <mat-checkbox value="" color="primary">
+                                <span class="option-name">2 - 4 Hours</span>
+                            </mat-checkbox>
+                            <mat-checkbox value="" color="primary">
+                                <span class="option-name">4 - 12 Hours</span>
+                            </mat-checkbox>
+                            <mat-checkbox value="" color="primary">
+                                <span class="option-name">12 - 24 Hours</span>
+                            </mat-checkbox>
+                        </div> -->
+                        <hr class="margin-40">
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Manage KPI Permissions" *ngIf="this.loginType === 'customer-admin' && this.userInfo.userType === 'customer'">
+                <div class="kpi-list-customer">
+                    <div class="kpi-details" *ngFor="let kpi of kpiList; let i = index">
+                        <div class="kpi-title">
+                            <mat-checkbox [checked]="isCustKpiAvailable(kpi.apiKey)" color="primary" (change)="getSelectedCustKpi($event.checked,kpi.apiKey)">
+                                <span class="kpi-name">
+                                    {{kpi.name}}
+                                </span>
+                            </mat-checkbox>
+                        </div>
+                        <hr class="margin-40">
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Manage Role Permission" *ngIf="this.conditionVar.rolePermission">
+                <div class="permission-section">
+                    <mat-radio-button [checked]="userPermission && userPermission.userType === 'admin'" (click)="updateRole('admin')">
+                        Make user as Admin
+                    </mat-radio-button>
+                    <span class="role-desc">Admin rights allows user full control with application</span>
+
+                    <mat-radio-button [checked]="userPermission && userPermission.userType === 'viewer'" (click)="updateRole('viewer')">
+                        Viewer
+                    </mat-radio-button>
+                    <span class="role-desc">Viewer rights allows user for provided control with application</span>
+                </div>
+            </mat-tab>
+            <mat-tab label="Customers Handling" *ngIf="this.conditionVar.customerHandling">
+                <div class="cutomer-list">
+                    <span class="customer-name padding-10" *ngFor="let customer of getCustomerHandling()">
+                        {{customer}}
+                    </span>
+                </div>
+            </mat-tab>
+            <mat-tab label="KPIs Handling" *ngIf="this.conditionVar.kpiHandling">
+                <div class="kpi-list" *ngIf="userPermission">
+                    <div class="kpi-details" *ngFor="let kpi of kpiList">
+                        <div class="kpi-title" *ngIf="isKpiAvailable(kpi.apiKey)">
+                            <div class="kpi-name">
+                                {{kpi.name}}
+                            </div>
+                            <hr>
+                        </div>
+                        <!-- <div class="kpi-options">
+                                <mat-checkbox value="" color="primary">
+                                    <span class="option-name">0 - 2 Hours</span>
+                                </mat-checkbox>
+                                <mat-checkbox value="" color="primary">
+                                    <span class="option-name">2 - 4 Hours</span>
+                                </mat-checkbox>
+                                <mat-checkbox value="" color="primary">
+                                    <span class="option-name">4 - 12 Hours</span>
+                                </mat-checkbox>
+                                <mat-checkbox value="" color="primary">
+                                    <span class="option-name">12 - 24 Hours</span>
+                                </mat-checkbox>
+                            </div> -->
+                    </div>
+                </div>
+                <div class="kpi-list" *ngIf="customerPermission">
+                        <div class="kpi-details" *ngFor="let kpi of kpiList">
+                            <div class="kpi-title" *ngIf="isCustKpiAvailable(kpi.apiKey)">
+                                <div class="kpi-name">
+                                    {{kpi.name}}
+                                </div>
+                                <hr>
+                            </div>
+                            <!-- <div class="kpi-options">
+                                    <mat-checkbox value="" color="primary">
+                                        <span class="option-name">0 - 2 Hours</span>
+                                    </mat-checkbox>
+                                    <mat-checkbox value="" color="primary">
+                                        <span class="option-name">2 - 4 Hours</span>
+                                    </mat-checkbox>
+                                    <mat-checkbox value="" color="primary">
+                                        <span class="option-name">4 - 12 Hours</span>
+                                    </mat-checkbox>
+                                    <mat-checkbox value="" color="primary">
+                                        <span class="option-name">12 - 24 Hours</span>
+                                    </mat-checkbox>
+                                </div> -->
+                        </div>
+                    </div>
+            </mat-tab>
+        </mat-tab-group>
+
+    </mat-card>
+    <mat-card class="customer-card" *ngIf="this.loginType === 'customer-admin' && customerAdmin">
+        <div>
+            <div>
+                <div>
+                    <span class="store-heading">Store Details</span>
+                </div>
+                <div class="store-details">
+                    <span class="profile-image">
+                        <img src="../../assets/images/user.ico" />
+                    </span>
+                    <span *ngIf="custStoreDetails">
+                        <span class="custStoreDetails">
+                            {{custStoreDetails.revolutions[0].customer}}
+                        </span>
+
+                        <div class="store-list" *ngFor="let storeDetails of custStoreDetails?.revolutions">
+                            <span *ngFor="let store of storeDetails?.location">
+                                <span *ngIf="storeDetails?.companyName"># </span> {{storeDetails?.companyName.split('#')[1]}}
+                                <span *ngIf="store?.name">, </span> {{store?.name}}
+                            </span>
+
+
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <hr class="margin-40">
+            <div>
+                <span class="store-heading">Revolutions</span>
+            </div>
+            <div class="list" *ngFor="let storeDetails of custStoreDetails?.revolutions">
+                <span *ngFor="let store of storeDetails?.location">
+                    <span class="revolution-list">{{storeDetails?.serial}}, {{storeDetails?.model}}</span>
+                    <span class="revolution-name">
+                        <span *ngIf="storeDetails?.companyName"># </span> {{storeDetails?.companyName.split('#')[1]}}, {{ store?.name}}</span>
+                </span>
+                <!-- <hr class="margin-40"> -->
+            </div>
+        </div>
+    </mat-card>
+</div>

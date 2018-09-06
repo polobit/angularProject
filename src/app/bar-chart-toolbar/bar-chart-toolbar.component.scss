@@ -1,0 +1,170 @@
+@import '../app.common';
+.mat-toolbar-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: -13px;
+    padding: 16px;
+    @include tablet {
+        height: 90px;
+        padding: 5px 16px;
+    }
+    @include phone {
+        height: 100px;
+        padding: 5px;
+        margin-bottom: 10px;
+        margin-top: -40px;
+    }
+    .vertical-divider {
+        margin-left: 10px;
+        width: 0px;
+        height: 20px;
+        border: 0.5px solid #b7b7b7;
+        @include laptop-medium {
+            display: none;
+        }
+    }
+    .action-section {
+        display: flex;
+        align-items: center;
+        height: 33px;
+        .clear-all {
+            margin-left: 10px;
+        }
+        @include phone {
+            justify-content: space-between;
+            width: 100%;
+        }
+    }
+    .align-right {
+        @include phone {
+            justify-content: flex-end;
+            width: 100%;
+            position: relative;
+            top: -15px;
+        }
+    }
+    .filter-section {
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin: 0;
+        @include tablet {
+            position: absolute;
+            margin-top: 35px;
+        }
+        @include phone {
+            align-items: flex-start;
+        }
+        .mat-chip-list {
+            @include phone {
+                margin-left: -8px;
+            }
+            .mat-chip-list-wrapper {
+                align-items: center;
+            }
+            .chip-section {
+                display: flex;
+                flex-direction: row;
+                @include laptop-medium {
+                    margin: 0 2px;
+                }
+                @include phone {
+                    flex-direction: column;
+                    margin-left: 5px;
+                }
+            }
+            .filter-count {
+                @include phone {
+                    max-width: 30px;
+                    height: 20px;
+                }
+            }
+            .filter-chips {
+                max-width: 160px;
+                display: flex;
+                justify-content: space-between;
+                @include laptop {
+                    max-width: 150px;
+                }
+                @include tablet {
+                    max-width: 130px;
+                }
+                @include phone {
+                    min-width: 80px;
+                    max-width: 80px;
+                    margin-bottom: 2px;
+                }
+                @include phone-small {
+                    min-width: 60px;
+                    max-width: 60px;
+                    margin-bottom: 2px;
+                }
+                margin-right: 5px;
+                .text {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+            .filter-title {
+                color: #7f7a7a;
+                font-size: 12px;
+                margin: 0 10px;
+                @include phone {
+                    margin: 0 20px;
+                }
+            }
+        }
+    }
+}
+
+.mat-chip:not(.mat-basic-chip) {
+    // background-color: mat-color($app-primary, 50);
+    @include phone-only {
+        max-width: 100px;
+        font-size: 10px;
+        line-height: 10px;
+        margin-top: 3px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        margin: 0 5px;
+        +.mat-chip {
+            margin-top: 3px;
+        }
+        .text {
+            @include ellipsis;
+            padding: 4px 0;
+        }
+        .mat-icon {
+            font-size: 14px;
+        }
+    }
+}
+
+.filter-count {
+    font-size: 15px;
+    line-height: 18px;
+}
+
+.filter-list {
+    span {
+        display: flex;
+        justify-content: space-between;
+        padding: 7px 10px 5px 10px;
+        color: #7f7a7a;
+        font-size: 13px;
+        .text {
+            width: 200px;
+            @include phone {
+                width: 155px;
+            }
+            @include phone-small {
+                width: 125px;
+            }
+        }
+        .mat-icon {
+            padding-top: 5px;
+            font-size: 18px;
+        }
+    }
+}

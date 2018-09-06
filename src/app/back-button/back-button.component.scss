@@ -1,0 +1,13 @@
+@import '../app.common';
+.back-button {
+    font-weight: bolder;
+    .mat-icon {
+        margin-left: -10px;
+    }
+    @include phone {
+        text-align: left;
+        .mat-icon {
+            margin-left: -20px;
+        }
+    }
+}

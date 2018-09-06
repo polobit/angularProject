@@ -1,0 +1,19 @@
+<app-bar-chart-toolbar [periodChips]="periodChips" [customerChips]="customerChips" [modelChips]="modelChips" ></app-bar-chart-toolbar>
+<div class="flex-item-box">
+  <div class="chart-container">
+    <mat-card class="flowchart-card">
+        <div class="title">{{Languages.get('kpi.cashFlowInnovation' , 'capitalizeFirst')}}</div>
+      <mat-card-content>
+        <mat-tab-group (selectChange)="ngOnChanges()">
+          <mat-tab label="Recycler Reliability">
+            <app-flow-chart *ngIf="flowchartData" 
+            [height]="flowchartHeight" 
+            [width]="this.flowchartWidth" 
+            [data]="flowchartData">
+            </app-flow-chart>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

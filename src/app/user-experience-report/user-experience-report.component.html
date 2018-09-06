@@ -1,0 +1,86 @@
+<div class="filter-section">
+    <app-report-filter></app-report-filter>
+    <app-bar-chart-toolbar [periodChips]="periodChips" [customerChips]="customerChips" [modelChips]="modelChips" [isBack]="false"></app-bar-chart-toolbar>
+</div>
+<div class="filter-section last-update">
+  <span>
+    {{Languages.get('global.lastUpdated', 'start')}}: {{moment(timeStamp,AppConfiguration.global.apiTimeFormat).subtract(1, 'days').format(AppConfiguration.global.displayTimeFormat)}}
+  </span>
+</div>
+<div class="report-container">
+  <div class="section">
+    <div class="donut-chart"  *ngIf="donutChartData">
+      <div class="flex-item-box">
+        <div class="chart-container">
+          <app-donut-chart
+              height="225" 
+              width="250" 
+              radius="120" 
+              [centerTitle]="donutCenterTitle" 
+              [centerSubTitle]="donutCenterSubTitle"
+              [titleColor]="titleColor" 
+              [data]="donutChartData" 
+              [donutThickness]="15">
+          </app-donut-chart>
+        </div>
+      </div>
+    </div>
+    <div class="area-chart">
+      <div class="flex-item-box">
+        <div class="chart-container">
+          <span class="card-title">
+            {{Languages.get('global.successRatioby', 'start')}} {{Languages.get('periods.' + periodChips.text, 'start')}}
+          </span>
+          <app-area-chart 
+            [data]="chartData" 
+            [type]="selectedCase" 
+            [period]="selectedPeriod"
+            [threshold]="99.5">
+          </app-area-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="bar-chart" *ngIf="barChartData">
+      <div class="flex-item-box">
+        <div class="chart-container">
+          <span class="card-title">
+            {{Languages.get('global.successRatioby', 'start')}} {{Languages.get('global.store', 'start')}}
+          </span>
+          <app-bar-chart
+              [serverPagination]="true"
+              [dataLength]="dataLength" 
+              [data]="barChartData" 
+              [barsPerPage]="30" 
+              (barClick)="onBarClick($event)" 
+              (pageChange)="onPageChange($event)"
+              [width]="width"
+              [chartFor]="'report'" 
+              [type]="selectedCase" 
+              [barColor]="'#0A9729'" 
+              timeFormat="MMM D" 
+              [tickAngle]="'-40'" 
+              [sortData]="true"
+              [kpiName]="'userExperience'"
+              [noData]="noData">
+          </app-bar-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-table" *ngIf="tableData.length > 0">
+      <div class="flex-item-box">
+        <div class="chart-container">
+          <app-info-table 
+            [data]="tableData" 
+            [columnList]="columnList" 
+            [reportType]="'storeDetail'" 
+            #infoTable>
+          </app-info-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

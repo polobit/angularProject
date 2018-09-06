@@ -1,0 +1,193 @@
+<div class="chart-data">
+    <div class="accordion-heading">
+        <div class="title-box">
+            <div class="title">
+                {{aggregateName}}
+            </div>
+            <span class="subtitle">
+                {{kpiName}}
+                <span *ngIf="kpiSubName">
+                    {{divider + ' ' + kpiSubName}}
+                </span>
+            </span>
+        </div>
+        <div id="{{kpiName}}_Average" *ngIf="aggregateValue && aggregateValue !== 0" [style.backgroundColor]="aggregateValueColor"
+             class="value-box">
+             <p>{{selectedCase === 'percentage' ? (aggregateValue  | number:'1.2-2') : round(aggregateValue,2) }} {{kpiName !== Languages.get('kpi.highFrequencyDispatch', 'start') ? aggregateUnit : Languages.get('global.stores', 'start')}}</p>
+        </div>
+        <div *ngIf="dispatchAverage && phoneFixAverage" class="value-box">
+            <div class="phonefix-box">{{round(phoneFixAverage,0)}}</div>
+            <div class="dispatch-box">{{round(dispatchAverage,0)}}</div>
+        </div>
+    </div>
+    <ng-container [ngTemplateOutlet]="chartDetailList"></ng-container>
+</div>
+
+<ng-template #chartDetailList>
+    <mat-accordion class="chart-detail-container">
+        <mat-expansion-panel [expanded]="true" [disabled]="true" [hideToggle]="true" [class.on-site-detail-panel]="detailsType === 'stacked'">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div>
+                        <span *ngIf="selectedDate">
+                            {{moment(selectedDate, AppConfiguration.global.apiTimeFormat).format(AppConfiguration.global.displayTimeFormat)}}
+                        </span>
+                        <span *ngIf="fromDate">
+                            {{moment(fromDate, AppConfiguration.global.apiTimeFormat).format(AppConfiguration.global.displayTimeFormat)}}
+                            <span *ngIf="toDate">
+                                &nbsp;-&nbsp; {{moment(toDate, AppConfiguration.global.apiTimeFormat).format(AppConfiguration.global.displayTimeFormat)}}
+                            </span>
+                        </span>
+                        <span class="machine-details" *ngIf="selectedMachine">
+                            {{selectedMachine || Languages.get('global.noMachineAvailable', 'capitalize')}}&nbsp;{{detailsByDate?.caseDetails[0]?.customerName}}
+                        </span>
+                        <span *ngIf="selectedDay">
+                            {{selectedDay}}
+                            <span *ngIf="selectedHour">
+                                - {{selectedHour}}:00
+                            </span>
+                        </span>
+                    </div>
+                    <div class="color-light-grey font-size-11" *ngIf="selectedMachine">
+                        {{detailsByDate?.caseDetails[0]?.location}}
+                    </div>
+                </mat-panel-title>
+                <mat-panel-description *ngIf="(detailsType === 'byDate' || detailsType === 'byMachine' || detailsType === 'byDay' || detailsType === 'byZone') && detailsByDate">
+                    <ng-container *ngIf="detailsByDate?.totalCases !== undefined && !dispatchAverage">
+                        <p>{{selectedBarValue ? selectedCase === 'percentage' ? (selectedBarValue | number: '1.2-2') : (selectedBarValue | number) : (detailsByDate?.totalCases | number)}} {{aggregateUnit}}</p>
+                    </ng-container>
+                    <ng-container *ngIf="detailsByDate?.aggregateAverageHours !== undefined">
+                        {{round(selectedBarValue ? selectedBarValue : detailsByDate?.aggregateAverageHours, 2)}} {{Languages.get('global.hrs', 'capitalize')}}
+                    </ng-container>
+                    <ng-container *ngIf="dispatchAverage && phoneFixAverage">
+                        {{selectedBarValue}}
+                    </ng-container>
+                </mat-panel-description>
+                <mat-icon color="primary" (click)="onNoClick()" class="close-button">close</mat-icon>
+            </mat-expansion-panel-header>
+            <ng-container *appLoading="((detailsType === 'byDate' || detailsType === 'byMachine' || detailsType === 'byDay' || detailsType === 'byZone') && detailsByDate)
+             || (detailsType === 'stacked' && stackedData) || (detailsType === 'slaStacked' && allZoneData) || detailsForAllDay">
+
+                <mat-list *ngIf="detailsType === 'byDate' || detailsType === 'byDay' || detailsType === 'byMachine' || detailsType === 'byZone'">
+                    <p mat-line *ngIf="detailsByDate.caseDetails.length === 0" class="desc-line-two">
+                        {{kpiName !== Languages.get('kpi.firstTimeFix', 'start') ? Languages.get('global.noCaseAvailable', 'capitalize') : Languages.get('global.noLinkedCaseAvailable', 'start') }} </p>
+                    <mat-list-item *ngFor="let caseDetail of detailsByDate.caseDetails">
+                        <h4 mat-line class="color-dark-grey" *ngIf="detailsType === 'byMachine' || detailsType === 'byDay'">
+                            {{caseDetail?.caseDate}}
+                        </h4>
+                        <p mat-line *ngIf="detailsType === 'byDate' || detailsType === 'byDay' || detailsType === 'byZone'" id="line-one" class="location">
+                            {{caseDetail?.machineId}}, {{caseDetail?.customerNamePrecise}}
+                        </p>
+
+                        <p mat-line *ngIf="detailsType === 'byZone'" id="line-two">
+                            {{Languages.get('global.zone', 'start')}} :
+                            <span class="inner-line-two">
+                                {{caseDetail?.slaZone?.substr(0, caseDetail?.slaZone?.indexOf(':'))}}
+                            </span> | {{Languages.get('global.durationToArrive', 'start')}} :
+                            <span class="inner-line-two">{{round(caseDetail?.slaHours,2)}}{{Languages.get('global.hrs', 'capitalize')}}</span>
+                        </p>
+                        <p mat-line id="line-two">
+                            {{Languages.get('global.model', 'start')}} #
+                            <span class="inner-line-two">
+                                {{caseDetail?.model}}
+                            </span> | {{Languages.get('global.jobType', 'start')}} :
+                            <span class="inner-line-two">
+                                {{caseDetail?.jobType}}
+                            </span> 
+                            <!-- | {{Languages.get('global.jobDesc', 'start')}} :
+                            <span class="inner-line-two">
+                                {{caseDetail?.description}}
+                            </span> -->
+                        </p>
+                        <p mat-line id="line-two">
+                                {{Languages.get('global.jobDesc', 'start')}} :
+                                <span class="inner-line-two">
+                                    {{caseDetail?.description}}
+                                </span>
+                        </p>
+
+                        <p mat-line id="line-two">
+                            {{Languages.get('global.case', 'start')}} #
+                            <span class="inner-line-two">{{caseDetail?.caseNumber}}</span> | {{Languages.get('global.technician','start')}}:
+                            <span class="inner-line-two">
+                                {{caseDetail?.technicianName}}
+                                <!-- ({{caseDetail?.technicianCompany}})  -->
+                            </span>
+                        </p>
+                        <div class="case-type-box" *ngIf="isHour">
+                            <span>
+                                {{round(caseDetail?.hoursSpentOnsite ? caseDetail?.hoursSpentOnsite : 0, 2)}} {{Languages.get('global.hrs', 'capitalize')}}
+                            </span>
+                        </div>
+                        <div class="case-type-box" *ngIf="isCaseType && detailsType !== 'byDay' && detailsType !=='byZone'">
+                            <ng-container *ngIf="casePriority === 'phonefix'">
+                                <ng-container *ngIf="caseDetail?.phoneFix === true">
+                                    {{Languages.get('global.phoneFix', 'upper')}}
+                                </ng-container>
+                                <ng-container *ngIf="caseDetail?.phoneFix === false && caseDetail?.linkedCase === true">
+                                    {{Languages.get('global.linked', 'upper')}}
+                                </ng-container>
+                                <ng-container *ngIf="caseDetail?.phoneFix === false && caseDetail?.linkedCase === false ">
+                                    {{caseDetail?.inScope === true ? Languages.get('global.inscope', 'upper') : Languages.get('global.outscope', 'upper')}}
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="casePriority === 'linked' && caseDetail?.linkedCase === true">
+                                {{Languages.get('global.linked', 'upper')}}
+                            </ng-container>
+                        </div>
+                        <div class="case-type-box" *ngIf="detailsType === 'byDay'">
+                            {{caseDetail?.phoneFix === true ? Languages.get('global.phoneFix', 'upper') : Languages.get('global.dispatch', 'upper')}}
+                        </div>
+                        <div class="case-type-box" *ngIf="detailsType === 'byZone'">
+                            {{caseDetail?.slaTime > 0 ? Languages.get('global.made', 'upper') : Languages.get('global.missed', 'upper')}}
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+
+                <mat-list *ngIf="detailsType === 'stacked'">
+                    <mat-list-item *ngFor="let period of AppConfiguration.onSiteTime.timePeriods">
+                        <mat-grid-list cols="3" rowHeight="64px" class="container">
+                            <mat-grid-tile>
+                                <div class="circle" [style.backgroundColor]="period.color"></div>
+                                <div>{{Languages.get('filter.' + period.slot, 'start')}}</div>
+                            </mat-grid-tile>
+                            <mat-grid-tile>{{selectedCase === 'number' ? stackedData[period.key]?.number + ' ' + Languages.get('global.cases',
+                                'capitalize') : stackedData[period.key]?.percentage + '%'}}
+                            </mat-grid-tile>
+                            <mat-grid-tile>{{selectedCase === 'number' ? stackedData[period.key]?.percentage + '%' : stackedData[period.key]?.number
+                                + ' ' + Languages.get('global.cases', 'capitalize')}}
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    </mat-list-item>
+                </mat-list>
+                <mat-list *ngIf="detailsType === 'slaStacked'">
+                    <mat-list-item id="zone-details" *ngFor="let zone of AppConfiguration.casesByZones.zones">
+                        <div class="label">
+                            <div class="circle" [style.backgroundColor]="AppConfiguration.casesByZones.colorSlots[zone.apiKey][0].color"></div>
+                            <div>{{Languages.get('filter.' + zone.key, 'start')}}</div>
+                        </div>
+                        <div>
+                            {{selectedCase === 'number' ? selectedSlaTime === 'inTime' ? allZoneData[zone.apiKey]?.inTimeCases?.number + ' ' + Languages.get('global.cases',
+                            'capitalize') : allZoneData[zone.apiKey]?.outTimeCases?.number + ' ' + Languages.get('global.cases',
+                            'capitalize') : selectedSlaTime === 'inTime' ? round(toNumber(allZoneData[zone.apiKey]?.inTimeCases?.percentage),2)
+                            + '%' : round(toNumber(allZoneData[zone.apiKey]?.outTimeCases?.percentage) , 2) + '%'}}
+                        </div>
+                        <div>
+                            {{selectedCase === 'number' ? selectedSlaTime === 'inTime' ? round(toNumber(allZoneData[zone.apiKey]?.inTimeCases?.percentage),2)
+                            + '%': round(toNumber(allZoneData[zone.apiKey]?.outTimeCases?.percentage),2) + '%' : selectedSlaTime
+                            === 'inTime' ? allZoneData[zone.apiKey]?.inTimeCases?.number + ' ' + Languages.get('global.cases',
+                            'capitalize') : allZoneData[zone.apiKey]?.outTimeCases?.number + ' ' + Languages.get('global.cases',
+                            'capitalize')}}
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+                <mat-list *ngIf="detailsByDate === '' && detailsType === ''">
+                    <mat-list-item *ngFor="let detail of detailsForAllDay">
+                        <p mat-line id="weekday"> {{detail?.weekDay}}</p>
+                        <div id="dayData"> {{detail?.phoneFix}} | {{detail?.dispatch}}</div>
+                    </mat-list-item>
+                </mat-list>
+            </ng-container>
+        </mat-expansion-panel>
+    </mat-accordion>
+</ng-template>

@@ -1,0 +1,16 @@
+version: "2"
+
+services:
+
+  ui:
+    image: nexus.techolution.com:8123/d3/ui 
+    ports:
+      - "4200:4200"
+    networks:
+      - my-network
+    expose:
+      - "4200"
+                
+networks:
+  my-network:
+    driver: bridge
